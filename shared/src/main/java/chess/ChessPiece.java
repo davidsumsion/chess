@@ -66,6 +66,9 @@ public class ChessPiece {
                 moves.add(potMov);
             } else if (piece.getTeamColor() != teamColor) {
                 moves.add(potMov);
+                break;
+            } else if (piece.getTeamColor() == teamColor) {
+                break;
             }
         }
         //down & right
@@ -82,6 +85,9 @@ public class ChessPiece {
                 moves.add(potMov);
             } else if (piece.getTeamColor() != teamColor) {
                 moves.add(potMov);
+                break;
+            } else if (piece.getTeamColor() == teamColor) {
+                break;
             }
         }
         //down & left
@@ -93,11 +99,14 @@ public class ChessPiece {
 
             //if another piece is not there
             //else if not empty and piece is opposing teams
-            //else (all other cases: if empty and my team)
+            //else (all other cases: if piece and my team)
             if (piece == null) {
                 moves.add(potMov);
             } else if (piece.getTeamColor() != teamColor) {
                 moves.add(potMov);
+                break;
+            } else if (piece.getTeamColor() == teamColor) {
+                break;
             }
         }
         //up and left
@@ -114,6 +123,9 @@ public class ChessPiece {
                 moves.add(potMov);
             } else if (piece.getTeamColor() != teamColor) {
                 moves.add(potMov);
+                break;
+            } else if (piece.getTeamColor() == teamColor) {
+                break;
             }
         }
         System.out.println(board);
@@ -152,9 +164,9 @@ public class ChessPiece {
         if (teamColor == null){
             return " " + "N" + "," + pieceType + ' ';
         } else if (teamColor == BLACK) {
-            return " " + "B" + "," + pieceType + ' ';
+            return "  B" + "," + pieceType + "  ";
         } else {
-            return " " + "W" + "," + pieceType + ' ';
+            return "  W" + "," + pieceType + "  ";
         }
     }
 }

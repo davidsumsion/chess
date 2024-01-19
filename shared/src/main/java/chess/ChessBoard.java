@@ -61,7 +61,7 @@ public class ChessBoard {
     public String toString() {
         String end = "";
         for (int i = 7; i >= 0; i--){
-            end += i;
+            end += i + 1;
             end += "|";
             for (int j = 0; j < 8; j++){
                 if (squares[i][j] == null) {
@@ -74,6 +74,7 @@ public class ChessBoard {
             }
             end += "\n";
         }
+        end += "        1           2           3           4           5           6           7           8\n";
         return end;
 //        return "ChessBoard{" +
 //                "squares=" + Arrays.toString(squares) +
