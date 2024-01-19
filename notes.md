@@ -111,6 +111,71 @@ builder.append("words");
 String str = builder.toString();
 
 
+## 1/18
+
+### Command-Line Arguments
+Packages
+- organizes packages into logical grouping
+- dots are folder seperaters
+- java.lang is implicityly imported (contains String)
+
+reading a Text File of Words
+- [skipped]
+
+### Classes and Objects
+- hour of videos to watch before next class period
+- string and array constructor are the only 2 exceptions, all other objects need new keyword
+  - Date dt;
+  - dt = new Date();
+- override the .equals method -- og for equals same memory location
+  - code, generate (equals and hash method)
+  - if (!(o instanceof Person)) return false
+  - Person person = (Person) o;
+  - Objects.equals(firstName, person.firstName) && ...
+
+### Instance vs static variables
+Instance Vars
+- each object gets its own copy of the variable
+- Allows two date objects to represent different dates
+Static Vars
+- being in the class not the instance
+- objects don't get their own copy, stored in class
+
+Instance Methods
+- each object gets its own copy of the code theoretically
+- not really tho
+Static Methods
+- can't access instance variables
+- 
+
+### Getters/Setters
+Should make variables private instance vars only available from instance 
+- create get/set methods if needed outside of that
+- IDE generates them
+  - code, generate, getter and setter, specify which ones
+  - public
+
+### Constructor methods
+much match the class name, including case
+CamelCase (classes)
+methods are notCamelCase
+no return type (can't specify void)
+- don't return void
+All classes have at least one (default constructor, no parametes on defualt), can have multiple
+Constructors invoke each other with this(...)
+- invoke parent class with super(...)
+- if you do this(...) or super(...) it needs to be the first statement in the constructor class
+  - needs to be one or the other every time
+ 
+
+
+
+References
+Directory names, packages
+static
+
+
+
 
 
 
