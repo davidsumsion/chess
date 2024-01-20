@@ -3,6 +3,7 @@ package chess;
 import java.util.*;
 
 import static chess.ChessGame.TeamColor.BLACK;
+import static chess.ChessGame.TeamColor.WHITE;
 import static chess.ChessPiece.PieceType.*;
 
 /**
@@ -248,6 +249,74 @@ public class ChessPiece {
         moves.addAll(rookMoves(board, myPosition));
         return moves;
     }
+    public Collection<ChessMove> pawnMoves(ChessBoard board, ChessPosition myPosition) {
+        Set<ChessMove> potMoves = new HashSet<>();
+        int myRow = myPosition.getRow();
+        int myCol = myPosition.getColumn();
+        System.out.println(board.getPiece(new ChessPosition(1,1)));
+        if (teamColor.equals(WHITE)) {
+            if (myRow < 7) {
+                if (myRow == 2) {
+                    potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol), null));
+                    potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 2, myCol), null));
+                } else {
+                    potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol), null));
+                }
+                ChessPiece piece = board.getPiece(new ChessPosition(myRow + 1, myCol - 1));
+                // forward/left
+                if (piece != null && piece.getTeamColor() != teamColor) {
+                    potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol - 1), null));
+                }
+                // forward/right
+                if (piece != null && piece.getTeamColor() != teamColor) {
+                    potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol + 1), null));
+                }
+            }
+            // 7th row note 8 not included -- PROMOTION -- return 4 of the same coordinate
+            /*
+
+            FIX return 4!
+
+
+             */
+            if (myRow == 7) {
+                //forward
+                if (board.getPiece(new ChessPosition(myRow+1, myCol)) == null) {
+                    potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow+1, myCol),null));
+                }
+                //forward/right
+                if (board.getPiece(new ChessPosition(myRow+1, myCol+1)) != null) {
+                    if (board.getPiece(new ChessPosition(myRow + 1, myCol + 1)).getTeamColor() != teamColor) {
+                        potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol + 1), null));
+                    }
+                }
+                //forward/left
+                if (board.getPiece(new ChessPosition(myRow+1, myCol-1)) != null) {
+                    if (board.getPiece(new ChessPosition(myRow + 1, myCol - 1)).getTeamColor() != teamColor) {
+                        potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol - 1), null));
+                    }
+                }
+            }
+        }
+        if (teamColor.equals(BLACK) && myRow > 2) {
+            if (myRow == 7) {
+                potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-1, myCol), null));
+                potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-2, myCol), null));
+            }
+            else {potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-1, myCol), null));}
+            ChessPiece piece = board.getPiece(new ChessPosition(myRow+1, myCol-1));
+            // down/left
+            if (piece != null && piece.getTeamColor() != teamColor) {
+                potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-1, myCol-1), null));
+            }
+            // forward/right
+            if (piece != null && piece.getTeamColor() != teamColor) {
+                potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-1, myCol+1), null));
+            }
+        }
+
+        return verifyMoves(potMoves,board);
+    }
         /**
          * Calculates all the positions a chess piece can move to
          * Does not take into account moves that are illegal due to leaving the king in
@@ -261,6 +330,7 @@ public class ChessPiece {
         if (pieceType == KNIGHT) { return knightMoves(board, myPosition);}
         if (pieceType == ROOK) { return rookMoves(board, myPosition); }
         if (pieceType == QUEEN) { return queenMoves(board, myPosition);}
+        if (pieceType == PAWN) { return pawnMoves(board, myPosition); }
 
         return new ArrayList<>();
     }
