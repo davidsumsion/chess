@@ -141,8 +141,6 @@ public class ChessPiece {
         Set<ChessMove> potMoves = new HashSet<>();
         int myRow = myPosition.getRow();
         int myCol = myPosition.getColumn();
-//        System.out.println(myPosition);
-//        System.out.println(board);
         //3 spots above king
         if (myRow != 8) {
             for (int i = myCol-1; i < myCol+2; i++){
@@ -158,8 +156,6 @@ public class ChessPiece {
         //left & right spots
         if (myCol != 0) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow, myCol-1), null)); }
         if (myCol != 8) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow, myCol+1), null)); }
-//        board.addPiece(new ChessPosition(myRow, myCol+1), new ChessPiece(BLACK, KING));
-//        System.out.println(board);
         return verifyMoves(potMoves, board);
     }
     public Collection<ChessMove> knightMoves(ChessBoard board, ChessPosition myPosition){
@@ -167,8 +163,7 @@ public class ChessPiece {
         Set<ChessMove> potMoves = new HashSet<>();
         int myRow = myPosition.getRow();
         int myCol = myPosition.getColumn();
-//        System.out.println(myPosition);
-//        System.out.println(board);
+
         if (myRow<=6 && myCol<=7) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow+2, myCol+1), null));}
         if (myRow<=6 && myCol>=2) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow+2, myCol-1), null));}
         if (myRow>=3 && myCol<=7) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-2, myCol+1), null));}
@@ -185,8 +180,6 @@ public class ChessPiece {
 //        Set<ChessMove> potMoves = new HashSet<>();
         int myRow = myPosition.getRow();
         int myCol = myPosition.getColumn();
-//        System.out.println(myPosition);
-//        System.out.println(board);
         //up
         for (int i = myRow+1; i <= 8; i++) {
             ChessPosition pos = new ChessPosition(i,myCol);
@@ -255,7 +248,6 @@ public class ChessPiece {
         int myRow = myPosition.getRow();
         int myCol = myPosition.getColumn();
         ChessPiece.PieceType[] types = {QUEEN, ROOK, KNIGHT, BISHOP};
-        System.out.println(board.getPiece(new ChessPosition(1,1)));
         if (teamColor.equals(WHITE)) {
             if (myRow < 7) {
                 // one forward
@@ -373,11 +365,11 @@ public class ChessPiece {
          */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         if (pieceType == BISHOP) { return bishopMoves(board, myPosition);}
-        if (pieceType == KING) { return kingMoves(board, myPosition);}
-        if (pieceType == KNIGHT) { return knightMoves(board, myPosition);}
-        if (pieceType == ROOK) { return rookMoves(board, myPosition); }
-        if (pieceType == QUEEN) { return queenMoves(board, myPosition);}
-        if (pieceType == PAWN) { return pawnMoves(board, myPosition); }
+        else if (pieceType == KING) { return kingMoves(board, myPosition);}
+        else if (pieceType == KNIGHT) { return knightMoves(board, myPosition);}
+        else if (pieceType == ROOK) { return rookMoves(board, myPosition); }
+        else if (pieceType == QUEEN) { return queenMoves(board, myPosition);}
+        else if (pieceType == PAWN) { return pawnMoves(board, myPosition); }
 
         return new ArrayList<>();
     }
