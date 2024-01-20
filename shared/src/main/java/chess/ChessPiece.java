@@ -256,11 +256,15 @@ public class ChessPiece {
         System.out.println(board.getPiece(new ChessPosition(1,1)));
         if (teamColor.equals(WHITE)) {
             if (myRow < 7) {
+                // one forward
+                if (board.getPiece(new ChessPosition(myRow+1, myCol)) == null){
+                    potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol), null));
+                }
+                // two forward (if in start position)
                 if (myRow == 2) {
-                    potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol), null));
-                    potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 2, myCol), null));
-                } else {
-                    potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol), null));
+                    if (board.getPiece(new ChessPosition(myRow+2, myCol)) == null){
+                        potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 2, myCol), null));
+                    }
                 }
                 ChessPiece piece = board.getPiece(new ChessPosition(myRow + 1, myCol - 1));
                 // forward/left
@@ -275,27 +279,35 @@ public class ChessPiece {
             // 7th row note 8 not included -- PROMOTION -- return 4 of the same coordinate
             /*
 
-            FIX return 4!
+            FIX sameFour
 
 
              */
             if (myRow == 7) {
+                ArrayList<ChessMove> fourSame = new ArrayList<>();
                 //forward
                 if (board.getPiece(new ChessPosition(myRow+1, myCol)) == null) {
-                    potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow+1, myCol),null));
+                    for (int i = 0; i < 4; i++){
+                        fourSame.add(new ChessMove(myPosition, new ChessPosition(myRow+1, myCol),null));
+                    }
                 }
                 //forward/right
                 if (board.getPiece(new ChessPosition(myRow+1, myCol+1)) != null) {
                     if (board.getPiece(new ChessPosition(myRow + 1, myCol + 1)).getTeamColor() != teamColor) {
-                        potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol + 1), null));
+                        for (int i = 0; i < 4; i++) {
+                            fourSame.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol + 1), null));
+                        }
                     }
                 }
                 //forward/left
                 if (board.getPiece(new ChessPosition(myRow+1, myCol-1)) != null) {
                     if (board.getPiece(new ChessPosition(myRow + 1, myCol - 1)).getTeamColor() != teamColor) {
-                        potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol - 1), null));
+                        for (int i = 0; i < 4; i++){
+                            fourSame.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol - 1), null));
+                        }
                     }
                 }
+                return fourSame;
             }
         }
         if (teamColor.equals(BLACK) && myRow > 2) {
