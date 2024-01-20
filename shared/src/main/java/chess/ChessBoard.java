@@ -1,6 +1,10 @@
 package chess;
 
 import java.util.Arrays;
+import static chess.ChessPiece.PieceType.*;
+import static chess.ChessGame.TeamColor.*;
+
+
 
 /**
  * A chessboard that can hold and rearrange chess pieces.
@@ -41,7 +45,36 @@ public class ChessBoard {
      * (How the game of chess normally starts)
      */
     public void resetBoard() {
-        throw new RuntimeException("Not implemented");
+        squares = new ChessPiece[8][8];
+        //black pawns
+        for (int i = 1; i < 9; i++){ addPiece(new ChessPosition(7,i), new ChessPiece(BLACK, PAWN)); }
+        //black rooks
+        addPiece(new ChessPosition(8,1), new ChessPiece(BLACK, ROOK));
+        addPiece(new ChessPosition(8,8), new ChessPiece(BLACK, ROOK));
+        //black knights
+        addPiece(new ChessPosition(8,2), new ChessPiece(BLACK, KNIGHT));
+        addPiece(new ChessPosition(8,7), new ChessPiece(BLACK, KNIGHT));
+        //black bishops
+        addPiece(new ChessPosition(8,3), new ChessPiece(BLACK, BISHOP));
+        addPiece(new ChessPosition(8,6), new ChessPiece(BLACK, BISHOP));
+        //black king/queen
+        addPiece(new ChessPosition(8,4), new ChessPiece(BLACK, QUEEN));
+        addPiece(new ChessPosition(8,5), new ChessPiece(BLACK, KING));
+
+        //white pawns
+        for (int i = 1; i < 9; i++){ addPiece(new ChessPosition(2,i), new ChessPiece(WHITE, PAWN)); }
+        //white rooks
+        addPiece(new ChessPosition(1,1), new ChessPiece(WHITE, ROOK));
+        addPiece(new ChessPosition(1,8), new ChessPiece(WHITE, ROOK));
+        //white knights
+        addPiece(new ChessPosition(1,2), new ChessPiece(WHITE, KNIGHT));
+        addPiece(new ChessPosition(1,7), new ChessPiece(WHITE, KNIGHT));
+        //white bishops
+        addPiece(new ChessPosition(1,3), new ChessPiece(WHITE, BISHOP));
+        addPiece(new ChessPosition(1,6), new ChessPiece(WHITE, BISHOP));
+        //white king/queen
+        addPiece(new ChessPosition(1,4), new ChessPiece(WHITE, QUEEN));
+        addPiece(new ChessPosition(1,5), new ChessPiece(WHITE, KING));
     }
 
     @Override
@@ -76,8 +109,5 @@ public class ChessBoard {
         }
         end += "        1           2           3           4           5           6           7           8\n";
         return end;
-//        return "ChessBoard{" +
-//                "squares=" + Arrays.toString(squares) +
-//                '}';
     }
 }
