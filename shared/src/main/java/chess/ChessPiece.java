@@ -137,7 +137,6 @@ public class ChessPiece {
         return moves;
     }
     public Collection<ChessMove> kingMoves(ChessBoard board, ChessPosition myPosition){
-        Set<ChessMove> moves = new HashSet<>();
         Set<ChessMove> potMoves = new HashSet<>();
         int myRow = myPosition.getRow();
         int myCol = myPosition.getColumn();
@@ -159,7 +158,6 @@ public class ChessPiece {
         return verifyMoves(potMoves, board);
     }
     public Collection<ChessMove> knightMoves(ChessBoard board, ChessPosition myPosition){
-        Set<ChessMove> moves = new HashSet<>();
         Set<ChessMove> potMoves = new HashSet<>();
         int myRow = myPosition.getRow();
         int myCol = myPosition.getColumn();
@@ -279,7 +277,6 @@ public class ChessPiece {
 
              */
             if (myRow == 7) {
-                ArrayList<ChessMove> fourSame = new ArrayList<>();
                 //forward
                 if (board.getPiece(new ChessPosition(myRow+1, myCol)) == null) {
                     for (int i = 0; i < 4; i++){
