@@ -3,7 +3,7 @@ package chess;
 import java.util.*;
 
 import static chess.ChessGame.TeamColor.BLACK;
-import static chess.ChessPiece.PieceType.BISHOP;
+import static chess.ChessPiece.PieceType.*;
 
 /**
  * Represents a single chess piece
@@ -49,16 +49,26 @@ public class ChessPiece {
     /* Notes
     Implement .equals
      */
+    public  Collection<ChessMove> verifyMoves(Collection<ChessMove> potMoves, ChessBoard board){
+        Set<ChessMove> moves = new HashSet<>();
+        for (ChessMove potPieceMove : potMoves){
+            ChessPosition pos = potPieceMove.getEndPosition();
+            ChessPiece piece = board.getPiece(pos);
+            if (piece == null) {
+                moves.add(potPieceMove);
+            } else if (piece.getTeamColor() != teamColor) {
+                moves.add(potPieceMove);
+            }
+        }
+        return moves;
+    }
     public Collection<ChessMove> bishopMoves(ChessBoard board, ChessPosition myPosition){
         Set<ChessMove> moves = new HashSet<>();
-        System.out.println(myPosition);
-        System.out.println(board);
         //up & right
         for (int i = myPosition.getRow()+1, j = myPosition.getColumn()+1; i <= 8 && j <= 8; i++, j++) {
             ChessPosition pos = new ChessPosition(i,j);
             ChessPiece piece = board.getPiece(pos);
             ChessMove potMov = new ChessMove(myPosition, pos, null);
-            board.addPiece(new ChessPosition(i,j), new ChessPiece(BLACK, BISHOP));
             //if another piece is not there
             //else if not empty and piece is opposing teams
             //else (all other cases: if empty and my team)
@@ -76,8 +86,6 @@ public class ChessPiece {
             ChessPosition pos = new ChessPosition(i,j);
             ChessPiece piece = board.getPiece(pos);
             ChessMove potMov = new ChessMove(myPosition, pos, null);
-            board.addPiece(new ChessPosition(i,j), new ChessPiece(BLACK, BISHOP));
-
             //if another piece is not there
             //else if not empty and piece is opposing teams
             //else (all other cases: if empty and my team)
@@ -95,8 +103,6 @@ public class ChessPiece {
             ChessPosition pos = new ChessPosition(i,j);
             ChessPiece piece = board.getPiece(pos);
             ChessMove potMov = new ChessMove(myPosition, pos, null);
-            board.addPiece(new ChessPosition(i,j), new ChessPiece(BLACK, BISHOP));
-
             //if another piece is not there
             //else if not empty and piece is opposing teams
             //else (all other cases: if piece and my team)
@@ -114,8 +120,6 @@ public class ChessPiece {
             ChessPosition pos = new ChessPosition(i,j);
             ChessPiece piece = board.getPiece(pos);
             ChessMove potMov = new ChessMove(myPosition, pos, null);
-            board.addPiece(new ChessPosition(i,j), new ChessPiece(BLACK, BISHOP));
-
             //if another piece is not there
             //else if not empty and piece is opposing teams
             //else (all other cases: if empty and my team)
@@ -128,20 +132,71 @@ public class ChessPiece {
                 break;
             }
         }
-        System.out.println(board);
         return moves;
     }
-    /**
-     * Calculates all the positions a chess piece can move to
-     * Does not take into account moves that are illegal due to leaving the king in
-     * danger
-     *
-     * @return Collection of valid moves
-     */
-    public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-        if (pieceType == BISHOP) {
-            return bishopMoves(board, myPosition);
+    public Collection<ChessMove> kingMoves(ChessBoard board, ChessPosition myPosition){
+        Set<ChessMove> moves = new HashSet<>();
+        Set<ChessMove> potMoves = new HashSet<>();
+        int myRow = myPosition.getRow();
+        int myCol = myPosition.getColumn();
+//        System.out.println(myPosition);
+//        System.out.println(board);
+        //3 spots above king
+        if (myRow != 8) {
+            for (int i = myCol-1; i < myCol+2; i++){
+                if (i < 9 && i > 0){ potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow+1, i), null));}
+            }
         }
+        //3 spots below king
+        if (myRow != 0){
+            for (int i = myCol-1; i < myCol+2; i++){
+                if (i < 9 && i > 0){ potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-1, i), null));}
+            }
+        }
+        //left & right spots
+        if (myCol != 0) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow, myCol-1), null)); }
+        if (myCol != 8) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow, myCol+1), null)); }
+//        board.addPiece(new ChessPosition(myRow, myCol+1), new ChessPiece(BLACK, KING));
+//        System.out.println(board);
+        return verifyMoves(potMoves, board);
+    }
+
+    public Collection<ChessMove> knightMoves(ChessBoard board, ChessPosition myPosition){
+        Set<ChessMove> moves = new HashSet<>();
+        Set<ChessMove> potMoves = new HashSet<>();
+        int myRow = myPosition.getRow();
+        int myCol = myPosition.getColumn();
+        System.out.println(myPosition);
+        System.out.println(board);
+        if (myRow<=6 && myCol<=7) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow+2, myCol+1), null));}
+        if (myRow<=6 && myCol>=2) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow+2, myCol-1), null));}
+        if (myRow>=3 && myCol<=7) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-2, myCol+1), null));}
+        if (myRow>=3 && myCol>=2) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-2, myCol-1), null));}
+        if (myRow<=7 && myCol<=6) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow+1, myCol+2), null));}
+        if (myRow>=2 && myCol<=6) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-1, myCol+2), null));}
+        if (myRow<=7 && myCol>=3) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow+1, myCol-2), null));}
+        if (myRow>=2 && myCol>=3) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-1, myCol-2), null));}
+
+        return verifyMoves(potMoves, board);
+    }
+
+    public Collection<ChessMove> queenMoves(ChessBoard board, ChessPosition myPosition) {
+        Set<ChessMove> moves = new HashSet<>();
+        Set<ChessMove> diagonalMoves = (Set<ChessMove>) bishopMoves(board, myPosition);
+        return moves;
+    }
+        /**
+         * Calculates all the positions a chess piece can move to
+         * Does not take into account moves that are illegal due to leaving the king in
+         * danger
+         *
+         * @return Collection of valid moves
+         */
+    public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
+        if (pieceType == BISHOP) { return bishopMoves(board, myPosition);}
+        if (pieceType == KING) { return kingMoves(board, myPosition);}
+        if (pieceType == KNIGHT) { return knightMoves(board, myPosition);}
+        if (pieceType == QUEEN) { return queenMoves(board, myPosition);}
         return new ArrayList<>();
     }
 
