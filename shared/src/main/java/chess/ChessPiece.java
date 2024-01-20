@@ -160,14 +160,13 @@ public class ChessPiece {
 //        System.out.println(board);
         return verifyMoves(potMoves, board);
     }
-
     public Collection<ChessMove> knightMoves(ChessBoard board, ChessPosition myPosition){
         Set<ChessMove> moves = new HashSet<>();
         Set<ChessMove> potMoves = new HashSet<>();
         int myRow = myPosition.getRow();
         int myCol = myPosition.getColumn();
-        System.out.println(myPosition);
-        System.out.println(board);
+//        System.out.println(myPosition);
+//        System.out.println(board);
         if (myRow<=6 && myCol<=7) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow+2, myCol+1), null));}
         if (myRow<=6 && myCol>=2) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow+2, myCol-1), null));}
         if (myRow>=3 && myCol<=7) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-2, myCol+1), null));}
@@ -179,10 +178,75 @@ public class ChessPiece {
 
         return verifyMoves(potMoves, board);
     }
-
+    public Collection<ChessMove> rookMoves(ChessBoard board, ChessPosition myPosition) {
+        Set<ChessMove> moves = new HashSet<>();
+//        Set<ChessMove> potMoves = new HashSet<>();
+        int myRow = myPosition.getRow();
+        int myCol = myPosition.getColumn();
+//        System.out.println(myPosition);
+//        System.out.println(board);
+        //up
+        for (int i = myRow+1; i <= 8; i++) {
+            ChessPosition pos = new ChessPosition(i,myCol);
+            ChessPiece piece = board.getPiece(pos);
+            ChessMove potMov = new ChessMove(myPosition, pos, null);
+            if (piece == null) {
+                moves.add(potMov);
+            } else if (piece.getTeamColor() != teamColor) {
+                moves.add(potMov);
+                break;
+            } else if (piece.getTeamColor() == teamColor) {
+                break;
+            }
+        }
+        //down
+        for (int i = myRow-1; i >= 1; i--) {
+            ChessPosition pos = new ChessPosition(i,myCol);
+            ChessPiece piece = board.getPiece(pos);
+            ChessMove potMov = new ChessMove(myPosition, pos, null);
+            if (piece == null) {
+                moves.add(potMov);
+            } else if (piece.getTeamColor() != teamColor) {
+                moves.add(potMov);
+                break;
+            } else if (piece.getTeamColor() == teamColor) {
+                break;
+            }
+        }
+        //right
+        for (int i = myCol+1; i <= 8; i++) {
+            ChessPosition pos = new ChessPosition(myRow,i);
+            ChessPiece piece = board.getPiece(pos);
+            ChessMove potMov = new ChessMove(myPosition, pos, null);
+            if (piece == null) {
+                moves.add(potMov);
+            } else if (piece.getTeamColor() != teamColor) {
+                moves.add(potMov);
+                break;
+            } else if (piece.getTeamColor() == teamColor) {
+                break;
+            }
+        }
+        //left
+        for (int i = myCol-1; i >= 1; i--) {
+            ChessPosition pos = new ChessPosition(myRow,i);
+            ChessPiece piece = board.getPiece(pos);
+            ChessMove potMov = new ChessMove(myPosition, pos, null);
+            if (piece == null) {
+                moves.add(potMov);
+            } else if (piece.getTeamColor() != teamColor) {
+                moves.add(potMov);
+                break;
+            } else if (piece.getTeamColor() == teamColor) {
+                break;
+            }
+        }
+        return moves;
+    }
     public Collection<ChessMove> queenMoves(ChessBoard board, ChessPosition myPosition) {
         Set<ChessMove> moves = new HashSet<>();
         Set<ChessMove> diagonalMoves = (Set<ChessMove>) bishopMoves(board, myPosition);
+
         return moves;
     }
         /**
@@ -196,7 +260,9 @@ public class ChessPiece {
         if (pieceType == BISHOP) { return bishopMoves(board, myPosition);}
         if (pieceType == KING) { return kingMoves(board, myPosition);}
         if (pieceType == KNIGHT) { return knightMoves(board, myPosition);}
+        if (pieceType == ROOK) { return rookMoves(board, myPosition); }
         if (pieceType == QUEEN) { return queenMoves(board, myPosition);}
+
         return new ArrayList<>();
     }
 

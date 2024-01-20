@@ -45,7 +45,7 @@
       <recent name="$PROJECT_DIR$/shared/src/test/java/passoffTests/chessTests" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.QueenMoveTests.queenMoveUntilEdge">
+  <component name="RunManager" selected="JUnit.RookMoveTests">
     <configuration name="KnightMoveTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="shared" />
       <extension name="coverage">
@@ -61,22 +61,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="KnightMoveTests.knightCornerOfBoardBottomRight" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="shared" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="passoffTests.chessTests.chessPieceTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="passoffTests.chessTests.chessPieceTests" />
-      <option name="MAIN_CLASS_NAME" value="passoffTests.chessTests.chessPieceTests.KnightMoveTests" />
-      <option name="METHOD_NAME" value="knightCornerOfBoardBottomRight" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="KnightMoveTests.knightCornerOfBoardTopRight" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="shared" />
       <extension name="coverage">
@@ -88,22 +72,6 @@
       <option name="PACKAGE_NAME" value="passoffTests.chessTests.chessPieceTests" />
       <option name="MAIN_CLASS_NAME" value="passoffTests.chessTests.chessPieceTests.KnightMoveTests" />
       <option name="METHOD_NAME" value="knightCornerOfBoardTopRight" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="KnightMoveTests.knightEdgeOfBoardTop" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="shared" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="passoffTests.chessTests.chessPieceTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="passoffTests.chessTests.chessPieceTests" />
-      <option name="MAIN_CLASS_NAME" value="passoffTests.chessTests.chessPieceTests.KnightMoveTests" />
-      <option name="METHOD_NAME" value="knightEdgeOfBoardTop" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -125,13 +93,44 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="RookMoveTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="shared" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.chessTests.chessPieceTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.chessTests.chessPieceTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.chessTests.chessPieceTests.RookMoveTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RookMoveTests.rookMoveUntilEdge" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="shared" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.chessTests.chessPieceTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.chessTests.chessPieceTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.chessTests.chessPieceTests.RookMoveTests" />
+      <option name="METHOD_NAME" value="rookMoveUntilEdge" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.RookMoveTests" />
+        <item itemvalue="JUnit.RookMoveTests.rookMoveUntilEdge" />
         <item itemvalue="JUnit.QueenMoveTests.queenMoveUntilEdge" />
         <item itemvalue="JUnit.KnightMoveTests" />
         <item itemvalue="JUnit.KnightMoveTests.knightCornerOfBoardTopRight" />
-        <item itemvalue="JUnit.KnightMoveTests.knightCornerOfBoardBottomRight" />
-        <item itemvalue="JUnit.KnightMoveTests.knightEdgeOfBoardTop" />
       </list>
     </recent_temporary>
   </component>
