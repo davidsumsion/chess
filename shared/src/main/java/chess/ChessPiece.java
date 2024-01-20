@@ -244,9 +244,8 @@ public class ChessPiece {
         return moves;
     }
     public Collection<ChessMove> queenMoves(ChessBoard board, ChessPosition myPosition) {
-        Set<ChessMove> moves = new HashSet<>();
-        Set<ChessMove> diagonalMoves = (Set<ChessMove>) bishopMoves(board, myPosition);
-
+        Set<ChessMove> moves = new HashSet<>(bishopMoves(board, myPosition));
+        moves.addAll(rookMoves(board, myPosition));
         return moves;
     }
         /**
