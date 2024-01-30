@@ -175,7 +175,6 @@ public class ChessPiece {
     }
     public Collection<ChessMove> rookMoves(ChessBoard board, ChessPosition myPosition) {
         Set<ChessMove> moves = new HashSet<>();
-//        Set<ChessMove> potMoves = new HashSet<>();
         int myRow = myPosition.getRow();
         int myCol = myPosition.getColumn();
         //up
@@ -270,12 +269,6 @@ public class ChessPiece {
                 }
             }
             // 7th row note 8 not included -- PROMOTION -- return 4 of the same coordinate
-            /*
-
-            FIX sameFour
-
-
-             */
             if (myRow == 7) {
                 //forward
                 if (board.getPiece(new ChessPosition(myRow+1, myCol)) == null) {
@@ -351,7 +344,6 @@ public class ChessPiece {
             }
         }
         return potMoves;
-//        return verifyMoves(potMoves,board);
     }
         /**
          * Calculates all the positions a chess piece can move to
