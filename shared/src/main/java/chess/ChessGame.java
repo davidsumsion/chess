@@ -13,11 +13,16 @@ import static chess.ChessMove.*;
  * Note: You can add to this class, but you may not alter
  * signature of the existing methods.
  */
-public class ChessGame {
+public class ChessGame implements Cloneable {
     TeamColor teamTurn = TeamColor.BLACK;
     ChessBoard board = new ChessBoard();
 
     public ChessGame() {
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     /**
@@ -77,7 +82,7 @@ public class ChessGame {
     }
 
 
-    public Collection<ChessMove> getOtherTeamPotMoves(TeamColor teamColor) {
+    public Collection<ChessMove> getTeamPotMoves(TeamColor teamColor) {
         HashSet<ChessMove> potMoves = new HashSet<>();
         //rows
         for (int i = 1; i <= 8; i++){
@@ -85,7 +90,7 @@ public class ChessGame {
             for (int j = 1; j <=8; j++){
                 ChessPosition piecePos = new ChessPosition(i, j);
                 ChessPiece piece = board.getPiece(piecePos);
-                if (piece != null && piece.getTeamColor() != teamColor){
+                if (piece != null && piece.getTeamColor() == teamColor){
                     Collection<ChessMove> piecePotMoves = piece.pieceMoves(board, piecePos);
                     potMoves.addAll(piecePotMoves);
                 }
@@ -122,7 +127,9 @@ public class ChessGame {
      */
     public boolean isInCheck(TeamColor teamColor) {
         // run through every move for every piece on opposite team, add to set (no duplicates), then check if King is contained in that set
-        Collection<ChessMove> otherTeamPotMoves = getOtherTeamPotMoves(teamColor);
+        TeamColor otherTeamColor = TeamColor.WHITE;
+        if (teamColor == TeamColor.WHITE) { otherTeamColor = TeamColor.BLACK; }
+        Collection<ChessMove> otherTeamPotMoves = getTeamPotMoves(otherTeamColor);
         ArrayList<ChessMove> otherTeamMovesArray = new ArrayList<>(otherTeamPotMoves);
         ChessPosition kingPos = findKing(teamColor);
         for (ChessMove potMov : otherTeamMovesArray){
@@ -141,8 +148,31 @@ public class ChessGame {
      */
     public boolean isInCheckmate(TeamColor teamColor) {
         //is in check and can't get out of check if any piece on that team is moved
+        if (!isInCheck(teamColor)){ return false; }
+        Collection<ChessMove> potMoves = getTeamPotMoves(teamColor);
+        ArrayList<ChessMove> potMovesArray = new ArrayList<>(potMoves);
+        for (ChessMove potMove : potMovesArray){
+            try {
+                ChessGame clonedGame = (ChessGame) this.clone();
+                try {
+                    //how do i make it so if the king is going to be in check still with the move it won't exit?
+                    clonedGame.makeMove(potMove);
+                    if (!clonedGame.isInCheck(teamColor)){
+                        return false;
+                    }
+                } catch (InvalidMoveException e) {
+                    //needs more robust logging
+                    e.printStackTrace();
+                }
+            } catch (CloneNotSupportedException e){
+                //needs more robust logging
+                e.printStackTrace();
+            }
+        }
+
+        //find all valid moves of current team, if not in check on any of them then return false
         //clone board
-        throw new RuntimeException("Not implemented");
+        return true;
     }
 
     /**
