@@ -147,13 +147,13 @@ public class ChessPiece {
             }
         }
         //3 spots below king
-        if (myRow != 0){
+        if (myRow != 1){
             for (int i = myCol-1; i < myCol+2; i++){
                 if (i < 9 && i > 0){ potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-1, i), null));}
             }
         }
         //left & right spots
-        if (myCol != 0) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow, myCol-1), null)); }
+        if (myCol != 1) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow, myCol-1), null)); }
         if (myCol != 8) { potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow, myCol+1), null)); }
         return verifyMoves(potMoves, board);
     }
