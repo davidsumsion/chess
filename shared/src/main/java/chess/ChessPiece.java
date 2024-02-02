@@ -257,13 +257,15 @@ public class ChessPiece {
                         }
                     }
                 }
-                ChessPiece leftPiece = board.getPiece(new ChessPosition(myRow + 1, myCol - 1));
                 // forward/left
+                ChessPiece leftPiece = null;
+                if (myCol > 1) {leftPiece = board.getPiece(new ChessPosition(myRow + 1, myCol - 1));}
                 if (leftPiece != null && leftPiece.getTeamColor() != teamColor) {
                     potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol - 1), null));
                 }
-                ChessPiece rightPiece = board.getPiece(new ChessPosition(myRow + 1, myCol + 1));
                 // forward/right
+                ChessPiece rightPiece = null;
+                if (myCol < 8) { rightPiece = board.getPiece(new ChessPosition(myRow + 1, myCol + 1)); }
                 if (rightPiece != null && rightPiece.getTeamColor() != teamColor) {
                     potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol + 1), null));
                 }
@@ -306,13 +308,16 @@ public class ChessPiece {
                         }
                     }
                 }
-                ChessPiece leftPiece = board.getPiece(new ChessPosition(myRow - 1, myCol - 1));
                 // down/left
+                ChessPiece leftPiece = null;
+                if (myCol > 1) {leftPiece = board.getPiece(new ChessPosition(myRow - 1, myCol - 1));}
                 if (leftPiece != null && leftPiece.getTeamColor() != teamColor) {
                     potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow - 1, myCol - 1), null));
                 }
-                ChessPiece rightPiece = board.getPiece(new ChessPosition(myRow - 1, myCol + 1));
+
                 // down/right
+                ChessPiece rightPiece = null;
+                if (myCol < 8) { rightPiece = board.getPiece(new ChessPosition(myRow - 1, myCol + 1)); }
                 if (rightPiece != null && rightPiece.getTeamColor() != teamColor) {
                     potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow - 1, myCol + 1), null));
                 }

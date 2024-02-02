@@ -1,5 +1,6 @@
 package chess;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -55,8 +56,8 @@ public class ChessGame {
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
         ChessPiece piece = board.getPiece(startPosition);
         Collection<ChessMove> pieceMoves = piece.pieceMoves(getBoard(), startPosition);
+        // for move in pieceMoves, does it put my king in Check?, need to implement check first
         return pieceMoves;
-//        throw new RuntimeException("Not implemented");
     }
 
     /**
@@ -75,6 +76,44 @@ public class ChessGame {
         board.removePiece(start);
     }
 
+
+    public Collection<ChessMove> getOtherTeamPotMoves(TeamColor teamColor) {
+        HashSet<ChessMove> potMoves = new HashSet<>();
+        //rows
+        for (int i = 1; i <= 8; i++){
+            //columns
+            for (int j = 1; j <=8; j++){
+                ChessPosition piecePos = new ChessPosition(i, j);
+                ChessPiece piece = board.getPiece(piecePos);
+                if (piece != null && piece.getTeamColor() != teamColor){
+                    Collection<ChessMove> piecePotMoves = piece.pieceMoves(board, piecePos);
+                    potMoves.addAll(piecePotMoves);
+                }
+            }
+        }
+        // loop through each row
+            //loop through each column
+                //if piece isn't null and piece color != teamColor
+                    //add PotMoves to set
+        //return that set
+        return potMoves;
+    }
+
+    public ChessPosition findKing(TeamColor teamColor) {
+        ChessPosition noKing = null;
+        for (int i = 1; i <= 8; i++){
+            //columns
+            for (int j = 1; j <=8; j++){
+                ChessPosition piecePos = new ChessPosition(i, j);
+                ChessPiece piece = board.getPiece(piecePos);
+                if (piece != null && piece.getTeamColor() == teamColor && piece.getPieceType() == ChessPiece.PieceType.KING){
+
+                    return piecePos;
+                }
+            }
+        }
+        return noKing;
+    }
     /**
      * Determines if the given team is in check
      *
@@ -82,7 +121,16 @@ public class ChessGame {
      * @return True if the specified team is in check
      */
     public boolean isInCheck(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+        // run through every move for every piece on opposite team, add to set (no duplicates), then check if King is contained in that set
+        Collection<ChessMove> otherTeamPotMoves = getOtherTeamPotMoves(teamColor);
+        ArrayList<ChessMove> otherTeamMovesArray = new ArrayList<>(otherTeamPotMoves);
+        ChessPosition kingPos = findKing(teamColor);
+        for (ChessMove potMov : otherTeamMovesArray){
+            if (potMov.getEndPosition().equals(kingPos)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -92,6 +140,8 @@ public class ChessGame {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
+        //is in check and can't get out of check if any piece on that team is moved
+        //clone board
         throw new RuntimeException("Not implemented");
     }
 
@@ -103,6 +153,7 @@ public class ChessGame {
      * @return True if the specified team is in stalemate, otherwise false
      */
     public boolean isInStalemate(TeamColor teamColor) {
+        //returns true if there are no valid(legal) moves a team can make
         throw new RuntimeException("Not implemented");
     }
 
