@@ -7,6 +7,7 @@ read board, copy from powerpoints
 checked/vs unchecked exceptions
 mutable
 static
+try w/ resources
 
 ### Java Records
 POJOs
@@ -202,5 +203,96 @@ public record Pet(int id, String name, String type) {}
     - more complicated
 - Stalemate
   - no valid moves, you're in stalemate
-- 
 ### Design Principles
+- Great systems
+  - work
+  - easy to understand, debug and maintain
+  - hold up well under changes
+  - have reusable components
+- Design is inherently Iterative
+  - building all the blueprints works for bridges and buildings, but not for software
+  - enough design to get started
+    - implement to see if it worked
+    - do more design
+    - keep doing those iterations, never done
+- BDUF - big design up front, doesn't work
+- can't just start coding, enough design before
+- DITD, Design, implemenet, test, deploy
+- Abstraction: how we deal with complex things
+  - create higher-level, domain-specefic abstractions and write software in terms of those
+  - ChessPiece
+  - sometimes Bank, customer, account, loan, broker
+  - other times HttpServer, DataBase, HashTable
+  - abstractions represented as a class
+    - someone can call your methods without knowing exactly how it was made, by the description or by the name
+  - Person class
+    - pulse, heart-rate, fingerprint -- do we care for chess? do we care for FBI system or HealthCare System
+  - Naming matters
+    - Class and var names are usually nouns
+    - method names are usually verbs
+  - Single-Responsibility/Cohesion
+    - Each class/method should have 1 reason for existing and should do one thing
+  - Decomposition (thursday)
+
+
+## 2/1
+### Abstraction
+- Decomposition
+  - tames complexity
+  - Large problems subdivided into smaller sub-problems
+  - levels
+    - system
+    - substystem
+    - packages
+    - classes
+    - methods
+  - Trie Data Structure
+
+### Streams and Files
+- when you write to your server
+- phases 5&6 you'll need to have user input
+- Streams (general, from server, from file)
+  - read bytes from source of bytes
+  - InputStreams, OutputStreams
+    - reading/writing bytes
+    - fileInputStream
+    - PipedInputStream
+    - URLConnection.getInputStream()
+    - HttpExchange.getRequestBody() -- use something else now
+    - ResultSet.getBinaryStream(int column index)
+    - more, plus corresponding output stream
+  - Filter Input Streams
+    - attach different streams
+    - can read a zipped file 
+  - Output Streams
+    - similar to input streams
+  - Data input/output streams
+  - Reader, Writer
+    - reading/writing characters
+    - inputstreamreader -- copper/pvc pipe connecter
+- Scanner Class, tokenized input by anything you tokenize by
+  - default: whitespace
+  - scanner + system.in waits for user input
+- Files class, ready, copy, whole files
+  - represents a file but it doesn't read the file
+  - pases as a parameter
+  - [insert photo!]
+  - Path path = Paths.get(file.getPath());
+  - List<String> filecontents = Files.readAllLines(path);
+  - return fileContents
+  - Java.nio
+- Random AccessFile Class
+  - seek(long), skipBytes(int)
+
+### Information Hiding
+- public
+- private
+  - implementation details 
+  - you can change it
+- protected
+
+### DRY principle
+- don't repeat yourself
+- don't use duplicate code
+  - 2 points of maintainence when you have 2 copies
+  - 
