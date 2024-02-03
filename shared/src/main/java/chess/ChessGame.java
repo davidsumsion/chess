@@ -64,7 +64,8 @@ public class ChessGame implements Cloneable {
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
         ChessPiece piece = board.getPiece(startPosition);
         if (piece == null) { return null;}
-        teamTurn = piece.getTeamColor();
+        //error
+//        setTeamTurn(piece.getTeamColor());
         Collection<ChessMove> pieceMoves = piece.pieceMoves(getBoard(), startPosition);
         ArrayList<ChessMove> potMovesArray = new ArrayList<>(pieceMoves);
         Collection<ChessMove> outOfCheckMoves = new HashSet<>();
@@ -93,7 +94,6 @@ public class ChessGame implements Cloneable {
      * @throws InvalidMoveException if move is invalid
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
-//        System.out.println(board);
         ChessPosition start = move.getStartPosition();
         ChessPosition end = move.getEndPosition();
         if (!validMoves(start).contains(move)) {
