@@ -75,7 +75,6 @@ public class ChessGame implements Cloneable {
                 ChessGame clonedGame = (ChessGame) this.clone();
                 clonedGame.board.addPiece(potMove.getEndPosition(), clonedGame.board.getPiece(potMove.getStartPosition()));
                 clonedGame.board.removePiece(potMove.getStartPosition());
-                System.out.println(clonedGame.board);
 //                if (!clonedGame.isInCheck(clonedGame.teamTurn)){
 //                    outOfCheckMoves.add(potMove);
 //                }
