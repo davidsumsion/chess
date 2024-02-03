@@ -40,9 +40,10 @@ public class ChessGame implements Cloneable {
      * @param team the team whose turn it is
      */
     public void setTeamTurn(TeamColor team) {
-        if (team == TeamColor.WHITE){
-            teamTurn = TeamColor.WHITE;
-        } else { teamTurn = TeamColor.BLACK; }
+        teamTurn = team;
+//        if (team == TeamColor.WHITE){
+//            teamTurn = TeamColor.WHITE;
+//        } else { teamTurn = TeamColor.BLACK; }
     }
 
     /**
@@ -63,12 +64,9 @@ public class ChessGame implements Cloneable {
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
         ChessPiece piece = board.getPiece(startPosition);
         if (piece == null) { return null;}
+        teamTurn = piece.getTeamColor();
         Collection<ChessMove> pieceMoves = piece.pieceMoves(getBoard(), startPosition);
         ArrayList<ChessMove> potMovesArray = new ArrayList<>(pieceMoves);
-        System.out.println("BEFORE\n"+board);
-//        if (!isInCheck(teamTurn)){
-//            return pieceMoves;
-//        } else {
         Collection<ChessMove> outOfCheckMoves = new HashSet<>();
         for (ChessMove potMove : potMovesArray){
             //if move moves team out of check then add to outOfCheckMoves
@@ -76,16 +74,15 @@ public class ChessGame implements Cloneable {
                 ChessGame clonedGame = (ChessGame) this.clone();
                 clonedGame.board.addPiece(potMove.getEndPosition(), clonedGame.board.getPiece(potMove.getStartPosition()));
                 clonedGame.board.removePiece(potMove.getStartPosition());
-                if (!clonedGame.isInCheck(teamTurn)){
+                System.out.println(clonedGame.board);
+                if (!clonedGame.isInCheck(clonedGame.teamTurn)){
                     outOfCheckMoves.add(potMove);
                 }
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
         }
-        System.out.println("AFTER\n"+board+"\n\n\n\n");
         return outOfCheckMoves;
-//        }
     }
 
 
@@ -96,19 +93,13 @@ public class ChessGame implements Cloneable {
      * @throws InvalidMoveException if move is invalid
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
-//        System.out.println("PRE- BEFORE");
-
 //        System.out.println(board);
-
         ChessPosition start = move.getStartPosition();
         ChessPosition end = move.getEndPosition();
         if (!validMoves(start).contains(move)) {
             throw new InvalidMoveException("Move is not Valid: Move is not in move list");
         }
-//        System.out.println("BEFORE");
-//        System.out.println(board);
         ChessPiece piece = board.getPiece(start);
-//        if (piece == null) { throw new InvalidMoveException("Is not a piece"); }
         if (piece.getTeamColor() != teamTurn) {
             throw new InvalidMoveException("Move is not Valid: not that piece's turn");
         }
@@ -120,14 +111,11 @@ public class ChessGame implements Cloneable {
             board.addPiece(end, piece);
         }
         board.removePiece(start);
-//        System.out.println("AFTER:");
-//        System.out.println(board);
         if (teamTurn == TeamColor.BLACK){
             setTeamTurn(TeamColor.WHITE);
         } else {
             setTeamTurn(TeamColor.BLACK);
         }
-
     }
 
     public Collection<ChessMove> getTeamPotMoves(TeamColor teamColor) {
@@ -161,7 +149,6 @@ public class ChessGame implements Cloneable {
                 ChessPosition piecePos = new ChessPosition(i, j);
                 ChessPiece piece = board.getPiece(piecePos);
                 if (piece != null && piece.getTeamColor() == teamColor && piece.getPieceType() == ChessPiece.PieceType.KING){
-
                     return piecePos;
                 }
             }
@@ -228,17 +215,7 @@ public class ChessGame implements Cloneable {
         if (isInCheck(teamColor)){
             return false;
         }
-        Collection<ChessMove> potMoves = new HashSet<>();
-        for (int i = 1; i <= 8; i++){
-            for (int j = 1; j <= 8 ; j++){
-                ChessPosition potPos = new ChessPosition(i, j);
-                ChessPiece piece = board.getPiece(potPos);
-                if (piece != null && piece.getTeamColor() == teamColor){
-                    potMoves.addAll(validMoves(potPos));
-                }
-            }
-        }
-        //returns stalemate is true if no validMoves and returns false if there are valid moves
+        Collection<ChessMove> potMoves = checkStaleMateHelper(teamColor);
         return potMoves.isEmpty();
     }
 
