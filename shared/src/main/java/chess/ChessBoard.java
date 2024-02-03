@@ -12,13 +12,29 @@ import static chess.ChessGame.TeamColor.*;
  * Note: You can add to this class, but you may not alter
  * signature of the existing methods.
  */
-public class ChessBoard {
+public class ChessBoard implements Cloneable {
     private ChessPiece[][] squares = new ChessPiece[8][8];
 
     public ChessBoard() {
 
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        ChessBoard clonedBoard = (ChessBoard) super.clone();
+        clonedBoard.squares = new ChessPiece[8][8];
+        for (int i =0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                if (this.squares[i][j] == null){
+                    clonedBoard.squares[i][j] = null;
+                }
+                else{
+                    clonedBoard.squares[i][j] = new ChessPiece(this.squares[i][j].getTeamColor(), this.squares[i][j].getPieceType());
+                }
+            }
+        }
+        return clonedBoard;
+    }
 
     /**
      * Adds a chess piece to the chessboard

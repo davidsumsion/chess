@@ -14,7 +14,7 @@ import static chess.ChessMove.*;
  * signature of the existing methods.
  */
 public class ChessGame implements Cloneable {
-    TeamColor teamTurn = TeamColor.BLACK;
+    TeamColor teamTurn = TeamColor.WHITE;
     ChessBoard board = new ChessBoard();
 
     public ChessGame() {
@@ -22,7 +22,9 @@ public class ChessGame implements Cloneable {
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+        ChessGame clonedGame = (ChessGame) super.clone();
+        clonedGame.board = (ChessBoard) this.board.clone();
+        return clonedGame;
     }
 
     /**
@@ -39,8 +41,8 @@ public class ChessGame implements Cloneable {
      */
     public void setTeamTurn(TeamColor team) {
         if (team == TeamColor.WHITE){
-            teamTurn = TeamColor.BLACK;
-        } else { teamTurn = TeamColor.WHITE; }
+            teamTurn = TeamColor.WHITE;
+        } else { teamTurn = TeamColor.BLACK; }
     }
 
     /**
@@ -60,10 +62,32 @@ public class ChessGame implements Cloneable {
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
         ChessPiece piece = board.getPiece(startPosition);
+        if (piece == null) { return null;}
         Collection<ChessMove> pieceMoves = piece.pieceMoves(getBoard(), startPosition);
-        // for move in pieceMoves, does it put my king in Check?, need to implement check first
-        return pieceMoves;
+        ArrayList<ChessMove> potMovesArray = new ArrayList<>(pieceMoves);
+        System.out.println("BEFORE\n"+board);
+//        if (!isInCheck(teamTurn)){
+//            return pieceMoves;
+//        } else {
+        Collection<ChessMove> outOfCheckMoves = new HashSet<>();
+        for (ChessMove potMove : potMovesArray){
+            //if move moves team out of check then add to outOfCheckMoves
+            try {
+                ChessGame clonedGame = (ChessGame) this.clone();
+                clonedGame.board.addPiece(potMove.getEndPosition(), clonedGame.board.getPiece(potMove.getStartPosition()));
+                clonedGame.board.removePiece(potMove.getStartPosition());
+                if (!clonedGame.isInCheck(teamTurn)){
+                    outOfCheckMoves.add(potMove);
+                }
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("AFTER\n"+board+"\n\n\n\n");
+        return outOfCheckMoves;
+//        }
     }
+
 
     /**
      * Makes a move in a chess game
@@ -72,15 +96,39 @@ public class ChessGame implements Cloneable {
      * @throws InvalidMoveException if move is invalid
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
+//        System.out.println("PRE- BEFORE");
+
+//        System.out.println(board);
+
         ChessPosition start = move.getStartPosition();
         ChessPosition end = move.getEndPosition();
-        if (!validMoves(start).contains(move)) { throw new InvalidMoveException("Move is not Valid"); }
-        ChessBoard board = getBoard();
+        if (!validMoves(start).contains(move)) {
+            throw new InvalidMoveException("Move is not Valid: Move is not in move list");
+        }
+//        System.out.println("BEFORE");
+//        System.out.println(board);
         ChessPiece piece = board.getPiece(start);
-        board.addPiece(end, piece);
+//        if (piece == null) { throw new InvalidMoveException("Is not a piece"); }
+        if (piece.getTeamColor() != teamTurn) {
+            throw new InvalidMoveException("Move is not Valid: not that piece's turn");
+        }
+        if (piece.getPieceType() == ChessPiece.PieceType.PAWN && start.getRow() == 7 && end.getRow() == 8
+                || piece.getPieceType() == ChessPiece.PieceType.PAWN && start.getRow() == 2 && end.getRow() == 1){
+            board.addPiece(end, new ChessPiece(piece.getTeamColor(), move.getPromotionPiece()));
+        }
+        else{
+            board.addPiece(end, piece);
+        }
         board.removePiece(start);
-    }
+//        System.out.println("AFTER:");
+//        System.out.println(board);
+        if (teamTurn == TeamColor.BLACK){
+            setTeamTurn(TeamColor.WHITE);
+        } else {
+            setTeamTurn(TeamColor.BLACK);
+        }
 
+    }
 
     public Collection<ChessMove> getTeamPotMoves(TeamColor teamColor) {
         HashSet<ChessMove> potMoves = new HashSet<>();
@@ -92,6 +140,7 @@ public class ChessGame implements Cloneable {
                 ChessPiece piece = board.getPiece(piecePos);
                 if (piece != null && piece.getTeamColor() == teamColor){
                     Collection<ChessMove> piecePotMoves = piece.pieceMoves(board, piecePos);
+
                     potMoves.addAll(piecePotMoves);
                 }
             }
@@ -140,6 +189,19 @@ public class ChessGame implements Cloneable {
         return false;
     }
 
+    public Collection<ChessMove> checkStaleMateHelper(TeamColor teamColor){
+        Collection<ChessMove> potMoves = new HashSet<>();
+        for (int i = 1; i <= 8; i++){
+            for (int j = 1; j <= 8 ; j++){
+                ChessPosition potPos = new ChessPosition(i, j);
+                ChessPiece piece = board.getPiece(potPos);
+                if (piece != null && piece.getTeamColor() == teamColor){
+                    potMoves.addAll(validMoves(potPos));
+                }
+            }
+        }
+        return potMoves;
+    }
     /**
      * Determines if the given team is in checkmate
      *
@@ -147,32 +209,11 @@ public class ChessGame implements Cloneable {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
-        //is in check and can't get out of check if any piece on that team is moved
-        if (!isInCheck(teamColor)){ return false; }
-        Collection<ChessMove> potMoves = getTeamPotMoves(teamColor);
-        ArrayList<ChessMove> potMovesArray = new ArrayList<>(potMoves);
-        for (ChessMove potMove : potMovesArray){
-            try {
-                ChessGame clonedGame = (ChessGame) this.clone();
-                try {
-                    //how do i make it so if the king is going to be in check still with the move it won't exit?
-                    clonedGame.makeMove(potMove);
-                    if (!clonedGame.isInCheck(teamColor)){
-                        return false;
-                    }
-                } catch (InvalidMoveException e) {
-                    //needs more robust logging
-                    e.printStackTrace();
-                }
-            } catch (CloneNotSupportedException e){
-                //needs more robust logging
-                e.printStackTrace();
-            }
+        if (!isInCheck(teamColor)){
+            return false;
         }
-
-        //find all valid moves of current team, if not in check on any of them then return false
-        //clone board
-        return true;
+        Collection<ChessMove> potMoves = checkStaleMateHelper(teamColor);
+        return potMoves.isEmpty();
     }
 
     /**
@@ -184,7 +225,21 @@ public class ChessGame implements Cloneable {
      */
     public boolean isInStalemate(TeamColor teamColor) {
         //returns true if there are no valid(legal) moves a team can make
-        throw new RuntimeException("Not implemented");
+        if (isInCheck(teamColor)){
+            return false;
+        }
+        Collection<ChessMove> potMoves = new HashSet<>();
+        for (int i = 1; i <= 8; i++){
+            for (int j = 1; j <= 8 ; j++){
+                ChessPosition potPos = new ChessPosition(i, j);
+                ChessPiece piece = board.getPiece(potPos);
+                if (piece != null && piece.getTeamColor() == teamColor){
+                    potMoves.addAll(validMoves(potPos));
+                }
+            }
+        }
+        //returns stalemate is true if no validMoves and returns false if there are valid moves
+        return potMoves.isEmpty();
     }
 
     /**

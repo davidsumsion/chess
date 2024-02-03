@@ -8,13 +8,18 @@ import java.util.Objects;
  * Note: You can add to this class, but you may not alter
  * signature of the existing methods.
  */
-public class ChessPosition {
+public class ChessPosition implements Cloneable{
     private final int row;
     private final int col;
 
     public ChessPosition(int row, int col) {
         this.row = row;
         this.col = col;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     /**

@@ -8,7 +8,7 @@ import java.util.Objects;
  * Note: You can add to this class, but you may not alter
  * signature of the existing methods.
  */
-public class ChessMove {
+public class ChessMove implements Cloneable {
     private ChessPosition startPosition;
     private ChessPosition endPosition;
     private ChessPiece.PieceType promotionPiece;
@@ -19,6 +19,10 @@ public class ChessMove {
         this.promotionPiece = promotionPiece;
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 
     /**
      * @return ChessPosition of starting location
@@ -33,6 +37,10 @@ public class ChessMove {
     public ChessPosition getEndPosition() {
         return endPosition;
     }
+
+//    public ChessPiece.PieceType getPromotionPiece(){
+//        return promotionPiece;
+//    }
 
     /**
      * Gets the type of piece to promote a pawn to if pawn promotion is part of this

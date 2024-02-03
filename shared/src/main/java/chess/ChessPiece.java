@@ -13,12 +13,17 @@ import static chess.ChessPiece.PieceType.*;
  * Note: You can add to this class, but you may not alter
  * signature of the existing methods.
  */
-public class ChessPiece {
+public class ChessPiece implements Cloneable {
     private PieceType pieceType;
     private ChessGame.TeamColor teamColor;
     public ChessPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type) {
         this.pieceType = type;
         this.teamColor = pieceColor;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     /**
@@ -32,6 +37,7 @@ public class ChessPiece {
         ROOK,
         PAWN
     }
+
 
     /**
      * @return Which team this chess piece belongs to
