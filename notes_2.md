@@ -1,0 +1,114 @@
+# 2/6
+
+###Json and Json Parsing Phase 3 (and phase 2 for the design)
+- JSON and XML are the two datatypes for the internet
+  - XML is mostly for configuration files
+- Supported Datatypes
+  - objects, arrays, numbers, strings, boolean, null
+- Parsers
+  - Serializers/Deserializers
+    - Gson
+    - directly converts it for you into a class
+    - Gson gson = new GsonBuilder()set.
+    - @Serializedname
+    - 
+  - Stream Parsers
+    - tokenize things one token at a time
+  - DOM parsers
+    - read into memory, represented as a tree
+
+### Phase 2:
+- read phase 2 and phase 3 assignment
+- understnad 3, create diagrams of 3
+- sequence diagrams
+- one sequence diagram for every endpoint
+- HTTP
+  - How a client connects with a server
+  - Server
+    - Web Site
+    - Web API
+  - Clients
+    - Web Browser (Test Page) (Website and API)
+    - Client App (API)
+    - Test Driver (JUnit tests) (API)
+- Design principles
+  - Single Responsibility Principle
+  - Avoid Code Duplication
+  - Information Hiding
+    - What you hide you can change
+- Chess Server Models (Model Classes)
+  - User class
+  - AuthToken
+  - Game
+    - username of white/black user, contains ChesGame
+  - (ChessGame, ChessPiece, ChessBoard, ChessMove)
+- Model Classes 
+  - user authtoken game
+- Data Access
+  - UserDao
+  - AuthTokenDao
+  - GameDao
+- Server -> handlers-- json/http(registration, login, clear, join) -> request/result
+- client app - server
+  - IP address for server and client app
+    - DNS server -- translates names to IP addresses
+      - caches results from upper level DNS servers they inherit from
+  - port is an "extension" for the IP address "office phone number"
+- URL
+  - protocol
+    - http/https
+  - domain name
+    - www.google.com:
+  - port number
+    - 443 (specefic program)
+    - don't have to include unless you want to, automatic
+  - path
+    - /images/branding/googlelogo/1x/googlelogo_color_272x92dp.png
+- GET request on server with path
+  - Headers
+    - Accept: image/png, image/gif, image/jpg
+      - what images are acceptable
+    - Accept-Encoding
+      - gzip, deflate if its sent in accept formats
+    - User-Agent
+      - what browser request was from
+  - Response
+    - HTTP/version StatusCode ReasonPhrase
+      - HTTP/1.1 200 OK
+        - 200 range successful
+        - 300 is informational, redirects
+        - 400 server considers what you sent it to be an error
+        - 500 means the server failed (sometimes sent as a 400, programs/companies don't like to admit they're wrong)
+      - Headers
+        - content-type: image/png
+        - Content: length: 5969
+        - Last modified:
+        - blank line
+      - body:
+        - PNG image bytes
+  - WebAPI call with HTTP
+    - GET url path HTTP version
+    - authorization: 3333333 (authtoken)
+    - read
+- POST request
+  - Create something in Web API
+  - POST URL_path HTTP/Version
+  - Headers
+    - list of headers 9content type, accept,accept encoding, content length
+  - Request body
+    - keywords = byu&cs&240
+- GET: Retreive
+  - read operation in a REST API
+  - Body should normally not be included in request
+- POST: Submit something to the specified resource, often causing a change or side effect
+  - create operation in a REST API
+  - body included in request
+    - Change in DB/Server (logining in an individual)
+- PUT
+  - Replace 
+  - an update operation in a REST API
+  - Body included in request
+- DELETE
+- Others
+  - HEAD, ОPTIONS, TRACE, PATCH
+  - 

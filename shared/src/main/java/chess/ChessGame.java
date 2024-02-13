@@ -64,8 +64,7 @@ public class ChessGame implements Cloneable {
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
         ChessPiece piece = board.getPiece(startPosition);
         if (piece == null) { return null;}
-        //error
-//        setTeamTurn(piece.getTeamColor());
+
         Collection<ChessMove> pieceMoves = piece.pieceMoves(getBoard(), startPosition);
         ArrayList<ChessMove> potMovesArray = new ArrayList<>(pieceMoves);
         Collection<ChessMove> outOfCheckMoves = new HashSet<>();
@@ -75,9 +74,6 @@ public class ChessGame implements Cloneable {
                 ChessGame clonedGame = (ChessGame) this.clone();
                 clonedGame.board.addPiece(potMove.getEndPosition(), clonedGame.board.getPiece(potMove.getStartPosition()));
                 clonedGame.board.removePiece(potMove.getStartPosition());
-//                if (!clonedGame.isInCheck(clonedGame.teamTurn)){
-//                    outOfCheckMoves.add(potMove);
-//                }
                 if (!clonedGame.isInCheck(piece.getTeamColor())){
                     outOfCheckMoves.add(potMove);
                 }
