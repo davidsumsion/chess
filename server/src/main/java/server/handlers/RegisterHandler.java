@@ -12,8 +12,7 @@ public class RegisterHandler {
     String reqData = args[0];
     RegisterRequest request = (RegisterRequest)gson.fromJson(reqData, RegisterRequest.class);
 
-    RegisterService service = new RegisterService();
-    RegisterResult result = service.register(reqeust);
-
-    return gson.toJson(result);
+//    RegisterService service = new RegisterService();
+//    RegisterResult result = service.register(reqeust);
+//    return gson.toJson(result);
 }
