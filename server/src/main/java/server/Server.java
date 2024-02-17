@@ -1,8 +1,15 @@
 package server;
 
+import handlers.RegisterHandler;
 import spark.*;
+import handlers.*;
 
 public class Server {
+
+    public static void main(String[] args){
+        Server server = new Server();
+        server.run(8080);
+    }
 
     public int run(int desiredPort) {
         Spark.port(desiredPort);
@@ -10,8 +17,7 @@ public class Server {
         Spark.staticFiles.location("web");
 
         // Register your endpoints and handle exceptions here.
-        Spark.post("/user", (req, res) ->
-                (new RegisterHandler()).handleRequest(req, res));
+        Spark.post("/user", (req, res) -> (new RegisterHandler()).handle(req, res));
 
 
 

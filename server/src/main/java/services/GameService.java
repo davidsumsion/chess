@@ -1,4 +1,4 @@
-package server.services;
+package services;
 
 public interface GameService {
 

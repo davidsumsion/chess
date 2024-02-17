@@ -1,6 +1,6 @@
-package server.handlers;
+package handlers;
 
-public class LoginHandler implements handler {
+public class LoginHandler {
     //read data in, call object encoder/decoder
     //make a result object and return it
     //make a request object and return it
