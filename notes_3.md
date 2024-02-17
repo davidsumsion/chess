@@ -15,7 +15,7 @@ Implementing a Web API with spark
 - Request
   - body - retreive the request body
   - headers - retrieve all headers () or specefic header -- auth token, what data format, how long
-- Reespone
+- Response
   - body - st the response body -- JSON string
   - status(404) - set the status code to 404
 Serve Static Files/Web App
@@ -34,7 +34,7 @@ Make Spark Java Available
 
 PHASE 3
 - Server, class, call it what you want and then call spark
-- User dao = new MemoryUserDao();
+- UserDAO dao = new MemoryUserDao(); -- hide that it's a memoryuserDAO
 - dao.insertuser
 - in phase 4, just change MemoryUserDao() to SQLUserDao
 - Interface for UserDAO, MemoryUserDAO implements UserDAO
@@ -59,4 +59,22 @@ PHASE 3
   - Server implemntation approach (SLIDES)
     - review info on writing test (Dr. Wilkerson'll talk about this soon)
   - UUID.randomUUID().toString() -- generate AuthTokoen
--  
+
+
+
+Phase 3
+- Spark passes info to handler (everything related to HTTP and JSON), use GSON to create a Request object (could write as a record - one line of code or a pojo)
+- service has the login in it
+- static instance method, getInstance, you 
+  - singletons
+  - static: don't get a new copy everytime you call an instance
+    - from different objects share the same variable
+    - declare var as static
+    - class.variable or instance.var returns the same thing
+- Variation designs
+  - write handlers into server lambdas
+- spark.staticfilelocation
+- cURL
+
+Quality code
+- 
