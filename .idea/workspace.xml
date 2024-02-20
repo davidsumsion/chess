@@ -5,20 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MemoryUserDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/handlers/userHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/models/UserDAOModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MemoryGameDA.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MemorySessionDA.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/handlers/ListGamesHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/handlers/LogoutHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/handlers/createGameHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/models/GameDAOModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/models/SessionDAOModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/services/CreateGameService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/services/ListGamesService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/services/LoginService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/services/LogoutService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared/src/main/java/requests/AuthTokenRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared/src/main/java/requests/CreateGameRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared/src/main/java/requests/LoginRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared/src/main/java/results/CreateGameResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared/src/main/java/results/ListGamesResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared/src/main/java/results/UserResult.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/JsonReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/JsonReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MemoryUserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MemoryUserDA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/handlers/LoginHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/handlers/LoginHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/handlers/RegisterHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/handlers/RegisterHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/handlers/LoginHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/handlers/LoginHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/handlers/RegisterHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/handlers/RegisterHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/handlers/handler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/requests/RegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/requests/RegisterRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/requests/request.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/services/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/services/RegisterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/RegisterService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/RegisterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/RegisterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/main/java/results/RegisterResult.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +53,9 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2ZP9VHLQjGHSyHX8qfVHnxNwmtW" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -264,17 +277,12 @@
           <option name="timeStamp" value="76" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/shared/src/main/java/requests/RegisterRequest.java</url>
-          <line>8</line>
-          <option name="timeStamp" value="79" />
+          <url>file://$PROJECT_DIR$/server/src/main/java/handlers/LoginHandler.java</url>
+          <line>13</line>
+          <option name="timeStamp" value="108" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="registerRequest.email" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

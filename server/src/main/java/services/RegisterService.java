@@ -1,29 +1,23 @@
 package services;
 import requests.RegisterRequest;
-import spark.Response;
-import spark.Request;
+import results.UserResult;
 import models.UserDAOModel;
 import dataAccess.*;
 
 public class RegisterService implements UserService {
     public RegisterService(){}
-
-    public Response register(RegisterRequest request, Response response){
-        UserDAOModel user = new UserDAOModel("myUsername", "myPassword", "myEmail");
-        MemoryUserDao dao = new MemoryUserDao(user);
+    public UserResult register(RegisterRequest request){
+        UserDAOModel user = new UserDAOModel(request.getUsername(), request.getPassword(), request.getEmail());
+        MemoryUserDA dao = new MemoryUserDA(user);
         String nullUser = dao.getUser();
         if (nullUser == null){
             dao.createUser();
             dao.createAuthToken();
-            Response rr = new Response();
-//            return new ArrayList(user.getUsername(), user.getAuthToken());
+            return new UserResult(user.getUsername(), user.getAuthToken());
         } else {
-            return null;
+            UserResult res = new UserResult("","");
+            res.setMessage("Username already in Database");
+            return res;
         }
-
-
-
-        return null;
     }
-
 }

@@ -2,12 +2,10 @@ package handlers;
 
 import requests.RegisterRequest;
 import com.google.gson.Gson;
+import results.UserResult;
 import services.RegisterService;
 import spark.Request;
 import spark.Response;
-//import spark.Route;
-
-
 
 public class RegisterHandler {
     //read data in, call object encoder/decoder
@@ -18,11 +16,8 @@ public class RegisterHandler {
         Gson gson = new Gson();
         RegisterRequest registerRequest = gson.fromJson(request.body(), RegisterRequest.class);
         RegisterService service = new RegisterService();
-        RegisterResult result = service.register(registerRequest, response);
-//        response.status(200);
-//        return gson.toJson(result);
-        return null;
+        UserResult result = service.register(registerRequest);
+        response.status(200);
+        return gson.toJson(result);
     }
-
-
 }
