@@ -44,5 +44,11 @@ public class GameDAOModel {
         this.gameName = gameName;
     }
 
-    public setColor
+    public void setColor(String color, UserDAOModel user){
+       if (color.equals("black")){
+            setBlackUsername(user.getUsername());
+        } else if (color.equals("white")){
+           setWhiteUsername(user.getUsername());
+       }
+    }
 }

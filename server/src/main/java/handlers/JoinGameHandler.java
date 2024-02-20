@@ -2,8 +2,10 @@ package handlers;
 
 import com.google.gson.Gson;
 import requests.JoinGameRequest;
+import results.MessageOnlyResult;
 import spark.Request;
 import spark.Response;
+import services.JoinGameService;
 
 public class JoinGameHandler {
 
@@ -13,7 +15,7 @@ public class JoinGameHandler {
         Gson gson = new Gson();
         JoinGameRequest joinGameRequest = gson.fromJson(request.body(), JoinGameRequest.class);
         JoinGameService service = new JoinGameService();
-        service.joinGame(joinGameRequest);
-
+        MessageOnlyResult mess =  service.joinGame(joinGameRequest);
+        return mess;
     }
 }
