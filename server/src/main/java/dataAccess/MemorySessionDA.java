@@ -28,4 +28,7 @@ public class MemorySessionDA {
     public SessionDAOModel getSesh() {
         return sesh;
     }
+    public void delete(){
+        seshArr = new ArrayList<>();
+    }
 }

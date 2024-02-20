@@ -43,4 +43,6 @@ public class GameDAOModel {
     public void setGameName(String gameName) {
         this.gameName = gameName;
     }
+
+    public setColor
 }

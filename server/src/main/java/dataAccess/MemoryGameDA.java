@@ -3,6 +3,7 @@ package dataAccess;
 import models.GameDAOModel;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class MemoryGameDA {
     GameDAOModel game;
@@ -25,4 +26,23 @@ public class MemoryGameDA {
         return retArr;
     }
 
+    public String createGame(String name){
+        GameDAOModel new_game = new GameDAOModel();
+        new_game.setGameName(name);
+        new_game.setGameID(UUID.randomUUID().toString());
+        gameArr.add(new_game);
+        return new_game.getGameID();
+    }
+
+    public void delete(){
+        gameArr = new ArrayList<>();
+    }
+    public GameDAOModel findGame(String gameID){
+        for (GameDAOModel game: gameArr){
+            if (game.getGameID().equals(gameID)){
+                return game;
+            }
+        }
+        return null;
+    }
 }

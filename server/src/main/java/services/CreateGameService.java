@@ -1,5 +1,6 @@
 package services;
 
+import dataAccess.MemoryGameDA;
 import models.GameDAOModel;
 import results.CreateGameResult;
 import requests.CreateGameRequest;
@@ -9,7 +10,8 @@ public class CreateGameService {
 
     public CreateGameResult createGame(CreateGameRequest createGameRequest){
         GameDAOModel game = new GameDAOModel();
-        game.createGame(createGameRequest.getGameName());
-
+        MemoryGameDA dao = new MemoryGameDA(game);
+        String retStr = dao.createGame(createGameRequest.getGameName());
+        return new CreateGameResult(retStr);
     }
 }

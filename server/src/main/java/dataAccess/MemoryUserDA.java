@@ -42,4 +42,8 @@ public class MemoryUserDA {
     public void createAuthToken(){
         user.setAuthToken(UUID.randomUUID().toString());
     }
+
+    public void delete(){
+        userArr = new ArrayList<>();
+    }
 }
