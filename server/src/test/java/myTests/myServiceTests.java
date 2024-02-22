@@ -5,9 +5,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import requests.AuthTokenRequest;
+import requests.CreateGameRequest;
 import requests.LoginRequest;
 import requests.RegisterRequest;
+import results.CreateGameResult;
 import results.UserResult;
+import services.CreateGameService;
 import services.LoginService;
 import services.LogoutService;
 import services.RegisterService;
@@ -92,6 +95,59 @@ public class myServiceTests {
         UserResult userResultLogout = logoutService.logout(new AuthTokenRequest(userResult.getAuthToken()));
 
         Assertions.assertEquals(null, userResultLogout.getUsername(), "Incorrect Username");
+    }
+
+    @Test
+    @Order(6)
+    @DisplayName("Create Game")
+    public void CreateGame() {
+        RegisterRequest registerRequest = new RegisterRequest("testUsernameCreateGame", "testPasswordCreateGame", "testEmail");
+        RegisterService registerService = new RegisterService();
+        UserResult userResult =  registerService.register(registerRequest);
+
+        CreateGameRequest createGameRequest = new CreateGameRequest("MyNewGame");
+        createGameRequest.setAuthToken(userResult.getAuthToken());
+        CreateGameService createGameService = new CreateGameService();
+        CreateGameResult createGameResult = createGameService.createGame(createGameRequest);
+
+
+        Assertions.assertEquals(null, createGameResult.getMessage(), "Incorrect Username");
+    }
+
+    @Test
+    @Order(7)
+    @DisplayName("Create Game Same name")
+    public void CreateGameSameName() {
+        RegisterRequest registerRequest = new RegisterRequest("testUsernameCreateGame", "testPasswordCreateGame", "testEmail");
+        RegisterService registerService = new RegisterService();
+        UserResult userResult =  registerService.register(registerRequest);
+
+        CreateGameRequest createGameRequest = new CreateGameRequest("MyNewGame");
+        createGameRequest.setAuthToken(userResult.getAuthToken());
+        CreateGameService createGameService = new CreateGameService();
+        CreateGameResult createGameResult = createGameService.createGame(createGameRequest);
+
+        CreateGameRequest createGameRequestSameName = new CreateGameRequest("MyNewGame");
+        createGameRequestSameName.setAuthToken(userResult.getAuthToken());
+        CreateGameService createGameServiceSameName = new CreateGameService();
+        CreateGameResult createGameResultSameName = createGameServiceSameName.createGame(createGameRequestSameName);
+        Assertions.assertEquals("Error: Game Name Already in use", createGameResultSameName.getMessage(), "Incorrect Username");
+    }
+
+    @Test
+    @Order(7)
+    @DisplayName("Create Game Not Authorized")
+    public void CreateGameNotAuthorized() {
+        RegisterRequest registerRequest = new RegisterRequest("testUsernameCreateGame", "testPasswordCreateGame", "testEmail");
+        RegisterService registerService = new RegisterService();
+        UserResult userResult =  registerService.register(registerRequest);
+
+        CreateGameRequest createGameRequest = new CreateGameRequest("MyNewGame");
+        createGameRequest.setAuthToken("1234");
+        CreateGameService createGameService = new CreateGameService();
+        CreateGameResult createGameResult = createGameService.createGame(createGameRequest);
+
+        Assertions.assertEquals("Error: Not Authorized", createGameResult.getMessage(), "Incorrect Username");
     }
 
 

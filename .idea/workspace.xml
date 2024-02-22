@@ -7,13 +7,12 @@
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MemoryAuthTokenDA.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MemoryAuthTokenDA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/handlers/LoginHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/handlers/LoginHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/handlers/LogoutHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/handlers/LogoutHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/handlers/RegisterHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/handlers/RegisterHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/LoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/LoginService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/LogoutService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/LogoutService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/RegisterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/RegisterService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/java/requests/AuthTokenRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/requests/AuthTokenRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MemoryGameDA.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MemoryGameDA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/handlers/CreateGameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/handlers/CreateGameHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/CreateGameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/CreateGameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/myTests/myServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/myTests/myServiceTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/main/java/requests/CreateGameRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/requests/CreateGameRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/main/java/results/CreateGameResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/results/CreateGameResult.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +70,7 @@
       <recent name="$PROJECT_DIR$/shared/src/main/java" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.myServiceTests.registerNewUser">
+  <component name="RunManager" selected="JUnit.myServiceTests.CreateGameNotAuthorized">
     <configuration name="StandardAPITests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
@@ -87,38 +86,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="myServiceTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="StandardAPITests.goodCreate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="myTests.*" />
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="myTests" />
-      <option name="MAIN_CLASS_NAME" value="myTests.myServiceTests" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="myServiceTests.LoginNonExistingUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="myTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="myTests" />
-      <option name="MAIN_CLASS_NAME" value="myTests.myServiceTests" />
-      <option name="METHOD_NAME" value="LoginNonExistingUser" />
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.StandardAPITests" />
+      <option name="METHOD_NAME" value="goodCreate" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="myServiceTests.LogoutExistingUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="myServiceTests.CreateGame" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
         <pattern>
@@ -128,13 +112,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="myTests" />
       <option name="MAIN_CLASS_NAME" value="myTests.myServiceTests" />
-      <option name="METHOD_NAME" value="LogoutExistingUser" />
+      <option name="METHOD_NAME" value="CreateGame" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="myServiceTests.registerNewUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="myServiceTests.CreateGameNotAuthorized" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
         <pattern>
@@ -144,7 +128,23 @@
       </extension>
       <option name="PACKAGE_NAME" value="myTests" />
       <option name="MAIN_CLASS_NAME" value="myTests.myServiceTests" />
-      <option name="METHOD_NAME" value="registerNewUser" />
+      <option name="METHOD_NAME" value="CreateGameNotAuthorized" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="myServiceTests.CreateGameSameName" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="myTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="myTests" />
+      <option name="MAIN_CLASS_NAME" value="myTests.myServiceTests" />
+      <option name="METHOD_NAME" value="CreateGameSameName" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -152,11 +152,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.myServiceTests.registerNewUser" />
-        <item itemvalue="JUnit.myServiceTests" />
-        <item itemvalue="JUnit.myServiceTests.LogoutExistingUser" />
-        <item itemvalue="JUnit.myServiceTests.LoginNonExistingUser" />
+        <item itemvalue="JUnit.myServiceTests.CreateGameNotAuthorized" />
+        <item itemvalue="JUnit.myServiceTests.CreateGameSameName" />
+        <item itemvalue="JUnit.myServiceTests.CreateGame" />
         <item itemvalue="JUnit.StandardAPITests" />
+        <item itemvalue="JUnit.StandardAPITests.goodCreate" />
       </list>
     </recent_temporary>
   </component>
@@ -291,19 +291,44 @@
           <option name="timeStamp" value="182" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/StandardAPITests.java</url>
-          <line>302</line>
-          <option name="timeStamp" value="191" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/handlers/LogoutHandler.java</url>
           <line>14</line>
           <option name="timeStamp" value="193" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/services/LogoutService.java</url>
-          <line>11</line>
-          <option name="timeStamp" value="194" />
+          <url>file://$PROJECT_DIR$/server/src/main/java/handlers/CreateGameHandler.java</url>
+          <line>13</line>
+          <option name="timeStamp" value="199" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/StandardAPITests.java</url>
+          <line>315</line>
+          <option name="timeStamp" value="200" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/services/CreateGameService.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="202" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/services/CreateGameService.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="203" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/handlers/CreateGameHandler.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="204" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/test/java/myTests/myServiceTests.java</url>
+          <line>113</line>
+          <option name="timeStamp" value="206" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/services/CreateGameService.java</url>
+          <line>16</line>
+          <option name="timeStamp" value="208" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

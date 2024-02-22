@@ -26,12 +26,14 @@ public class MemoryGameDA {
         return retArr;
     }
 
-    public String createGame(String name){
-        GameData new_game = new GameData();
-        new_game.setGameName(name);
-        new_game.setGameID(UUID.randomUUID().toString());
-        gameArr.add(new_game);
-        return new_game.getGameID();
+    public boolean createGame(){
+        for (GameData gameData: gameArr){
+            if (gameData.getGameName().equals(game.getGameName())){
+                return false;
+            }
+        }
+        gameArr.add(game);
+        return true;
     }
 
     public void delete(){

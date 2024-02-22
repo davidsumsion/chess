@@ -39,4 +39,13 @@ public class MemoryAuthTokenDA {
 
     public ArrayList<AuthData> getAuthArr(){ return authArr; }
 
+    public boolean verifyAuthToken(String authToken){
+        for (AuthData authData: authArr){
+            if (authData.getAuthToken().equals(authToken)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
