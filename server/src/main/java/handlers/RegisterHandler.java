@@ -17,7 +17,10 @@ public class RegisterHandler {
         RegisterRequest registerRequest = gson.fromJson(request.body(), RegisterRequest.class);
         RegisterService service = new RegisterService();
         UserResult result = service.register(registerRequest);
-        response.status(200);
+        if (!result.getUsername().isEmpty()){
+            response.status(200);
+        }
+        else { response.status(400); }
         return gson.toJson(result);
     }
 }

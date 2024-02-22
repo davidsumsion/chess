@@ -14,7 +14,7 @@ public class DeleteAllHandler {
         service.DeleteAll();
         response.status(200);
         MessageOnlyResult mess = new MessageOnlyResult();
-        mess.setMessage("");
-        return mess;
+        mess.setMessage("{}");
+        return "{}";
     }
 }

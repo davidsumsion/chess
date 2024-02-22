@@ -1,9 +1,7 @@
 package services;
 
 import dataAccess.MemoryGameDA;
-import dataAccess.MemoryUserDA;
-import models.GameDAOModel;
-import models.UserDAOModel;
+import models.GameData;
 import requests.JoinGameRequest;
 import results.MessageOnlyResult;
 
@@ -16,9 +14,9 @@ public class JoinGameService {
 //        MemoryUserDA users = new MemoryUserDA(user);
 //        UserDAOModel dbUser = users.verifyUser();
 
-        GameDAOModel game = new GameDAOModel();
+        GameData game = new GameData();
         MemoryGameDA games = new MemoryGameDA(game);
-        GameDAOModel dbGame = games.findGame(JoinGameRequest.getGameID());
+        GameData dbGame = games.findGame(JoinGameRequest.getGameID());
         if (dbGame != null){
             //need user to set the color to the right
 //            dbGame.setColor(JoinGameRequest.getClientColor(), user);

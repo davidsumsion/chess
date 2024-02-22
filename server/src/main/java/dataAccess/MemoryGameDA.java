@@ -1,21 +1,21 @@
 package dataAccess;
 
-import models.GameDAOModel;
+import models.GameData;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class MemoryGameDA {
-    GameDAOModel game;
+    GameData game;
 
-    static ArrayList<GameDAOModel> gameArr = new ArrayList<>();
-    public MemoryGameDA(GameDAOModel game) {
+    static ArrayList<GameData> gameArr = new ArrayList<>();
+    public MemoryGameDA(GameData game) {
         this.game = game;
     }
 
     public ArrayList<ArrayList<String>> getListGames(){
         ArrayList<ArrayList<String>> retArr = new ArrayList<>();
-        for (GameDAOModel game: gameArr){
+        for (GameData game: gameArr){
             ArrayList<String> gameInf = new ArrayList<String>();
             gameInf.add(game.getGameID());
             gameInf.add(game.getWhiteUsername());
@@ -27,7 +27,7 @@ public class MemoryGameDA {
     }
 
     public String createGame(String name){
-        GameDAOModel new_game = new GameDAOModel();
+        GameData new_game = new GameData();
         new_game.setGameName(name);
         new_game.setGameID(UUID.randomUUID().toString());
         gameArr.add(new_game);
@@ -37,8 +37,8 @@ public class MemoryGameDA {
     public void delete(){
         gameArr = new ArrayList<>();
     }
-    public GameDAOModel findGame(String gameID){
-        for (GameDAOModel game: gameArr){
+    public GameData findGame(String gameID){
+        for (GameData game: gameArr){
             if (game.getGameID().equals(gameID)){
                 return game;
             }

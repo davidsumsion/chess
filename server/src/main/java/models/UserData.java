@@ -1,12 +1,12 @@
 package models;
 
-public class UserDAOModel {
+public class UserData {
     String username;
     String password;
     String email;
     String authToken;
 
-    public UserDAOModel(String username, String password, String email){
+    public UserData(String username, String password, String email){
         this.username = username;
         this.password = password;
         this.email = email;

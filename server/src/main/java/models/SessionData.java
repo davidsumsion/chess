@@ -1,10 +1,10 @@
 package models;
 
-public class SessionDAOModel {
+public class SessionData {
     String username;
     String authToken;
 
-    public SessionDAOModel(String username, String authToken) {
+    public SessionData(String username, String authToken) {
         this.username = username;
         this.authToken = authToken;
     }

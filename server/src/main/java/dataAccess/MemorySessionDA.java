@@ -1,14 +1,14 @@
 package dataAccess;
 
-import models.SessionDAOModel;
+import models.SessionData;
 import java.util.ArrayList;
 
 public class MemorySessionDA {
-    SessionDAOModel sesh;
+    SessionData sesh;
 
-    static ArrayList<SessionDAOModel> seshArr = new ArrayList<>();
+    static ArrayList<SessionData> seshArr = new ArrayList<>();
 
-    public MemorySessionDA(SessionDAOModel sesh) {
+    public MemorySessionDA(SessionData sesh) {
         this.sesh = sesh;
     }
 
@@ -17,7 +17,7 @@ public class MemorySessionDA {
     }
 
     public String deleteSesh(String authToken){
-        for (SessionDAOModel sesh: seshArr){
+        for (SessionData sesh: seshArr){
             if (sesh.getAuthToken().equals(authToken)){
                 sesh = null;
                 return authToken;
@@ -25,7 +25,7 @@ public class MemorySessionDA {
         }
         return null;
     }
-    public SessionDAOModel getSesh() {
+    public SessionData getSesh() {
         return sesh;
     }
     public void delete(){

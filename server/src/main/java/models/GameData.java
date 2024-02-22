@@ -2,13 +2,13 @@ package models;
 
 import java.util.UUID;
 
-public class GameDAOModel {
+public class GameData {
     private String gameID;
     private String whiteUsername;
     private String blackUsername;
     private String gameName;
 
-    public GameDAOModel() {
+    public GameData() {
         this.gameID = UUID.randomUUID().toString();
     }
 
@@ -44,7 +44,7 @@ public class GameDAOModel {
         this.gameName = gameName;
     }
 
-    public void setColor(String color, UserDAOModel user){
+    public void setColor(String color, UserData user){
        if (color.equals("black")){
             setBlackUsername(user.getUsername());
         } else if (color.equals("white")){
