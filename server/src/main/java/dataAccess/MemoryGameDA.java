@@ -13,15 +13,18 @@ public class MemoryGameDA {
         this.game = game;
     }
 
-    public ArrayList<ArrayList<String>> getListGames(){
-        ArrayList<ArrayList<String>> retArr = new ArrayList<>();
+    public ArrayList<String> getListGames(){
+//        ArrayList<ArrayList<String>> retArr = new ArrayList<>();
+        ArrayList<String> retArr = new ArrayList<>();
         for (GameData game: gameArr){
-            ArrayList<String> gameInf = new ArrayList<String>();
-//            gameInf.add(game.getGameID());
-            gameInf.add(game.getWhiteUsername());
-            gameInf.add(game.getBlackUsername());
-            gameInf.add(game.getGameName());
-            retArr.add(gameInf);
+            retArr.add(game.toString());
+//            ArrayList<String> gameInf = new ArrayList<String>();
+////            gameInf.add(game.getGameID());
+//            gameInf.add(String.format("gameID: %d", game.getGameID()));
+//            gameInf.add(game.getWhiteUsername());
+//            gameInf.add(game.getBlackUsername());
+//            gameInf.add(game.getGameName());
+//            retArr.add(gameInf);
         }
         return retArr;
     }

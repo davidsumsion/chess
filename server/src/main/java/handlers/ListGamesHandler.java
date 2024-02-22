@@ -12,11 +12,15 @@ public class ListGamesHandler {
     public ListGamesHandler() {
     }
     public Object handle(Request request, Response response) throws Exception{
-        Gson gson = new Gson();
-        AuthTokenRequest authTokenRequest = gson.fromJson(request.body(), AuthTokenRequest.class);
+//        AuthTokenRequest authTokenRequest = gson.fromJson(request.body(), AuthTokenRequest.class);
+        AuthTokenRequest authTokenRequest = new AuthTokenRequest(request.headers("Authorization"));
+//        authTokenRequest.setAuthToken(request.headers("Authorization"));
         ListGamesService service = new ListGamesService();
         ListGamesResult result = service.listGames(authTokenRequest);
+
+
         response.status(200);
+        Gson gson = new Gson();
         return gson.toJson(result);
     }
 }

@@ -1,10 +1,13 @@
 package models;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.Locale;
 import java.util.UUID;
 
 public class GameData {
-    private int gameID;
+    private Integer gameID;
     private String whiteUsername;
     private String blackUsername;
     private String gameName;
@@ -56,5 +59,15 @@ public class GameData {
         } else if (color.equals("white")){
            setWhiteUsername(username);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"gameID\":" + (gameID != null ? gameID : "") +
+                ", \"whiteUsername\":\"" + (whiteUsername != null ? whiteUsername : "") + '\"' +
+                ", \"blackUsername\":\"" + (blackUsername != null ? blackUsername : "") + '\"' +
+                ", \"gameName\":\"" + (gameName != null ? gameName : "") + '\"' +
+                '}';
     }
 }
