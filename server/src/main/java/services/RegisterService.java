@@ -10,8 +10,8 @@ public class RegisterService implements UserService {
     public UserResult register(RegisterRequest request){
         UserData user = new UserData(request.getUsername(), request.getPassword(), request.getEmail());
         MemoryUserDA dao = new MemoryUserDA(user);
-        String nullUser = dao.getUser();
-        if (nullUser == null){
+        UserData dbUser = dao.getUser();
+        if (dbUser == null){
             dao.createUser();
             dao.createAuthToken();
             MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();

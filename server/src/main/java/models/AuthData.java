@@ -2,9 +2,9 @@ package models;
 
 public class AuthData {
     private String Username;
-    private String Authtoken;
-    public AuthData(String username, String authtoken) {
-        Authtoken = authtoken;
+    private String AuthToken;
+    public AuthData(String username, String authToken) {
+        AuthToken = authToken;
         Username = username;
     }
 
@@ -16,11 +16,11 @@ public class AuthData {
         Username = username;
     }
 
-    public String getAuthtoken() {
-        return Authtoken;
+    public String getAuthToken() {
+        return AuthToken;
     }
 
-    public void setAuthtoken(String authtoken) {
-        Authtoken = authtoken;
+    public void setAuthToken(String authtoken) {
+        AuthToken = authtoken;
     }
 }

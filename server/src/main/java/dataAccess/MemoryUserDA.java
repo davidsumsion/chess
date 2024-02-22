@@ -11,9 +11,9 @@ public class MemoryUserDA {
         this.user = user;
     }
 
-    public String getUser(){
+    public UserData getUser(){
         for (UserData dbUser : userArr){
-            if (dbUser.getUsername().equals(user.getUsername())){ return user.getUsername(); }
+            if (dbUser.getUsername().equals(user.getUsername())){ return dbUser; }
         }
         return null;
     }

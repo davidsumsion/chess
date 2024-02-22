@@ -17,12 +17,17 @@ public class LoginHandler {
         Gson gson = new Gson();
         LoginRequest loginRequest = gson.fromJson(request.body(), LoginRequest.class);
         LoginService service = new LoginService();
-
-//        loginRequest.
-        UserResult result = service.login(request.headers("Authorization"), loginRequest);
-        if (result.getMessage().contains("incorrect password")) { response.status(400); }
-        else if (result.getMessage().contains("incorrect AuthToken")) { response.status(401); }
-        else { response.status(200); }
+//        try {
+//
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//        loginRequest.setAuthToken(request.headers("Authorization"));
+        UserResult result = service.login(loginRequest);
+        if (result.getMessage() == null) { response.status(200); }
+        else if (result.getMessage().contains("incorrect password")) { response.status(400); }
+//        else if (result.getMessage().contains("incorrect AuthToken")) { response.status(401); }
+//        response.status(200);
         return gson.toJson(result);
     }
 }

@@ -8,19 +8,19 @@ import spark.Request;
 import spark.Response;
 
 public class RegisterHandler {
-    //read data in, call object encoder/decoder
-    //make a result object and return it
-    //make a request object and return it
-
     public Object handle(Request request, Response response) throws Exception {
+        //decode
         Gson gson = new Gson();
         RegisterRequest registerRequest = gson.fromJson(request.body(), RegisterRequest.class);
+        //create service and call register
         RegisterService service = new RegisterService();
         UserResult result = service.register(registerRequest);
+        //set proper status code
         if (!result.getUsername().isEmpty()){
             response.status(200);
         }
         else { response.status(400); }
+
         return gson.toJson(result);
     }
 }

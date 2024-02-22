@@ -43,4 +43,9 @@ public class UserData {
     public void setAuthToken(String authToken) {
         this.authToken = authToken;
     }
+
+    public boolean equals(UserData obj) {
+        return this.username.equals(obj.username) && this.password.equals(obj.password);
+//        return super.equals(obj);
+    }
 }
