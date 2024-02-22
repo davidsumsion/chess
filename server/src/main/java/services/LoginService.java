@@ -2,13 +2,9 @@ package services;
 import dataAccess.MemoryAuthTokenDA;
 import dataAccess.MemoryUserDA;
 import models.AuthData;
-import models.SessionData;
 import models.UserData;
-import org.eclipse.jetty.server.Authentication;
 import requests.LoginRequest;
 import results.UserResult;
-
-import java.util.ArrayList;
 
 //getUser(request.username) from database
     //null or user
@@ -25,13 +21,8 @@ import java.util.ArrayList;
 public class LoginService implements GameService{
     public LoginService(){}
 
-    public boolean verifyUser(UserData dbUser, UserData inputUser){
-        if (dbUser.equals(inputUser)){ return true; }
-        return false;
-    }
 
     public UserResult login(LoginRequest request){
-
         UserData inputData = new UserData(request.getUsername(), request.getPassword(), null);
         MemoryUserDA memoryUserDA = new MemoryUserDA(inputData);
         UserData dbUser = memoryUserDA.getUser();

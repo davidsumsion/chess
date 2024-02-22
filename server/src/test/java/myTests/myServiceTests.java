@@ -49,8 +49,8 @@ public class myServiceTests {
     // LOGIN TESTS ////
     ///////////////////
     @Test
-    @Order(2)
-    @DisplayName("Register Existing User")
+    @Order(3)
+    @DisplayName("Login Existing User")
     public void LoginExistingUser() {
         RegisterRequest registerRequest = new RegisterRequest("testLoginUsername", "testLoginPassword", "testEmail");
         RegisterService registerService = new RegisterService();
@@ -63,7 +63,19 @@ public class myServiceTests {
         UserResult userResult1 = loginService.login(loginRequest);
 
         Assertions.assertEquals("testLoginUsername", userResult1.getUsername(), "Incorrect Username");
-        Assertions.assertEquals(userResult.getAuthToken(), userResult1.getAuthToken(), "Incorrect AuthToken");
+        Assertions.assertNotEquals(userResult.getAuthToken(), userResult1.getAuthToken(), "Incorrect AuthToken");
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("Login Nonexisting User")
+    public void LoginNonExistingUser() {
+        LoginRequest loginRequest = new LoginRequest("testLoginUsername", "testLoginPassword");
+
+        LoginService loginService = new LoginService();
+        UserResult userResult1 = loginService.login(loginRequest);
+
+        Assertions.assertEquals(null, userResult1.getUsername(), "Incorrect Username");
     }
 
 

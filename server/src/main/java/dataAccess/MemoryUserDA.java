@@ -17,17 +17,17 @@ public class MemoryUserDA {
         }
         return null;
     }
-    public UserData verifyUser(){
-        for (UserData dbUser : userArr){
-            if (dbUser.getUsername().equals(user.getUsername())) {
-                if (dbUser.getPassword().equals(user.getPassword())){
-                    return dbUser;
-                };
-                return null;
-            }
-        }
-        return null;
-    }
+//    public UserData verifyUser(){
+//        for (UserData dbUser : userArr){
+//            if (dbUser.getUsername().equals(user.getUsername())) {
+//                if (dbUser.getPassword().equals(user.getPassword())){
+//                    return dbUser;
+//                };
+//                return null;
+//            }
+//        }
+//        return null;
+//    }
     public boolean verifyAuthToken(String authToken){
         for (UserData dbUser : userArr){
             if (dbUser.getAuthToken().equals(authToken)){
@@ -36,8 +36,8 @@ public class MemoryUserDA {
         }
         return false;
     }
-    public void createUser(){
-        userArr.add(this.user);
+    public void createUser(UserData userData){
+        userArr.add(userData);
     }
     public void createAuthToken(){
         user.setAuthToken(UUID.randomUUID().toString());

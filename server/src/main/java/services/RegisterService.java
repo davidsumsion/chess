@@ -5,22 +5,31 @@ import results.UserResult;
 import models.UserData;
 import dataAccess.*;
 
+import java.util.UUID;
+
 public class RegisterService implements UserService {
     public RegisterService(){}
+
+    public String createAuthToken() { return UUID.randomUUID().toString(); }
+
     public UserResult register(RegisterRequest request){
         UserData user = new UserData(request.getUsername(), request.getPassword(), request.getEmail());
         MemoryUserDA dao = new MemoryUserDA(user);
         UserData dbUser = dao.getUser();
         if (dbUser == null){
-            dao.createUser();
-            dao.createAuthToken();
+            //create authtoken
+            String newAuthToken = createAuthToken();
+            user.setAuthToken(newAuthToken);
+            //insert user into userDB
+            dao.createUser(user);
+            //insert authData into AuthDB
             MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
             memoryAuthTokenDA.createSession(new AuthData(user.getUsername(), user.getAuthToken()));
             return new UserResult(user.getUsername(), user.getAuthToken());
         } else {
-            UserResult res = new UserResult("","");
-            res.setMessage("Username already in Database");
-            return res;
+            UserResult result = new UserResult("","");
+            result.setMessage("Username already in Database");
+            return result;
         }
     }
 }

@@ -3,7 +3,6 @@ package services;
 import dataAccess.MemoryGameDA;
 import dataAccess.MemoryUserDA;
 import models.GameData;
-import models.SessionData;
 import models.UserData;
 
 public class DeleteAllService {
@@ -16,7 +15,7 @@ public class DeleteAllService {
         MemoryGameDA games = new MemoryGameDA(game);
         games.delete();
         //session
-        SessionData sesh = new SessionData(null, null);
+//        SessionData sesh = new SessionData(null, null);
 //        MemorySessionDA sessions = new MemorySessionDA(sesh);
 //        sessions.delete();
         //user
