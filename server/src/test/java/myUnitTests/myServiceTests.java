@@ -1,8 +1,8 @@
-package myTests;
+package myUnitTests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
+//import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import requests.AuthTokenRequest;
 import requests.CreateGameRequest;
@@ -22,7 +22,6 @@ public class myServiceTests {
     ////Register Tests///
     /////////////////////
     @Test
-    @Order(1)
     @DisplayName("Register New User")
     public void registerNewUser() {
         RegisterRequest registerRequestA = new RegisterRequest("testUsername3", "testPassword3", "testEmail");
@@ -34,7 +33,6 @@ public class myServiceTests {
     }
 
     @Test
-    @Order(2)
     @DisplayName("Register Existing User")
     public void registerExistingUser() {
         RegisterRequest registerRequest = new RegisterRequest("testUsername", "testPassword", "testEmail");
@@ -54,7 +52,6 @@ public class myServiceTests {
     // LOGIN TESTS ////
     ///////////////////
     @Test
-    @Order(3)
     @DisplayName("Login Existing User")
     public void LoginExistingUser() {
         RegisterRequest registerRequest = new RegisterRequest("testLoginUsername3", "testLoginPassword3", "testEmail");
@@ -72,7 +69,6 @@ public class myServiceTests {
     }
 
     @Test
-    @Order(4)
     @DisplayName("Login Nonexisting User")
     public void LoginNonExistingUser() {
         LoginRequest loginRequest = new LoginRequest("testLoginUsername1", "testLoginPassword1");
@@ -84,7 +80,6 @@ public class myServiceTests {
     }
 
     @Test
-    @Order(5)
     @DisplayName("Logout User")
     public void LogoutExistingUser() {
         RegisterRequest registerRequest = new RegisterRequest("testUsernameLogout1", "testPasswordLogout1", "testEmail");
@@ -94,11 +89,10 @@ public class myServiceTests {
         LogoutService logoutService = new LogoutService();
         UserResult userResultLogout = logoutService.logout(new AuthTokenRequest(userResult.getAuthToken()));
 
-        Assertions.assertEquals(null, userResultLogout.getUsername(), "Incorrect Username");
+        Assertions.assertNull(userResultLogout.getUsername(), "Incorrect Username");
     }
 
     @Test
-    @Order(6)
     @DisplayName("Create Game")
     public void CreateGame() {
         RegisterRequest registerRequest = new RegisterRequest("testUsernameCreateGame3", "testPasswordCreateGame3", "testEmail");
@@ -108,14 +102,12 @@ public class myServiceTests {
         CreateGameRequest createGameRequest = new CreateGameRequest("MyNewGame");
         createGameRequest.setAuthToken(userResult.getAuthToken());
         CreateGameService createGameService = new CreateGameService();
-//        CreateGameResult createGameResult = createGameService.createGame(createGameRequest);
+        CreateGameResult createGameResult = createGameService.createGame(createGameRequest);
 
-
-//        Assertions.assertEquals(null, createGameResult.getMessage(), "Incorrect Username");
+        Assertions.assertNull(createGameResult.getMessage(), "Incorrect Username");
     }
 
     @Test
-    @Order(7)
     @DisplayName("Create Game Same name")
     public void CreateGameSameName() {
         RegisterRequest registerRequest = new RegisterRequest("testUsernameCreateGame2", "testPasswordCreateGame2", "testEmail");
@@ -125,17 +117,16 @@ public class myServiceTests {
         CreateGameRequest createGameRequest = new CreateGameRequest("MyNewGame");
         createGameRequest.setAuthToken(userResult.getAuthToken());
         CreateGameService createGameService = new CreateGameService();
-//        CreateGameResult createGameResult = createGameService.createGame(createGameRequest);
+        CreateGameResult createGameResult = createGameService.createGame(createGameRequest);
 
         CreateGameRequest createGameRequestSameName = new CreateGameRequest("MyNewGame");
         createGameRequestSameName.setAuthToken(userResult.getAuthToken());
         CreateGameService createGameServiceSameName = new CreateGameService();
-//        CreateGameResult createGameResultSameName = createGameServiceSameName.createGame(createGameRequestSameName);
-//        Assertions.assertEquals("Error: Game Name Already in use", createGameResultSameName.getMessage(), "Incorrect Username");
+        CreateGameResult createGameResultSameName = createGameServiceSameName.createGame(createGameRequestSameName);
+        Assertions.assertEquals("Error: Game Name Already in use", createGameResultSameName.getMessage(), "Incorrect Username");
     }
 
     @Test
-    @Order(7)
     @DisplayName("Create Game Not Authorized")
     public void CreateGameNotAuthorized() {
         RegisterRequest registerRequest = new RegisterRequest("testUsernameCreateGame1", "testPasswordCreateGame1", "testEmail");
@@ -145,12 +136,27 @@ public class myServiceTests {
         CreateGameRequest createGameRequest = new CreateGameRequest("MyNewGame");
         createGameRequest.setAuthToken("1234");
         CreateGameService createGameService = new CreateGameService();
-//        CreateGameResult createGameResult = createGameService.createGame(createGameRequest);
+        CreateGameResult createGameResult = createGameService.createGame(createGameRequest);
 
-//        Assertions.assertEquals("Error: Not Authorized", createGameResult.getMessage(), "Incorrect Username");
+        Assertions.assertEquals("Error: Not Authorized", createGameResult.getMessage(), "Incorrect Username");
     }
 
+    @Test
+    @DisplayName("Join Game")
+    public void JoinGame() {
+        RegisterRequest registerRequest = new RegisterRequest("testUsernameCreateGame3", "testPasswordCreateGame3", "testEmail");
+        RegisterService registerService = new RegisterService();
+        UserResult userResult =  registerService.register(registerRequest);
 
+        CreateGameRequest createGameRequest = new CreateGameRequest("MyNewGame");
+        createGameRequest.setAuthToken(userResult.getAuthToken());
+        CreateGameService createGameService = new CreateGameService();
+        CreateGameResult createGameResult = createGameService.createGame(createGameRequest);
+
+
+
+
+    }
 
 
 

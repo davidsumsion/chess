@@ -1,6 +1,7 @@
 package dataAccess;
 
 import models.AuthData;
+import models.UserData;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -15,25 +16,38 @@ public class MemoryAuthTokenDA {
     public void createSession(AuthData authData){
         //if username already in database update authToken
         boolean reached = false;
-        for (AuthData dbAuthData : authArr){
-            if (dbAuthData.getUsername().equals(authData.getUsername())){
-                dbAuthData.setAuthToken(authData.getAuthToken());
-                reached = true;
-                break;
-            }
-        }
+//        for (AuthData dbAuthData : authArr){
+//            if (dbAuthData.getUsername().equals(authData.getUsername())){
+//                dbAuthData.setAuthToken(authData.getAuthToken());
+//                reached = true;
+//                break;
+//            }
+//        }
         if (!reached) { authArr.add(authData); }
     }
 
+    public String getUser(String authToken){
+        for (AuthData dbAuthData : authArr){
+            if (dbAuthData.getAuthToken().equals(authToken)){
+                return dbAuthData.getUsername();
+            }
+        }
+        return null;
+    }
     public boolean deleteSession(String authToken){
+        AuthData removable = null;
         for (AuthData session: authArr){
             if (session.getAuthToken().equals(authToken)){
                 session.setAuthToken("");
                 session.setUsername("");
-                return true;
+                removable = session;
             }
         }
-        return false;
+        if (removable == null) {
+            return false;
+        }
+        authArr.remove(removable);
+        return true;
     }
     public void delete() { authArr = new ArrayList<>(); }
 

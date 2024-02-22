@@ -1,5 +1,6 @@
 package models;
 
+import java.util.Locale;
 import java.util.UUID;
 
 public class GameData {
@@ -47,11 +48,13 @@ public class GameData {
         this.gameName = gameName;
     }
 
-    public void setColor(String color, UserData user){
-       if (color.equals("black")){
-            setBlackUsername(user.getUsername());
+    public void setColor(String color, String username){
+        if (color == null) {return;}
+        color = color.toLowerCase(Locale.ROOT);
+        if (color.equals("black")){
+            setBlackUsername(username);
         } else if (color.equals("white")){
-           setWhiteUsername(user.getUsername());
-       }
+           setWhiteUsername(username);
+        }
     }
 }

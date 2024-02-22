@@ -39,11 +39,11 @@ public class MemoryGameDA {
     public void delete(){
         gameArr = new ArrayList<>();
     }
-    public GameData findGame(String gameID){
+    public GameData findGame(Integer gameID){
         for (GameData game: gameArr){
-//            if (game.getGameID().equals(gameID)){
-//                return game;
-//            }
+            if (game.getGameID() == gameID){
+                return game;
+            }
         }
         return null;
     }

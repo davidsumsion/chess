@@ -1,32 +1,41 @@
 package services;
 
+import dataAccess.MemoryAuthTokenDA;
 import dataAccess.MemoryGameDA;
 import models.GameData;
+import models.UserData;
 import requests.JoinGameRequest;
+import results.CreateGameResult;
 import results.MessageOnlyResult;
 
 public class JoinGameService {
     public JoinGameService(){};
 
     public MessageOnlyResult joinGame(JoinGameRequest joinGameRequest){
-//        UserDAOModel user = new UserDAOModel(null, null, null);
-//        user.setAuthToken(joinGameRequest.getAuthToken);
-//        MemoryUserDA users = new MemoryUserDA(user);
-//        UserDAOModel dbUser = users.verifyUser();
+        boolean indicator;
+        MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
+        indicator = memoryAuthTokenDA.verifyAuthToken(joinGameRequest.getAuthToken());
+        if (!indicator){
+            MessageOnlyResult result = new MessageOnlyResult();
+            result.setMessage("Error: Not Authorized");
+            return result;
+        }
+
+        String dbUsername =  memoryAuthTokenDA.getUser(joinGameRequest.getAuthToken());
 
         GameData game = new GameData();
         MemoryGameDA games = new MemoryGameDA(game);
-        GameData dbGame = games.findGame(JoinGameRequest.getGameID());
+        GameData dbGame = games.findGame(joinGameRequest.getGameID());
         if (dbGame != null){
+            // game exists at ID
             //need user to set the color to the right
-//            dbGame.setColor(JoinGameRequest.getClientColor(), user);
+            dbGame.setColor(joinGameRequest.getClientColor(), dbUsername);
             MessageOnlyResult mess = new MessageOnlyResult();
             mess.setMessage("");
             return mess;
         }
-
         MessageOnlyResult mess = new MessageOnlyResult();
-        mess.setMessage("");
+        mess.setMessage("Error: Game not found in DB");
         return mess;
     }
 }

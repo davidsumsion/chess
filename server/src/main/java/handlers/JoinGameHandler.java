@@ -14,8 +14,16 @@ public class JoinGameHandler {
     public Object handle(Request request, Response response){
         Gson gson = new Gson();
         JoinGameRequest joinGameRequest = gson.fromJson(request.body(), JoinGameRequest.class);
+//        joinGameRequest.setGameID();
+        joinGameRequest.setAuthToken(request.headers("Authorization"));
         JoinGameService service = new JoinGameService();
-        MessageOnlyResult mess =  service.joinGame(joinGameRequest);
-        return mess;
+        MessageOnlyResult messageOnlyResult =  service.joinGame(joinGameRequest);
+        if (messageOnlyResult.getMessage().isEmpty()){
+            response.status(200);
+            messageOnlyResult.setMessage(null);
+        }
+        else {response.status(400);}
+//        return "{}";
+        return gson.toJson(messageOnlyResult);
     }
 }
