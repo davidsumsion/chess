@@ -18,8 +18,12 @@ public class ListGamesHandler {
         ListGamesService service = new ListGamesService();
         ListGamesResult result = service.listGames(authTokenRequest);
 
+        if (result.getMessage() == null) {
+            response.status(200);
+        } else {
+            response.status(401);
+        }
 
-        response.status(200);
         Gson gson = new Gson();
         return gson.toJson(result);
     }

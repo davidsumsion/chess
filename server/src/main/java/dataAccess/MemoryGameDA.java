@@ -3,7 +3,6 @@ package dataAccess;
 import models.GameData;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class MemoryGameDA {
     GameData game;
@@ -13,20 +12,13 @@ public class MemoryGameDA {
         this.game = game;
     }
 
-    public ArrayList<String> getListGames(){
+    public ArrayList<GameData> getListGames(){
 //        ArrayList<ArrayList<String>> retArr = new ArrayList<>();
-        ArrayList<String> retArr = new ArrayList<>();
-        for (GameData game: gameArr){
-            retArr.add(game.toString());
-//            ArrayList<String> gameInf = new ArrayList<String>();
-////            gameInf.add(game.getGameID());
-//            gameInf.add(String.format("gameID: %d", game.getGameID()));
-//            gameInf.add(game.getWhiteUsername());
-//            gameInf.add(game.getBlackUsername());
-//            gameInf.add(game.getGameName());
-//            retArr.add(gameInf);
-        }
-        return retArr;
+//        ArrayList<String> retArr = new ArrayList<>();
+//        for (GameData game: gameArr){
+//            retArr.add(game.toString());
+//        }
+        return gameArr;
     }
 
     public boolean createGame(){

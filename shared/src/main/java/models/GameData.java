@@ -53,21 +53,24 @@ public class GameData {
 
     public void setColor(String color, String username){
         if (color == null) {return;}
-        color = color.toLowerCase(Locale.ROOT);
-        if (color.equals("black")){
+//        color = color.toLowerCase(Locale.ROOT);
+        if (color.equals("BLACK")){
             setBlackUsername(username);
-        } else if (color.equals("white")){
+        } else if (color.equals("WHITE")){
            setWhiteUsername(username);
         }
     }
 
     @Override
     public String toString() {
-        return "{" +
-                "\"gameID\":" + (gameID != null ? gameID : "") +
-                ", \"whiteUsername\":\"" + (whiteUsername != null ? whiteUsername : "") + '\"' +
-                ", \"blackUsername\":\"" + (blackUsername != null ? blackUsername : "") + '\"' +
-                ", \"gameName\":\"" + (gameName != null ? gameName : "") + '\"' +
-                '}';
+        return "{gameID=" + this.gameID + ", gameName='" + this.gameName + "', whiteUsername='" + this.whiteUsername + "', blackUsername='" + this.blackUsername + "'}";
     }
+//    public String toString() {
+//        return "{" +
+//                "\"gameID\":" + (gameID != null ? gameID : "") +
+//                ", \"whiteUsername\":\"" + (whiteUsername != null ? whiteUsername : "") + '\"' +
+//                ", \"blackUsername\":\"" + (blackUsername != null ? blackUsername : "") + '\"' +
+//                ", \"gameName\":\"" + (gameName != null ? gameName : "") + '\"' +
+//                '}';
+//    }
 }

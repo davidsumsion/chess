@@ -3,9 +3,7 @@ package services;
 import dataAccess.MemoryAuthTokenDA;
 import dataAccess.MemoryGameDA;
 import models.GameData;
-import models.UserData;
 import requests.JoinGameRequest;
-import results.CreateGameResult;
 import results.MessageOnlyResult;
 
 public class JoinGameService {
@@ -29,7 +27,7 @@ public class JoinGameService {
         if (dbGame != null){
             // game exists at ID
             //need user to set the color to the right
-            dbGame.setColor(joinGameRequest.getClientColor(), dbUsername);
+            dbGame.setColor(joinGameRequest.getPlayerColor(), dbUsername);
             MessageOnlyResult mess = new MessageOnlyResult();
             mess.setMessage("");
             return mess;

@@ -1,16 +1,17 @@
 package results;
-
+import models.GameData;
+//
 
 import java.util.ArrayList;
 
 public class ListGamesResult {
-    private ArrayList<String> games;
+    private ArrayList<GameData> games;
     private String message;
 
-    public ListGamesResult(ArrayList<String> Arr) {
+    public ListGamesResult(ArrayList<GameData> Arr) {
         this.games = Arr;
     }
-    public ArrayList<String> getGames() {
+    public ArrayList<GameData> getGames() {
         return games;
     }
 

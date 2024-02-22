@@ -2,12 +2,9 @@ package services;
 
 import dataAccess.MemoryAuthTokenDA;
 import dataAccess.MemoryGameDA;
-import models.AuthData;
 import models.GameData;
 import results.CreateGameResult;
 import requests.CreateGameRequest;
-
-import java.util.UUID;
 
 public class CreateGameService {
     public CreateGameService() {}

@@ -1,10 +1,8 @@
 package dataAccess;
 
 import models.AuthData;
-import models.UserData;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 
 public class MemoryAuthTokenDA {

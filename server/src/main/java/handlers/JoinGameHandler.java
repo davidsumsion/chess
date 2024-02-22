@@ -21,6 +21,8 @@ public class JoinGameHandler {
         if (messageOnlyResult.getMessage().isEmpty()){
             response.status(200);
             messageOnlyResult.setMessage(null);
+        } else if (messageOnlyResult.getMessage().contains("Error: Not Authorized")){
+            response.status(401);
         }
         else {response.status(400);}
 //        return "{}";

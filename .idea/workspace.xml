@@ -6,10 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MemoryAuthTokenDA.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MemoryAuthTokenDA.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MemoryGameDA.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MemoryGameDA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/handlers/JoinGameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/handlers/JoinGameHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/handlers/ListGamesHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/handlers/ListGamesHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/models/GameData.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/models/GameData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/handlers/LoginHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/handlers/LoginHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/models/AuthData.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/models/AuthData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/models/GameData.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/models/GameData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/models/UserData.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/models/UserData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/CreateGameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/CreateGameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/DeleteAllService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/DeleteAllService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/JoinGameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/JoinGameService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/services/ListGamesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/ListGamesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/main/java/requests/JoinGameRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/requests/JoinGameRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shared/src/main/java/results/ListGamesResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/results/ListGamesResult.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +77,7 @@
       <recent name="$PROJECT_DIR$/shared/src/main/java" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.StandardAPITests.uniqueAuthorizationTokens">
+  <component name="RunManager" selected="JUnit.StandardAPITests">
     <configuration name="StandardAPITests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
@@ -84,6 +93,38 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="StandardAPITests.badAuthWatch" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.StandardAPITests" />
+      <option name="METHOD_NAME" value="badAuthWatch" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StandardAPITests.badColorJoin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.StandardAPITests" />
+      <option name="METHOD_NAME" value="badColorJoin" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="StandardAPITests.clearData" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
@@ -95,22 +136,6 @@
       <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
       <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.StandardAPITests" />
       <option name="METHOD_NAME" value="clearData" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="StandardAPITests.goodWatch" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="passoffTests.serverTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
-      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.StandardAPITests" />
-      <option name="METHOD_NAME" value="goodWatch" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -132,28 +157,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="myServiceTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="myUnitTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="myTests" />
-      <option name="MAIN_CLASS_NAME" value="myUnitTests.myServiceTests" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.StandardAPITests.uniqueAuthorizationTokens" />
         <item itemvalue="JUnit.StandardAPITests" />
-        <item itemvalue="JUnit.StandardAPITests.goodWatch" />
+        <item itemvalue="JUnit.StandardAPITests.badColorJoin" />
+        <item itemvalue="JUnit.StandardAPITests.badAuthWatch" />
         <item itemvalue="JUnit.StandardAPITests.clearData" />
-        <item itemvalue="JUnit.myServiceTests" />
+        <item itemvalue="JUnit.StandardAPITests.uniqueAuthorizationTokens" />
       </list>
     </recent_temporary>
   </component>
@@ -269,68 +279,38 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/services/CreateGameService.java</url>
-          <line>15</line>
+          <line>12</line>
           <option name="timeStamp" value="211" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/StandardAPITests.java</url>
-          <line>740</line>
-          <option name="timeStamp" value="234" />
+          <line>538</line>
+          <option name="timeStamp" value="282" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/StandardAPITests.java</url>
-          <line>788</line>
-          <option name="timeStamp" value="240" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/StandardAPITests.java</url>
-          <line>789</line>
-          <option name="timeStamp" value="241" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/StandardAPITests.java</url>
-          <line>364</line>
-          <option name="timeStamp" value="259" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/StandardAPITests.java</url>
-          <line>367</line>
-          <option name="timeStamp" value="261" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/StandardAPITests.java</url>
-          <line>368</line>
-          <option name="timeStamp" value="262" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/StandardAPITests.java</url>
-          <line>369</line>
-          <option name="timeStamp" value="263" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/StandardAPITests.java</url>
-          <line>208</line>
-          <option name="timeStamp" value="265" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/StandardAPITests.java</url>
-          <line>202</line>
-          <option name="timeStamp" value="266" />
+          <line>573</line>
+          <option name="timeStamp" value="283" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/handlers/ListGamesHandler.java</url>
-          <line>18</line>
-          <option name="timeStamp" value="269" />
+          <line>15</line>
+          <option name="timeStamp" value="286" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/services/ListGamesService.java</url>
-          <line>38</line>
-          <option name="timeStamp" value="271" />
+          <url>file://$PROJECT_DIR$/server/src/main/java/handlers/JoinGameHandler.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="288" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/dataAccess/MemoryGameDA.java</url>
-          <line>17</line>
-          <option name="timeStamp" value="272" />
+          <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/StandardAPITests.java</url>
+          <line>535</line>
+          <option name="timeStamp" value="289" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/StandardAPITests.java</url>
+          <line>570</line>
+          <option name="timeStamp" value="290" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

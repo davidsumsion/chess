@@ -1,7 +1,9 @@
 package services;
 
+import dataAccess.MemoryAuthTokenDA;
 import dataAccess.MemoryGameDA;
 import dataAccess.MemoryUserDA;
+import models.AuthData;
 import models.GameData;
 import models.UserData;
 
@@ -15,6 +17,9 @@ public class DeleteAllService {
         MemoryGameDA games = new MemoryGameDA(game);
         games.delete();
         //session
+        AuthData auth = new AuthData(null, null);
+        MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
+        memoryAuthTokenDA.delete();
 //        SessionData sesh = new SessionData(null, null);
 //        MemorySessionDA sessions = new MemorySessionDA(sesh);
 //        sessions.delete();

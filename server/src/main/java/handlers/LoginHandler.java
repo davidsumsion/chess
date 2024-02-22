@@ -1,14 +1,11 @@
 package handlers;
 
 import com.google.gson.Gson;
-import dataAccess.MemoryAuthTokenDA;
-import models.AuthData;
 import requests.LoginRequest;
 import results.UserResult;
 import services.LoginService;
 import spark.Request;
 import spark.Response;
-import java.util.ArrayList;
 
 public class LoginHandler {
     public LoginHandler(){};
