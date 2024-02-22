@@ -17,7 +17,7 @@ public class MemoryGameDA {
         ArrayList<ArrayList<String>> retArr = new ArrayList<>();
         for (GameData game: gameArr){
             ArrayList<String> gameInf = new ArrayList<String>();
-            gameInf.add(game.getGameID());
+//            gameInf.add(game.getGameID());
             gameInf.add(game.getWhiteUsername());
             gameInf.add(game.getBlackUsername());
             gameInf.add(game.getGameName());
@@ -41,9 +41,9 @@ public class MemoryGameDA {
     }
     public GameData findGame(String gameID){
         for (GameData game: gameArr){
-            if (game.getGameID().equals(gameID)){
-                return game;
-            }
+//            if (game.getGameID().equals(gameID)){
+//                return game;
+//            }
         }
         return null;
     }

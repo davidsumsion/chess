@@ -13,7 +13,7 @@ public class CreateGameHandler {
     public Object handle(Request request, Response response) throws Exception {
         Gson gson = new Gson();
         CreateGameRequest createGameRequest = gson.fromJson(request.body(), CreateGameRequest.class);
-        createGameRequest.setAuthToken(request.headers("Authorize"));
+        createGameRequest.setAuthToken(request.headers("Authorization"));
 
         CreateGameService service = new CreateGameService();
         CreateGameResult result = service.createGame(createGameRequest);
@@ -24,6 +24,8 @@ public class CreateGameHandler {
         } else {
             response.status(401);
         }
-        return gson.toJson(result);
+        String myJson = gson.toJson(result);
+//        myJson =
+        return myJson;
     }
 }

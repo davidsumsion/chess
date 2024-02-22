@@ -1,10 +1,10 @@
 package results;
 
 public class CreateGameResult {
-    private String gameID;
+    private Integer gameID;
     private String message;
 
-    public CreateGameResult(String gameID) {
+    public CreateGameResult(Integer gameID) {
         this.gameID = gameID;
     }
 

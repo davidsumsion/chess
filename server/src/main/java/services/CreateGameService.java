@@ -17,7 +17,7 @@ public class CreateGameService {
         MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
         indicator = memoryAuthTokenDA.verifyAuthToken(createGameRequest.getAuthToken());
         if (!indicator){
-            CreateGameResult result = new CreateGameResult("");
+            CreateGameResult result = new CreateGameResult(null);
             result.setMessage("Error: Not Authorized");
             return result;
         }
@@ -25,15 +25,13 @@ public class CreateGameService {
         //add variables to instance
         GameData game = new GameData();
         game.setGameName(createGameRequest.getGameName());
-        game.setGameID(UUID.randomUUID().toString());
-
         MemoryGameDA dao = new MemoryGameDA(game);
         boolean bool;
         bool = dao.createGame();
         if (bool){
             return new CreateGameResult(game.getGameID());
         }
-        CreateGameResult result = new CreateGameResult("");
+        CreateGameResult result = new CreateGameResult(null);
         result.setMessage("Error: Game Name Already in use");
         return result;
     }

@@ -3,16 +3,18 @@ package models;
 import java.util.UUID;
 
 public class GameData {
-    private String gameID;
+    private int gameID;
     private String whiteUsername;
     private String blackUsername;
     private String gameName;
 
+    private static int counter = 0;
+
     public GameData() {
-        this.gameID = UUID.randomUUID().toString();
+        setGameID();
     }
 
-    public String getGameID() {
+    public int getGameID() {
         return gameID;
     }
 
@@ -28,8 +30,9 @@ public class GameData {
         return gameName;
     }
 
-    public void setGameID(String gameID) {
-        this.gameID = gameID;
+    public void setGameID() {
+        counter += 1;
+        this.gameID = counter;
     }
 
     public void setWhiteUsername(String whiteUsername) {
