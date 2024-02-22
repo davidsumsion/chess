@@ -78,3 +78,41 @@ Phase 3
 
 Quality code
 - 
+
+
+### 
+- Untested Code is broken code
+  - F22,
+  - write a little code and test it, over and over
+  - Large pieces consist of smaller pieces
+    - Unit is a generic term for these smaller pieces
+    - Unit testing - test units in isolation
+      - developer written
+    - Integration Testing - test integrated unites
+      - odd for developer to right
+    - System Testing - test entire system that is fully inegrated
+      - developer seldom rights these
+  - regression testing
+    - fix a but but create 3 more bugs
+  - Test driver program
+    - litte or no labor
+    - easy to add more tests
+    - JUnit Testing Framework
+      - @BeforeEach
+      - @BeforeAll
+      - @AfterEach
+      - @AfterAll
+      - Group Tests with package level
+      - Before, During, After???
+    - Code Coverage
+      - enough tests? can only tell you the minimum hurdle
+  - Function Coverage
+    - No universally accepted right answer on coverage percentage?
+      - most things need to be, getters and setters don't need to be
+  - tools
+    - Propriety / built in to IDE's like Intellij
+    - Cobertura: Open-source, command line
+    - JaCoCo: open-source command line but has intellij plugin
+    - Parasoft JTest: Nice, but expensive
+    - Many others
+    - 
