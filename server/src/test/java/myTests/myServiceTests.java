@@ -4,10 +4,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import requests.AuthTokenRequest;
 import requests.LoginRequest;
 import requests.RegisterRequest;
 import results.UserResult;
 import services.LoginService;
+import services.LogoutService;
 import services.RegisterService;
 
 public class myServiceTests {
@@ -77,6 +79,21 @@ public class myServiceTests {
 
         Assertions.assertEquals(null, userResult1.getUsername(), "Incorrect Username");
     }
+
+    @Test
+    @Order(5)
+    @DisplayName("Logout User")
+    public void LogoutExistingUser() {
+        RegisterRequest registerRequest = new RegisterRequest("testUsernameLogout", "testPasswordLogout", "testEmail");
+        RegisterService registerService = new RegisterService();
+        UserResult userResult =  registerService.register(registerRequest);
+
+        LogoutService logoutService = new LogoutService();
+        UserResult userResultLogout = logoutService.logout(new AuthTokenRequest(userResult.getAuthToken()));
+
+        Assertions.assertEquals(null, userResultLogout.getUsername(), "Incorrect Username");
+    }
+
 
 
 

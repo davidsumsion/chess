@@ -25,17 +25,16 @@ public class MemoryAuthTokenDA {
         if (!reached) { authArr.add(authData); }
     }
 
-    public String deleteSession(String authToken){
+    public boolean deleteSession(String authToken){
         for (AuthData session: authArr){
             if (session.getAuthToken().equals(authToken)){
-                session = null;
-                return authToken;
+                session.setAuthToken("");
+                session.setUsername("");
+                return true;
             }
         }
-        return null;
+        return false;
     }
-    public String createAuthToken() { return UUID.randomUUID().toString(); }
-
     public void delete() { authArr = new ArrayList<>(); }
 
     public ArrayList<AuthData> getAuthArr(){ return authArr; }

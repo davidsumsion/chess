@@ -18,8 +18,12 @@ public class LoginHandler {
         LoginRequest loginRequest = gson.fromJson(request.body(), LoginRequest.class);
         LoginService service = new LoginService();
         UserResult result = service.login(loginRequest);
-        if (result.getMessage() == null) { response.status(200); }
-        else if (result.getMessage().contains("incorrect password")) { response.status(400); }
+        if (result.getMessage() == null) {
+            response.status(200);
+        }
+        else if (result.getMessage().contains("Error")) {
+            response.status(401);
+        }
         return gson.toJson(result);
     }
 }

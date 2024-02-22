@@ -6,6 +6,8 @@ import models.UserData;
 import requests.LoginRequest;
 import results.UserResult;
 
+import java.util.UUID;
+
 //getUser(request.username) from database
     //null or user
 //if null
@@ -20,12 +22,12 @@ import results.UserResult;
 
 public class LoginService implements GameService{
     public LoginService(){}
-
+    public String createAuthToken() { return UUID.randomUUID().toString(); }
 
     public UserResult login(LoginRequest request){
         UserData inputData = new UserData(request.getUsername(), request.getPassword(), null);
-        MemoryUserDA memoryUserDA = new MemoryUserDA(inputData);
-        UserData dbUser = memoryUserDA.getUser();
+        MemoryUserDA userDao = new MemoryUserDA(inputData);
+        UserData dbUser = userDao.getUser();
 
         if (dbUser == null){
             UserResult result = new UserResult(null, null);
@@ -41,9 +43,9 @@ public class LoginService implements GameService{
             } else {
                 //correct password
                 //create AuthToken
-                MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
-                String newAuthToken = memoryAuthTokenDA.createAuthToken();
+                String newAuthToken = createAuthToken();
                 //create Session
+                MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
                 memoryAuthTokenDA.createSession(new AuthData(request.getUsername(), newAuthToken));
                 //return result
                 return new UserResult(request.getUsername(), newAuthToken);

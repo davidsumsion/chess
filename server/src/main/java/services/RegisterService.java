@@ -13,6 +13,11 @@ public class RegisterService implements UserService {
     public String createAuthToken() { return UUID.randomUUID().toString(); }
 
     public UserResult register(RegisterRequest request){
+        if (request.getPassword() == null){
+            UserResult result = new UserResult(null,null);
+            result.setMessage("Error: Bad Request");
+            return result;
+        }
         UserData user = new UserData(request.getUsername(), request.getPassword(), request.getEmail());
         MemoryUserDA dao = new MemoryUserDA(user);
         UserData dbUser = dao.getUser();
@@ -27,8 +32,8 @@ public class RegisterService implements UserService {
             memoryAuthTokenDA.createSession(new AuthData(user.getUsername(), user.getAuthToken()));
             return new UserResult(user.getUsername(), user.getAuthToken());
         } else {
-            UserResult result = new UserResult("","");
-            result.setMessage("Username already in Database");
+            UserResult result = new UserResult(null,null);
+            result.setMessage("Error: Username already in Database");
             return result;
         }
     }
