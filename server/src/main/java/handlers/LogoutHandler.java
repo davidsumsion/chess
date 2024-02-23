@@ -2,6 +2,7 @@ package handlers;
 
 import com.google.gson.Gson;
 import results.UserResult;
+import services.BadRequestException;
 import spark.Request;
 import spark.Response;
 import requests.AuthTokenRequest;
@@ -14,10 +15,13 @@ public class LogoutHandler {
         Gson gson = new Gson();
         AuthTokenRequest authTokenRequest = new AuthTokenRequest(request.headers("Authorization"));
         LogoutService service = new LogoutService();
-        UserResult result = service.logout(authTokenRequest);
-        if (result.getMessage() == null){
+        UserResult result = null;
+        try {
+            result = service.logout(authTokenRequest);
             response.status(200);
-        } else {
+        } catch (BadRequestException e) {
+            result = new UserResult(null, null);
+            result.setMessage(e.getMessage());
             response.status(401);
         }
         return gson.toJson(result);

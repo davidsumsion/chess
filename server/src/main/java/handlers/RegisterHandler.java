@@ -3,26 +3,30 @@ package handlers;
 import requests.RegisterRequest;
 import com.google.gson.Gson;
 import results.UserResult;
+import services.ForbiddenException;
 import services.RegisterService;
+import services.UnauthorizedException;
 import spark.Request;
 import spark.Response;
 
 public class RegisterHandler {
-    public Object handle(Request request, Response response) throws Exception {
-        //decode
+    public Object handle(Request request, Response response) {
         Gson gson = new Gson();
         RegisterRequest registerRequest = gson.fromJson(request.body(), RegisterRequest.class);
         RegisterService service = new RegisterService();
-        UserResult result = service.register(registerRequest);
-
-        //set proper status code
-        if (result.getMessage() == null){
+        UserResult result = null;
+        try{
+            result = service.register(registerRequest);
             response.status(200);
-        }
-        else if (result.getMessage().contains("Bad Request")){
+        } catch (UnauthorizedException e) {
+            result = new UserResult(null,null);
+            result.setMessage(e.getMessage());
             response.status(400);
+        } catch (ForbiddenException e) {
+            result = new UserResult(null,null);
+            result.setMessage(e.getMessage());
+            response.status(403);
         }
-        else { response.status(403); }
         return gson.toJson(result);
     }
 }
