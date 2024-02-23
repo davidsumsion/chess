@@ -7,7 +7,6 @@ import results.UserResult;
 public class LogoutService {
     public LogoutService() {
     }
-
     public UserResult logout(AuthTokenRequest request) {
         MemoryAuthTokenDA dao = new MemoryAuthTokenDA();
         boolean result = dao.deleteSession(request.getAuthToken());

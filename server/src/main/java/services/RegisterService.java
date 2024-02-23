@@ -7,7 +7,7 @@ import dataAccess.*;
 
 import java.util.UUID;
 
-public class RegisterService implements UserService {
+public class RegisterService {
     public RegisterService(){}
 
     public String createAuthToken() { return UUID.randomUUID().toString(); }

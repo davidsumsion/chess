@@ -19,8 +19,6 @@ public class CreateGameHandler {
         CreateGameResult result = service.createGame(createGameRequest);
         if (result.getMessage() == null) {
             response.status(200);
-//        } else if (result.getMessage().contains("Authorized")){
-//            response.status(403);
         } else {
             response.status(401);
         }

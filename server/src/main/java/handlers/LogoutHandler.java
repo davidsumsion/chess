@@ -12,9 +12,7 @@ public class LogoutHandler {
 
     public Object handle(Request request, Response response) throws Exception{
         Gson gson = new Gson();
-//        AuthTokenRequest authTokenRequest = (AuthTokenRequest)gson.fromJson(request.body(), AuthTokenRequest.class);
         AuthTokenRequest authTokenRequest = new AuthTokenRequest(request.headers("Authorization"));
-//        authTokenRequest.setAuthToken(request.headers("Authorization"));
         LogoutService service = new LogoutService();
         UserResult result = service.logout(authTokenRequest);
         if (result.getMessage() == null){

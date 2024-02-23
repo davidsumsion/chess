@@ -16,13 +16,12 @@ public class DeleteAllService {
         GameData game = new GameData();
         MemoryGameDA games = new MemoryGameDA(game);
         games.delete();
+
         //session
         AuthData auth = new AuthData(null, null);
         MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
         memoryAuthTokenDA.delete();
-//        SessionData sesh = new SessionData(null, null);
-//        MemorySessionDA sessions = new MemorySessionDA(sesh);
-//        sessions.delete();
+
         //user
         UserData user = new UserData(null, null, null);
         MemoryUserDA users = new MemoryUserDA(user);

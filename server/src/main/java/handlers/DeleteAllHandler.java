@@ -9,7 +9,6 @@ import services.DeleteAllService;
 public class DeleteAllHandler {
 
     public Object handle(Request request, Response response){
-//        Gson gson = new Gson();
         DeleteAllService service = new DeleteAllService();
         service.DeleteAll();
         response.status(200);

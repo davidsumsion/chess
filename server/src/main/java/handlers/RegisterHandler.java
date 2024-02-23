@@ -12,12 +12,9 @@ public class RegisterHandler {
         //decode
         Gson gson = new Gson();
         RegisterRequest registerRequest = gson.fromJson(request.body(), RegisterRequest.class);
-//        if (registerRequest.getPassword() == null){
-//
-//        }
-        //create service and call register
         RegisterService service = new RegisterService();
         UserResult result = service.register(registerRequest);
+
         //set proper status code
         if (result.getMessage() == null){
             response.status(200);
@@ -26,7 +23,6 @@ public class RegisterHandler {
             response.status(400);
         }
         else { response.status(403); }
-
         return gson.toJson(result);
     }
 }

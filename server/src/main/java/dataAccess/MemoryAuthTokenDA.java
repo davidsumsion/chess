@@ -13,15 +13,7 @@ public class MemoryAuthTokenDA {
 
     public void createSession(AuthData authData){
         //if username already in database update authToken
-        boolean reached = false;
-//        for (AuthData dbAuthData : authArr){
-//            if (dbAuthData.getUsername().equals(authData.getUsername())){
-//                dbAuthData.setAuthToken(authData.getAuthToken());
-//                reached = true;
-//                break;
-//            }
-//        }
-        if (!reached) { authArr.add(authData); }
+        authArr.add(authData);
     }
 
     public String getUser(String authToken){

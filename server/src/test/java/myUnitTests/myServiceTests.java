@@ -1,12 +1,8 @@
 package myUnitTests;
-
-import handlers.DeleteAllHandler;
 import models.GameData;
-import org.eclipse.jetty.server.Authentication;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import requests.*;
 import results.CreateGameResult;
@@ -15,7 +11,6 @@ import results.MessageOnlyResult;
 import results.UserResult;
 import services.*;
 
-import java.util.ArrayList;
 
 public class myServiceTests {
 

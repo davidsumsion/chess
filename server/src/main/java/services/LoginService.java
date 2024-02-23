@@ -8,19 +8,7 @@ import results.UserResult;
 
 import java.util.UUID;
 
-//getUser(request.username) from database
-    //null or user
-//if null
-    //throw an error, need to register user
-//if user
-    //check that passwords match dbUser.password equals request.password Verify User
-    //if incorrect return incorrect password
-    //if correct
-        //create authtoken
-        //createSession - insert into MemoryAuthToken
-        //return result
-
-public class LoginService implements GameService{
+public class LoginService{
     public LoginService(){}
     public String createAuthToken() { return UUID.randomUUID().toString(); }
 

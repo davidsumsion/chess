@@ -37,9 +37,6 @@ public class JoinGameService {
                 mess.setMessage("");
                 return mess;
             }
-
-
-
         }
         MessageOnlyResult mess = new MessageOnlyResult();
         mess.setMessage("Error: Game not found in DB");
