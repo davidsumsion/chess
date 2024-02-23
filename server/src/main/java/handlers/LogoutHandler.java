@@ -2,11 +2,11 @@ package handlers;
 
 import com.google.gson.Gson;
 import results.UserResult;
-import services.BadRequestException;
+import services.Exceptions.BadRequestException;
 import spark.Request;
 import spark.Response;
 import requests.AuthTokenRequest;
-import services.LogoutService;
+import services.UserServices.LogoutService;
 
 public class LogoutHandler {
     public LogoutHandler(){};

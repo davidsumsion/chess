@@ -3,9 +3,9 @@ package handlers;
 import requests.RegisterRequest;
 import com.google.gson.Gson;
 import results.UserResult;
-import services.ForbiddenException;
-import services.RegisterService;
-import services.UnauthorizedException;
+import services.Exceptions.ForbiddenException;
+import services.UserServices.RegisterService;
+import services.Exceptions.UnauthorizedException;
 import spark.Request;
 import spark.Response;
 

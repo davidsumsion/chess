@@ -5,6 +5,9 @@ import dataAccess.MemoryGameDA;
 import models.GameData;
 import requests.JoinGameRequest;
 import results.MessageOnlyResult;
+import services.Exceptions.BadRequestException;
+import services.Exceptions.ForbiddenException;
+import services.Exceptions.UnauthorizedException;
 
 public class JoinGameService {
     public JoinGameService(){};

@@ -5,11 +5,12 @@ import dataAccess.MemoryGameDA;
 import models.GameData;
 import results.CreateGameResult;
 import requests.CreateGameRequest;
+import services.Exceptions.UnauthorizedException;
 
 public class CreateGameService {
     public CreateGameService() {}
 
-    public CreateGameResult createGame(CreateGameRequest createGameRequest) throws UnauthorizedException{
+    public CreateGameResult createGame(CreateGameRequest createGameRequest) throws UnauthorizedException {
         MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
         boolean exists = memoryAuthTokenDA.verifyAuthToken(createGameRequest.getAuthToken());
         if (!exists){ throw new UnauthorizedException("Error: Not Authorized"); }

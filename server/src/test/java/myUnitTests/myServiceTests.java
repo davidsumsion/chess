@@ -10,6 +10,12 @@ import results.ListGamesResult;
 import results.MessageOnlyResult;
 import results.UserResult;
 import services.*;
+import services.Exceptions.BadRequestException;
+import services.Exceptions.ForbiddenException;
+import services.Exceptions.UnauthorizedException;
+import services.UserServices.LoginService;
+import services.UserServices.LogoutService;
+import services.UserServices.RegisterService;
 
 
 public class myServiceTests {

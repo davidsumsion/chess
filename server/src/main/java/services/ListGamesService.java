@@ -1,13 +1,11 @@
 package services;
 
-import dataAccess.DataAccessException;
 import dataAccess.MemoryAuthTokenDA;
 import dataAccess.MemoryGameDA;
 import models.GameData;
 import requests.AuthTokenRequest;
 import results.ListGamesResult;
-
-import java.util.ArrayList;
+import services.Exceptions.UnauthorizedException;
 
 public class ListGamesService {
     public ListGamesService() {

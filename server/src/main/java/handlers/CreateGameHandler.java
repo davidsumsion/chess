@@ -1,7 +1,7 @@
 package handlers;
 
 import com.google.gson.Gson;
-import services.UnauthorizedException;
+import services.Exceptions.UnauthorizedException;
 import spark.Request;
 import spark.Response;
 import requests.CreateGameRequest;

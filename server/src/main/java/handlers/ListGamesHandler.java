@@ -1,12 +1,10 @@
 package handlers;
 
 import com.google.gson.Gson;
-import dataAccess.DataAccessException;
 import requests.AuthTokenRequest;
 import results.ListGamesResult;
-import results.UserResult;
 import services.ListGamesService;
-import services.UnauthorizedException;
+import services.Exceptions.UnauthorizedException;
 import spark.Request;
 import spark.Response;
 

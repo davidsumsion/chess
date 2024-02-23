@@ -3,8 +3,8 @@ package handlers;
 import com.google.gson.Gson;
 import requests.LoginRequest;
 import results.UserResult;
-import services.LoginService;
-import services.UnauthorizedException;
+import services.UserServices.LoginService;
+import services.Exceptions.UnauthorizedException;
 import spark.Request;
 import spark.Response;
 

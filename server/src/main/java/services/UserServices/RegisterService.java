@@ -1,16 +1,16 @@
-package services;
+package services.UserServices;
+
 import models.AuthData;
 import requests.RegisterRequest;
 import results.UserResult;
 import models.UserData;
 import dataAccess.*;
-
-import java.util.UUID;
+import services.Exceptions.ForbiddenException;
+import services.Exceptions.UnauthorizedException;
 
 public class RegisterService extends UserService {
     public RegisterService(){}
-
-    public UserResult register(RegisterRequest request) throws UnauthorizedException, ForbiddenException{
+    public UserResult register(RegisterRequest request) throws UnauthorizedException, ForbiddenException {
         UserData dataBaseUser = getUser(request.getUsername(), request.getPassword(), request.getEmail());
         if (request.getPassword() == null){ throw new UnauthorizedException("Error: Bad Request"); }
         else if (dataBaseUser != null){ throw new ForbiddenException("Error: Username already in Database"); }
@@ -24,7 +24,6 @@ public class RegisterService extends UserService {
             //createUser
             MemoryUserDA dao = new MemoryUserDA(user);
             dao.createUser(user);
-
             return new UserResult(user.getUsername(), user.getAuthToken());
         }
     }

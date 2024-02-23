@@ -1,8 +1,9 @@
-package services;
+package services.UserServices;
 
 import dataAccess.MemoryAuthTokenDA;
 import requests.AuthTokenRequest;
 import results.UserResult;
+import services.Exceptions.BadRequestException;
 
 public class LogoutService {
     public LogoutService() {
