@@ -8,8 +8,8 @@ public class ListGamesResult {
     private ArrayList<GameData> games;
     private String message;
 
-    public ListGamesResult(ArrayList<GameData> Arr) {
-        this.games = Arr;
+    public ListGamesResult(ArrayList<GameData> arr) {
+        this.games = arr;
     }
     public ListGamesResult(String message) {
         this.message = message;

@@ -26,7 +26,7 @@ public class myServiceTests {
     @AfterEach
     public void cleanUp() {
         DeleteAllService deleteAllService = new DeleteAllService();
-        deleteAllService.DeleteAll();
+        deleteAllService.deleteAll();
         GameData gameData = new GameData();
         gameData.resetCounter();
     }
@@ -253,7 +253,7 @@ public class myServiceTests {
         CreateGameResult createGameResult = createGameService.createGame(createGameRequest);
 
         DeleteAllService deleteAllService = new DeleteAllService();
-        deleteAllService.DeleteAll();
+        deleteAllService.deleteAll();
 
         //Test User Memory
         LoginRequest loginRequest = new LoginRequest("myUsername", "myPassword");

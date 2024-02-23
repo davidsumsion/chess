@@ -1,26 +1,26 @@
 package models;
 
 public class AuthData {
-    private String Username;
-    private String AuthToken;
+    private String username;
+    private String authToken;
     public AuthData(String username, String authToken) {
-        AuthToken = authToken;
-        Username = username;
+        this.authToken = authToken;
+        this.username = username;
     }
 
     public String getUsername() {
-        return Username;
+        return username;
     }
 
     public void setUsername(String username) {
-        Username = username;
+        this.username = username;
     }
 
     public String getAuthToken() {
-        return AuthToken;
+        return authToken;
     }
 
     public void setAuthToken(String authtoken) {
-        AuthToken = authtoken;
+        authToken = authtoken;
     }
 }

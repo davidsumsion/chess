@@ -2,7 +2,7 @@ package requests;
 
 public class CreateGameRequest {
     private String gameName;
-    private String AuthToken;
+    private String authToken;
 
     public CreateGameRequest(String gameName) {
         this.gameName = gameName;
@@ -13,10 +13,10 @@ public class CreateGameRequest {
     }
 
     public String getAuthToken() {
-        return AuthToken;
+        return authToken;
     }
 
     public void setAuthToken(String authToken) {
-        AuthToken = authToken;
+        this.authToken = authToken;
     }
 }

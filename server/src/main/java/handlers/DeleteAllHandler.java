@@ -1,6 +1,5 @@
 package handlers;
 
-import com.google.gson.Gson;
 import results.MessageOnlyResult;
 import spark.Request;
 import spark.Response;
@@ -10,7 +9,7 @@ public class DeleteAllHandler {
 
     public Object handle(Request request, Response response){
         DeleteAllService service = new DeleteAllService();
-        service.DeleteAll();
+        service.deleteAll();
         response.status(200);
         MessageOnlyResult mess = new MessageOnlyResult();
         mess.setMessage("{}");

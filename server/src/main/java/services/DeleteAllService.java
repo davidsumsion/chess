@@ -3,7 +3,6 @@ package services;
 import dataAccess.MemoryAuthTokenDA;
 import dataAccess.MemoryGameDA;
 import dataAccess.MemoryUserDA;
-import models.AuthData;
 import models.GameData;
 import models.UserData;
 
@@ -15,6 +14,7 @@ public class DeleteAllService {
         GameData game = new GameData();
         MemoryGameDA games = new MemoryGameDA(game);
         games.delete();
+        game.resetCounter();
     }
     private void deleteAuthDA(){
         MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
@@ -25,7 +25,7 @@ public class DeleteAllService {
         MemoryUserDA users = new MemoryUserDA(user);
         users.delete();
     }
-    public void DeleteAll(){
+    public void deleteAll(){
         deleteGameDA();
         deleteAuthDA();
         deleteUserDA();

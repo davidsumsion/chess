@@ -41,8 +41,6 @@ public class MemoryAuthTokenDA {
     }
     public void delete() { authArr = new ArrayList<>(); }
 
-    public ArrayList<AuthData> getAuthArr(){ return authArr; }
-
     public boolean verifyAuthToken(String authToken){
         for (AuthData authData: authArr){
             if (authData.getAuthToken().equals(authToken)){
