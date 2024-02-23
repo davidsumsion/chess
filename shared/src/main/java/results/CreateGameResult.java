@@ -16,4 +16,11 @@ public class CreateGameResult {
         this.message = message;
     }
 
+    public Integer getGameID() {
+        return gameID;
+    }
+
+    public void setGameID(Integer gameID) {
+        this.gameID = gameID;
+    }
 }

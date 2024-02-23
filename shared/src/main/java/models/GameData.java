@@ -53,7 +53,6 @@ public class GameData {
 
     public void setColor(String color, String username){
         if (color == null) {return;}
-//        color = color.toLowerCase(Locale.ROOT);
         if (color.equals("BLACK")){
             setBlackUsername(username);
         } else if (color.equals("WHITE")){

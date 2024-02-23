@@ -23,6 +23,8 @@ public class JoinGameHandler {
             messageOnlyResult.setMessage(null);
         } else if (messageOnlyResult.getMessage().contains("Error: Not Authorized")){
             response.status(401);
+        } else if (messageOnlyResult.getMessage().contains("Color")){
+            response.status(403);
         }
         else {response.status(400);}
 //        return "{}";

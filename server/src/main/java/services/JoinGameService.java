@@ -27,10 +27,19 @@ public class JoinGameService {
         if (dbGame != null){
             // game exists at ID
             //need user to set the color to the right
-            dbGame.setColor(joinGameRequest.getPlayerColor(), dbUsername);
-            MessageOnlyResult mess = new MessageOnlyResult();
-            mess.setMessage("");
-            return mess;
+            if (dbGame.getWhiteUsername() != null && joinGameRequest.getPlayerColor().equals("WHITE") ||  dbGame.getBlackUsername() != null && joinGameRequest.getPlayerColor().equals("BLACK")){
+                MessageOnlyResult result = new MessageOnlyResult();
+                result.setMessage("Error: Color already occupied");
+                return result;
+            } else {
+                dbGame.setColor(joinGameRequest.getPlayerColor(), dbUsername);
+                MessageOnlyResult mess = new MessageOnlyResult();
+                mess.setMessage("");
+                return mess;
+            }
+
+
+
         }
         MessageOnlyResult mess = new MessageOnlyResult();
         mess.setMessage("Error: Game not found in DB");

@@ -4,16 +4,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import requests.AuthTokenRequest;
-import requests.CreateGameRequest;
-import requests.LoginRequest;
-import requests.RegisterRequest;
+import requests.*;
 import results.CreateGameResult;
+import results.MessageOnlyResult;
 import results.UserResult;
-import services.CreateGameService;
-import services.LoginService;
-import services.LogoutService;
-import services.RegisterService;
+import services.*;
 
 public class myServiceTests {
 
@@ -92,6 +87,10 @@ public class myServiceTests {
         Assertions.assertNull(userResultLogout.getUsername(), "Incorrect Username");
     }
 
+    ///////////////////////
+    ////CREATE GAMES///////
+    ///////////////////////
+
     @Test
     @DisplayName("Create Game")
     public void CreateGame() {
@@ -153,10 +152,15 @@ public class myServiceTests {
         CreateGameService createGameService = new CreateGameService();
         CreateGameResult createGameResult = createGameService.createGame(createGameRequest);
 
+        JoinGameRequest joinGameRequest = new JoinGameRequest(createGameResult.getGameID(),"WHITE");
+        joinGameRequest.setAuthToken(userResult.getAuthToken());
+        JoinGameService joinGameService = new JoinGameService();
+        MessageOnlyResult messageOnlyResult = joinGameService.joinGame(joinGameRequest);
 
-
-
+        Assertions.assertEquals("", messageOnlyResult.getMessage(), "Error when expected none");
     }
+
+
 
 
 
