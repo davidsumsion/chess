@@ -23,10 +23,7 @@ public class ListGamesHandler {
         } catch (UnauthorizedException e) {
             response.status(401);
             result = new ListGamesResult(e.getMessage());
-//        } catch (DataAccessException e){
-
         }
-
         Gson gson = new Gson();
         return gson.toJson(result);
     }

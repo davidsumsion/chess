@@ -6,11 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/handlers/CreateGameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/handlers/CreateGameHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/handlers/ListGamesHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/handlers/ListGamesHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/CreateGameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/CreateGameService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/services/ListGamesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/ListGamesService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/UnauthorizedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/UnauthorizedException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/test/java/myUnitTests/myServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/myUnitTests/myServiceTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/java/results/ListGamesResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/results/ListGamesResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/main/java/results/CreateGameResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/results/CreateGameResult.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,11 +68,26 @@
       <recent name="$PROJECT_DIR$/shared/src/main/java" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.passoffTests.serverTests in server">
+  <component name="RunManager" selected="JUnit.StandardAPITests">
     <configuration name="All in server" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <option name="PACKAGE_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StandardAPITests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.StandardAPITests" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -88,22 +103,6 @@
       <option name="PACKAGE_NAME" value="myUnitTests" />
       <option name="MAIN_CLASS_NAME" value="myUnitTests.myServiceTests" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="myServiceTests.DeleteAll" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="myUnitTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="myUnitTests" />
-      <option name="MAIN_CLASS_NAME" value="myUnitTests.myServiceTests" />
-      <option name="METHOD_NAME" value="DeleteAll" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -140,11 +139,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.StandardAPITests" />
         <item itemvalue="JUnit.passoffTests.serverTests in server" />
         <item itemvalue="JUnit.All in server" />
         <item itemvalue="JUnit.myServiceTests" />
         <item itemvalue="JUnit.myServiceTests.ListGames" />
-        <item itemvalue="JUnit.myServiceTests.DeleteAll" />
       </list>
     </recent_temporary>
   </component>

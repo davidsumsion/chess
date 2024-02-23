@@ -9,27 +9,18 @@ import requests.CreateGameRequest;
 public class CreateGameService {
     public CreateGameService() {}
 
-    public CreateGameResult createGame(CreateGameRequest createGameRequest){
+    public CreateGameResult createGame(CreateGameRequest createGameRequest) throws UnauthorizedException{
         boolean indicator;
         MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
         indicator = memoryAuthTokenDA.verifyAuthToken(createGameRequest.getAuthToken());
-        if (!indicator){
-            CreateGameResult result = new CreateGameResult(null);
-            result.setMessage("Error: Not Authorized");
-            return result;
-        }
+        if (!indicator){ throw new UnauthorizedException("Error: Not Authorized"); }
 
-        //add variables to instance
         GameData game = new GameData();
         game.setGameName(createGameRequest.getGameName());
+
         MemoryGameDA dao = new MemoryGameDA(game);
-        boolean bool;
-        bool = dao.createGame();
-        if (bool){
-            return new CreateGameResult(game.getGameID());
-        }
-        CreateGameResult result = new CreateGameResult(null);
-        result.setMessage("Error: Game Name Already in use");
-        return result;
+        boolean bool = dao.createGame();
+        if (!bool){ throw new UnauthorizedException("Error: Game Name Already in use"); }
+        return new CreateGameResult(game.getGameID());
     }
 }

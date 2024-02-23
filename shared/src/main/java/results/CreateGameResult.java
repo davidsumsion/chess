@@ -8,6 +8,10 @@ public class CreateGameResult {
         this.gameID = gameID;
     }
 
+    public CreateGameResult(String message) {
+        this.message = message;
+    }
+
     public String getMessage() {
         return message;
     }
