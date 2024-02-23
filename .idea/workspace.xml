@@ -6,13 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MemoryAuthTokenDA.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MemoryAuthTokenDA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/handlers/DeleteAllHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/handlers/DeleteAllHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/DeleteAllService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/DeleteAllService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/test/java/myUnitTests/myServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/myUnitTests/myServiceTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/java/models/AuthData.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/models/AuthData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/java/models/GameData.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/models/GameData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/java/models/UserData.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/models/UserData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/main/java/chess/ChessGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/chess/ChessGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/main/java/chess/ChessMove.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/chess/ChessMove.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/main/java/chess/ChessPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/chess/ChessPiece.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,6 +78,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="All in shared" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="shared" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="myServiceTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
@@ -129,29 +133,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="myServiceTests.registerExistingUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="myUnitTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="myUnitTests" />
-      <option name="MAIN_CLASS_NAME" value="myUnitTests.myServiceTests" />
-      <option name="METHOD_NAME" value="registerExistingUser" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.All in server" />
+        <item itemvalue="JUnit.All in shared" />
         <item itemvalue="JUnit.myServiceTests" />
         <item itemvalue="JUnit.myServiceTests.CreateGameSameName" />
         <item itemvalue="JUnit.myServiceTests.LoginNonExistingUser" />
-        <item itemvalue="JUnit.myServiceTests.registerExistingUser" />
       </list>
     </recent_temporary>
   </component>
@@ -202,64 +190,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/shared/src/test/java/passoffTests/chessTests/ChessGameTests.java</url>
-          <line>649</line>
-          <option name="timeStamp" value="54" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/shared/src/test/java/passoffTests/chessTests/ChessGameTests.java</url>
-          <line>653</line>
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/shared/src/test/java/passoffTests/chessTests/ChessGameTests.java</url>
-          <line>167</line>
-          <option name="timeStamp" value="66" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/shared/src/test/java/passoffTests/chessTests/ChessGameTests.java</url>
-          <line>203</line>
-          <properties>
-            <option name="lambda-ordinal" value="-1" />
-          </properties>
-          <option name="timeStamp" value="67" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/shared/src/test/java/passoffTests/chessTests/ChessGameTests.java</url>
-          <line>227</line>
-          <option name="timeStamp" value="68" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/shared/src/test/java/passoffTests/chessTests/ChessGameTests.java</url>
-          <line>261</line>
-          <option name="timeStamp" value="69" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/shared/src/test/java/passoffTests/chessTests/ChessGameTests.java</url>
-          <line>279</line>
-          <option name="timeStamp" value="70" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/shared/src/test/java/passoffTests/chessTests/ChessGameTests.java</url>
-          <line>180</line>
-          <option name="timeStamp" value="71" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/shared/src/test/java/passoffTests/chessTests/ChessGameTests.java</url>
-          <line>189</line>
-          <option name="timeStamp" value="73" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/shared/src/main/java/chess/ChessGame.java</url>
-          <line>95</line>
-          <option name="timeStamp" value="75" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/shared/src/main/java/chess/ChessGame.java</url>
-          <line>64</line>
-          <option name="timeStamp" value="76" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/StandardAPITests.java</url>
           <line>538</line>

@@ -41,9 +41,6 @@ public class ChessGame implements Cloneable {
      */
     public void setTeamTurn(TeamColor team) {
         teamTurn = team;
-//        if (team == TeamColor.WHITE){
-//            teamTurn = TeamColor.WHITE;
-//        } else { teamTurn = TeamColor.BLACK; }
     }
 
     /**

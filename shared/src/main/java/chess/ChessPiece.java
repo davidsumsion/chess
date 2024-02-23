@@ -70,75 +70,58 @@ public class ChessPiece implements Cloneable {
         }
         return moves;
     }
+
+    public Boolean breaker(Integer i, Integer j, ChessBoard board){
+        ChessPosition pos = new ChessPosition(i,j);
+        ChessPiece piece = board.getPiece(pos);
+        if (piece == null){
+            return false;
+        } else if (piece.getTeamColor() != teamColor) {
+            return true;
+        } else if (piece.getTeamColor() == teamColor) {
+            return true;
+        }
+        return false;
+    }
+    public ChessMove bishopHelper(Integer i, Integer j, ChessBoard board, ChessPosition myPosition) {
+        ChessPosition pos = new ChessPosition(i,j);
+        ChessPiece piece = board.getPiece(pos);
+        ChessMove potMov = new ChessMove(myPosition, pos, null);
+        if (piece == null) {
+            return potMov;
+        } else if (piece.getTeamColor() != teamColor) {
+            return potMov;
+        } else if (piece.getTeamColor() == teamColor) {
+            return null;
+        }
+        return null;
+    }
     public Collection<ChessMove> bishopMoves(ChessBoard board, ChessPosition myPosition){
         Set<ChessMove> moves = new HashSet<>();
+
         //up & right
         for (int i = myPosition.getRow()+1, j = myPosition.getColumn()+1; i <= 8 && j <= 8; i++, j++) {
-            ChessPosition pos = new ChessPosition(i,j);
-            ChessPiece piece = board.getPiece(pos);
-            ChessMove potMov = new ChessMove(myPosition, pos, null);
-            //if another piece is not there
-            //else if not empty and piece is opposing teams
-            //else (all other cases: if empty and my team)
-            if (piece == null) {
-                moves.add(potMov);
-            } else if (piece.getTeamColor() != teamColor) {
-                moves.add(potMov);
-                break;
-            } else if (piece.getTeamColor() == teamColor) {
-                break;
-            }
+            ChessMove chessMove = bishopHelper(i, j, board, myPosition);
+            if (chessMove != null) { moves.add(chessMove); }
+            if (breaker(i, j, board)) { break; }
         }
         //down & right
         for (int i = myPosition.getRow()-1, j = myPosition.getColumn()+1; i > 0 && j <= 8; i--, j++) {
-            ChessPosition pos = new ChessPosition(i,j);
-            ChessPiece piece = board.getPiece(pos);
-            ChessMove potMov = new ChessMove(myPosition, pos, null);
-            //if another piece is not there
-            //else if not empty and piece is opposing teams
-            //else (all other cases: if empty and my team)
-            if (piece == null) {
-                moves.add(potMov);
-            } else if (piece.getTeamColor() != teamColor) {
-                moves.add(potMov);
-                break;
-            } else if (piece.getTeamColor() == teamColor) {
-                break;
-            }
+            ChessMove chessMove = bishopHelper(i, j, board, myPosition);
+            if (chessMove != null) { moves.add(chessMove); }
+            if (breaker(i, j, board)) { break; }
         }
         //down & left
         for (int i = myPosition.getRow()-1, j = myPosition.getColumn()-1; i > 0 && j > 0; i--, j--) {
-            ChessPosition pos = new ChessPosition(i,j);
-            ChessPiece piece = board.getPiece(pos);
-            ChessMove potMov = new ChessMove(myPosition, pos, null);
-            //if another piece is not there
-            //else if not empty and piece is opposing teams
-            //else (all other cases: if piece and my team)
-            if (piece == null) {
-                moves.add(potMov);
-            } else if (piece.getTeamColor() != teamColor) {
-                moves.add(potMov);
-                break;
-            } else if (piece.getTeamColor() == teamColor) {
-                break;
-            }
+            ChessMove chessMove = bishopHelper(i, j, board, myPosition);
+            if (chessMove != null) { moves.add(chessMove); }
+            if (breaker(i, j, board)) { break; }
         }
         //up and left
         for (int i = myPosition.getRow()+ 1, j = myPosition.getColumn()-1; i <= 8 && j > 0; i++, j--) {
-            ChessPosition pos = new ChessPosition(i,j);
-            ChessPiece piece = board.getPiece(pos);
-            ChessMove potMov = new ChessMove(myPosition, pos, null);
-            //if another piece is not there
-            //else if not empty and piece is opposing teams
-            //else (all other cases: if empty and my team)
-            if (piece == null) {
-                moves.add(potMov);
-            } else if (piece.getTeamColor() != teamColor) {
-                moves.add(potMov);
-                break;
-            } else if (piece.getTeamColor() == teamColor) {
-                break;
-            }
+            ChessMove chessMove = bishopHelper(i, j, board, myPosition);
+            if (chessMove != null) { moves.add(chessMove); }
+            if (breaker(i, j, board)) { break; }
         }
         return moves;
     }
@@ -252,47 +235,39 @@ public class ChessPiece implements Cloneable {
         int myCol = myPosition.getColumn();
         ChessPiece.PieceType[] types = {QUEEN, ROOK, KNIGHT, BISHOP};
         if (teamColor.equals(WHITE)) {
-            if (myRow < 7) {
-                // one forward
+            if (myRow < 7) { // one forward
                 if (board.getPiece(new ChessPosition(myRow+1, myCol)) == null){
-                    potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol), null));
-                    // two forward (if in start position)
+                    potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol), null)); // two forward (if in start position)
                     if (myRow == 2) {
                         if (board.getPiece(new ChessPosition(myRow+2, myCol)) == null){
                             potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 2, myCol), null));
                         }
                     }
-                }
-                // forward/left
+                } // forward/left
                 ChessPiece leftPiece = null;
                 if (myCol > 1) {leftPiece = board.getPiece(new ChessPosition(myRow + 1, myCol - 1));}
                 if (leftPiece != null && leftPiece.getTeamColor() != teamColor) {
                     potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol - 1), null));
-                }
-                // forward/right
+                } // forward/right
                 ChessPiece rightPiece = null;
                 if (myCol < 8) { rightPiece = board.getPiece(new ChessPosition(myRow + 1, myCol + 1)); }
                 if (rightPiece != null && rightPiece.getTeamColor() != teamColor) {
                     potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol + 1), null));
                 }
-            }
-            // 7th row note 8 not included -- PROMOTION -- return 4 of the same coordinate
-            if (myRow == 7) {
-                //forward
+            } // 7th row note 8 not included -- PROMOTION -- return 4 of the same coordinate
+            if (myRow == 7) { //forward
                 if (board.getPiece(new ChessPosition(myRow+1, myCol)) == null) {
                     for (int i = 0; i < 4; i++){
                         potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow+1, myCol),types[i]));
                     }
-                }
-                //forward/right
+                } //forward/right
                 if (board.getPiece(new ChessPosition(myRow+1, myCol+1)) != null) {
                     if (board.getPiece(new ChessPosition(myRow + 1, myCol + 1)).getTeamColor() != teamColor) {
                         for (int i = 0; i < 4; i++) {
                             potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow + 1, myCol + 1), types[i]));
                         }
                     }
-                }
-                //forward/left
+                } //forward/left
                 if (board.getPiece(new ChessPosition(myRow+1, myCol-1)) != null) {
                     if (board.getPiece(new ChessPosition(myRow + 1, myCol - 1)).getTeamColor() != teamColor) {
                         for (int i = 0; i < 4; i++){
@@ -303,48 +278,39 @@ public class ChessPiece implements Cloneable {
             }
         }
         if (teamColor.equals(BLACK)) {
-            if (myRow > 2) {
-                // one down
+            if (myRow > 2) { // one down
                 if (board.getPiece(new ChessPosition(myRow-1, myCol)) == null){
-                    potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-1, myCol), null));
-                    // two forward (if in start position)
+                    potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-1, myCol), null)); // two forward (if in start position)
                     if (myRow == 7) {
                         if (board.getPiece(new ChessPosition(myRow-2, myCol)) == null){
                             potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-2, myCol), null));
                         }
                     }
-                }
-                // down/left
+                } // down/left
                 ChessPiece leftPiece = null;
                 if (myCol > 1) {leftPiece = board.getPiece(new ChessPosition(myRow - 1, myCol - 1));}
                 if (leftPiece != null && leftPiece.getTeamColor() != teamColor) {
                     potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow - 1, myCol - 1), null));
-                }
-
-                // down/right
+                } // down/right
                 ChessPiece rightPiece = null;
                 if (myCol < 8) { rightPiece = board.getPiece(new ChessPosition(myRow - 1, myCol + 1)); }
                 if (rightPiece != null && rightPiece.getTeamColor() != teamColor) {
                     potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow - 1, myCol + 1), null));
                 }
             }
-            if (myRow == 2) {
-                //down
+            if (myRow == 2) { //down
                 if (board.getPiece(new ChessPosition(myRow-1, myCol)) == null) {
                     for (int i = 0; i < 4; i++){
                         potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow-1, myCol),types[i]));
                     }
-                }
-                //down/right
+                } //down/right
                 if (board.getPiece(new ChessPosition(myRow-1, myCol+1)) != null) {
                     if (board.getPiece(new ChessPosition(myRow - 1, myCol + 1)).getTeamColor() != teamColor) {
-
                         for (int i = 0; i < 4; i++) {
                             potMoves.add(new ChessMove(myPosition, new ChessPosition(myRow - 1, myCol + 1), types[i]));
                         }
                     }
-                }
-                //down/left
+                } //down/left
                 if (board.getPiece(new ChessPosition(myRow-1, myCol-1)) != null) {
                     if (board.getPiece(new ChessPosition(myRow - 1, myCol - 1)).getTeamColor() != teamColor) {
                         for (int i = 0; i < 4; i++){
