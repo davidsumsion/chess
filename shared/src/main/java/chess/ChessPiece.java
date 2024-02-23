@@ -162,65 +162,63 @@ public class ChessPiece implements Cloneable {
 
         return verifyMoves(potMoves, board);
     }
+
+    public ChessMove rookMovesIHelper(Integer i, Integer myCol, ChessBoard board, ChessPosition myPosition) {
+        ChessPosition pos = new ChessPosition(i,myCol);
+        ChessPiece piece = board.getPiece(pos);
+        ChessMove potMov = new ChessMove(myPosition, pos, null);
+        if (piece == null) {
+            return potMov;
+        } else if (piece.getTeamColor() != teamColor) {
+            return potMov;
+        } else if (piece.getTeamColor() == teamColor) {
+            return null;
+        }
+        return null;
+    }
+
+    public  ChessMove rookMovesJHelper(Integer myRow, Integer j, ChessBoard board, ChessPosition myPosition) {
+        ChessPosition pos = new ChessPosition(myRow, j);
+        ChessPiece piece = board.getPiece(pos);
+        ChessMove potMov = new ChessMove(myPosition, pos, null);
+        if (piece == null) {
+            return  potMov;
+        } else if (piece.getTeamColor() != teamColor) {
+            return  potMov;
+        } else if (piece.getTeamColor() == teamColor) {
+            return null;
+        }
+        return null;
+    }
+
+
     public Collection<ChessMove> rookMoves(ChessBoard board, ChessPosition myPosition) {
         Set<ChessMove> moves = new HashSet<>();
         int myRow = myPosition.getRow();
         int myCol = myPosition.getColumn();
         //up
         for (int i = myRow+1; i <= 8; i++) {
-            ChessPosition pos = new ChessPosition(i,myCol);
-            ChessPiece piece = board.getPiece(pos);
-            ChessMove potMov = new ChessMove(myPosition, pos, null);
-            if (piece == null) {
-                moves.add(potMov);
-            } else if (piece.getTeamColor() != teamColor) {
-                moves.add(potMov);
-                break;
-            } else if (piece.getTeamColor() == teamColor) {
-                break;
-            }
+            ChessMove chessMove = rookMovesIHelper(i, myCol, board, myPosition);
+            if (chessMove != null) { moves.add(chessMove); }
+            if (breaker(i, myCol, board)) { break; }
         }
         //down
         for (int i = myRow-1; i >= 1; i--) {
-            ChessPosition pos = new ChessPosition(i,myCol);
-            ChessPiece piece = board.getPiece(pos);
-            ChessMove potMov = new ChessMove(myPosition, pos, null);
-            if (piece == null) {
-                moves.add(potMov);
-            } else if (piece.getTeamColor() != teamColor) {
-                moves.add(potMov);
-                break;
-            } else if (piece.getTeamColor() == teamColor) {
-                break;
-            }
+            ChessMove chessMove = rookMovesIHelper(i, myCol, board, myPosition);
+            if (chessMove != null) { moves.add(chessMove); }
+            if (breaker(i, myCol, board)) { break; }
         }
         //right
         for (int i = myCol+1; i <= 8; i++) {
-            ChessPosition pos = new ChessPosition(myRow,i);
-            ChessPiece piece = board.getPiece(pos);
-            ChessMove potMov = new ChessMove(myPosition, pos, null);
-            if (piece == null) {
-                moves.add(potMov);
-            } else if (piece.getTeamColor() != teamColor) {
-                moves.add(potMov);
-                break;
-            } else if (piece.getTeamColor() == teamColor) {
-                break;
-            }
+            ChessMove chessMove = rookMovesJHelper(myRow, i, board, myPosition);
+            if (chessMove != null) { moves.add(chessMove); }
+            if (breaker(myRow, i, board)) { break; }
         }
         //left
         for (int i = myCol-1; i >= 1; i--) {
-            ChessPosition pos = new ChessPosition(myRow,i);
-            ChessPiece piece = board.getPiece(pos);
-            ChessMove potMov = new ChessMove(myPosition, pos, null);
-            if (piece == null) {
-                moves.add(potMov);
-            } else if (piece.getTeamColor() != teamColor) {
-                moves.add(potMov);
-                break;
-            } else if (piece.getTeamColor() == teamColor) {
-                break;
-            }
+            ChessMove chessMove = rookMovesJHelper(myRow, i, board, myPosition);
+            if (chessMove != null) { moves.add(chessMove); }
+            if (breaker(myRow, i, board)) { break; }
         }
         return moves;
     }
