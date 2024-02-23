@@ -9,28 +9,18 @@ import results.MessageOnlyResult;
 public class JoinGameService {
     public JoinGameService(){};
 
-    public MessageOnlyResult joinGame(JoinGameRequest joinGameRequest){
-        boolean indicator;
+    public MessageOnlyResult joinGame(JoinGameRequest joinGameRequest) throws UnauthorizedException, ForbiddenException, BadRequestException {
         MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
-        indicator = memoryAuthTokenDA.verifyAuthToken(joinGameRequest.getAuthToken());
-        if (!indicator){
-            MessageOnlyResult result = new MessageOnlyResult();
-            result.setMessage("Error: Not Authorized");
-            return result;
-        }
-
+        boolean exists = memoryAuthTokenDA.verifyAuthToken(joinGameRequest.getAuthToken());
+        if (!exists){ throw new UnauthorizedException("Error: Not Authorized"); }
         String dbUsername =  memoryAuthTokenDA.getUser(joinGameRequest.getAuthToken());
-
         GameData game = new GameData();
         MemoryGameDA games = new MemoryGameDA(game);
         GameData dbGame = games.findGame(joinGameRequest.getGameID());
         if (dbGame != null){
             // game exists at ID
-            //need user to set the color to the right
             if (dbGame.getWhiteUsername() != null && joinGameRequest.getPlayerColor().equals("WHITE") ||  dbGame.getBlackUsername() != null && joinGameRequest.getPlayerColor().equals("BLACK")){
-                MessageOnlyResult result = new MessageOnlyResult();
-                result.setMessage("Error: Color already occupied");
-                return result;
+                throw new ForbiddenException("Error: Color already occupied");
             } else {
                 dbGame.setColor(joinGameRequest.getPlayerColor(), dbUsername);
                 MessageOnlyResult mess = new MessageOnlyResult();
@@ -38,8 +28,6 @@ public class JoinGameService {
                 return mess;
             }
         }
-        MessageOnlyResult mess = new MessageOnlyResult();
-        mess.setMessage("Error: Game not found in DB");
-        return mess;
+        throw new BadRequestException("Error: Game not found in DB");
     }
 }

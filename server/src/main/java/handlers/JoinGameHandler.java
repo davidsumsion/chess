@@ -3,6 +3,9 @@ package handlers;
 import com.google.gson.Gson;
 import requests.JoinGameRequest;
 import results.MessageOnlyResult;
+import services.BadRequestException;
+import services.ForbiddenException;
+import services.UnauthorizedException;
 import spark.Request;
 import spark.Response;
 import services.JoinGameService;
@@ -16,18 +19,24 @@ public class JoinGameHandler {
         JoinGameRequest joinGameRequest = gson.fromJson(request.body(), JoinGameRequest.class);
         joinGameRequest.setAuthToken(request.headers("Authorization"));
         JoinGameService service = new JoinGameService();
-        MessageOnlyResult messageOnlyResult =  service.joinGame(joinGameRequest);
-
-        if (messageOnlyResult.getMessage().isEmpty()){
+        MessageOnlyResult messageOnlyResult = null;
+        try {
+            messageOnlyResult =  service.joinGame(joinGameRequest);
             response.status(200);
             messageOnlyResult.setMessage(null);
-        } else if (messageOnlyResult.getMessage().contains("Error: Not Authorized")){
+        } catch(UnauthorizedException e){
             response.status(401);
-        } else if (messageOnlyResult.getMessage().contains("Color")){
+            messageOnlyResult = new MessageOnlyResult();
+            messageOnlyResult.setMessage(e.getMessage());
+        } catch (ForbiddenException e) {
             response.status(403);
+            messageOnlyResult = new MessageOnlyResult();
+            messageOnlyResult.setMessage(e.getMessage());
+        } catch (BadRequestException e) {
+            response.status(400);
+            messageOnlyResult = new MessageOnlyResult();
+            messageOnlyResult.setMessage(e.getMessage());
         }
-        else {response.status(400);}
-//        return "{}";
         return gson.toJson(messageOnlyResult);
     }
 }

@@ -12,22 +12,17 @@ public class LoginService{
     public LoginService(){}
     public String createAuthToken() { return UUID.randomUUID().toString(); }
 
-    public UserResult login(LoginRequest request){
+    public UserResult login(LoginRequest request) throws UnauthorizedException{
         UserData inputData = new UserData(request.getUsername(), request.getPassword(), null);
         MemoryUserDA userDao = new MemoryUserDA(inputData);
         UserData dbUser = userDao.getUser();
 
         if (dbUser == null){
-            UserResult result = new UserResult(null, null);
-            result.setMessage("Error: User not found in database. Register before logging in");
-            return result;
+            throw new UnauthorizedException("Error: User not found in database. Register before logging in");
         } else {
             //user is in database
             if (!request.getPassword().equals(dbUser.getPassword())){
-                //incorrect password
-                UserResult result = new UserResult(null, null);
-                result.setMessage("Error: Incorrect Password");
-                return result;
+                throw new UnauthorizedException("Error: Incorrect Password");
             } else {
                 //correct password
                 //create AuthToken
