@@ -6,7 +6,7 @@ import services.Exceptions.BadRequestException;
 import spark.Request;
 import spark.Response;
 import requests.AuthTokenRequest;
-import services.UserServices.LogoutService;
+import services.LogoutService;
 
 public class LogoutHandler {
     public LogoutHandler(){};

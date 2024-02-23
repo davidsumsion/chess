@@ -1,22 +1,17 @@
-package services;
+package services.GameServices;
 
-import dataAccess.MemoryAuthTokenDA;
 import dataAccess.MemoryGameDA;
 import models.GameData;
 import requests.AuthTokenRequest;
 import results.ListGamesResult;
 import services.Exceptions.UnauthorizedException;
 
-public class ListGamesService {
-    public ListGamesService() {
-    }
-
+public class ListGamesService extends GameService{
+    public ListGamesService() {}
     public ListGamesResult listGames(AuthTokenRequest authTokenRequest) throws UnauthorizedException {
-        MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
-        boolean exists = memoryAuthTokenDA.verifyAuthToken(authTokenRequest.getAuthToken());
-        if (!exists){ throw new UnauthorizedException("Error: Not Authorized"); }
-        String dbUsername =  memoryAuthTokenDA.getUser(authTokenRequest.getAuthToken());
-        if (dbUsername == null){
+        verifyAuthToken(authTokenRequest.getAuthToken());
+        String dataBaseUsername =  findUsername(authTokenRequest.getAuthToken());
+        if (dataBaseUsername == null){
             throw new UnauthorizedException("Error: incorrect authtoken - no user associated");
         } else {
             MemoryGameDA game = new MemoryGameDA(new GameData());

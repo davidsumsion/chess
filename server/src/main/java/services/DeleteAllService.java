@@ -11,20 +11,23 @@ public class DeleteAllService {
 
     public DeleteAllService() {}
 
-    public void DeleteAll(){
-        //game
+    private void deleteGameDA(){
         GameData game = new GameData();
         MemoryGameDA games = new MemoryGameDA(game);
         games.delete();
-
-        //session
-        AuthData auth = new AuthData(null, null);
+    }
+    private void deleteAuthDA(){
         MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
         memoryAuthTokenDA.delete();
-
-        //user
+    }
+    private void deleteUserDA(){
         UserData user = new UserData(null, null, null);
         MemoryUserDA users = new MemoryUserDA(user);
         users.delete();
+    }
+    public void DeleteAll(){
+        deleteGameDA();
+        deleteAuthDA();
+        deleteUserDA();
     }
 }

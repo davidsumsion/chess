@@ -13,8 +13,11 @@ import services.*;
 import services.Exceptions.BadRequestException;
 import services.Exceptions.ForbiddenException;
 import services.Exceptions.UnauthorizedException;
+import services.GameServices.CreateGameService;
+import services.GameServices.JoinGameService;
+import services.GameServices.ListGamesService;
 import services.UserServices.LoginService;
-import services.UserServices.LogoutService;
+import services.LogoutService;
 import services.UserServices.RegisterService;
 
 

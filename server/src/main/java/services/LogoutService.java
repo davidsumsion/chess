@@ -1,4 +1,4 @@
-package services.UserServices;
+package services;
 
 import dataAccess.MemoryAuthTokenDA;
 import requests.AuthTokenRequest;
@@ -6,8 +6,7 @@ import results.UserResult;
 import services.Exceptions.BadRequestException;
 
 public class LogoutService {
-    public LogoutService() {
-    }
+    public LogoutService() {}
     public UserResult logout(AuthTokenRequest request) throws BadRequestException {
         MemoryAuthTokenDA dao = new MemoryAuthTokenDA();
         boolean result = dao.deleteSession(request.getAuthToken());

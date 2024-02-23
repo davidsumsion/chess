@@ -8,7 +8,7 @@ import services.Exceptions.ForbiddenException;
 import services.Exceptions.UnauthorizedException;
 import spark.Request;
 import spark.Response;
-import services.JoinGameService;
+import services.GameServices.JoinGameService;
 
 public class JoinGameHandler {
 

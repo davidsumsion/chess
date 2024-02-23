@@ -3,7 +3,7 @@ package handlers;
 import com.google.gson.Gson;
 import requests.AuthTokenRequest;
 import results.ListGamesResult;
-import services.ListGamesService;
+import services.GameServices.ListGamesService;
 import services.Exceptions.UnauthorizedException;
 import spark.Request;
 import spark.Response;

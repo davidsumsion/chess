@@ -6,7 +6,7 @@ import spark.Request;
 import spark.Response;
 import requests.CreateGameRequest;
 import results.CreateGameResult;
-import services.CreateGameService;
+import services.GameServices.CreateGameService;
 
 public class CreateGameHandler {
     public CreateGameHandler(){};
