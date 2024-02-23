@@ -11,6 +11,9 @@ public class ListGamesResult {
     public ListGamesResult(ArrayList<GameData> Arr) {
         this.games = Arr;
     }
+    public ListGamesResult(String message) {
+        this.message = message;
+    }
     public ArrayList<GameData> getGames() {
         return games;
     }

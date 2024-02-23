@@ -1,5 +1,6 @@
 package services;
 
+import dataAccess.DataAccessException;
 import dataAccess.MemoryAuthTokenDA;
 import dataAccess.MemoryGameDA;
 import models.GameData;
@@ -12,15 +13,16 @@ public class ListGamesService {
     public ListGamesService() {
     }
 
-    public ListGamesResult listGames(AuthTokenRequest authTokenRequest){
+    public ListGamesResult listGames(AuthTokenRequest authTokenRequest) throws UnauthorizedException {
         boolean indicator;
         MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
         indicator = memoryAuthTokenDA.verifyAuthToken(authTokenRequest.getAuthToken());
         if (!indicator){
-            ArrayList<GameData> emptyStringList = new ArrayList<>();
-            ListGamesResult result = new ListGamesResult(emptyStringList);
-            result.setMessage("Error: Not Authorized");
-            return result;
+//            ArrayList<GameData> emptyStringList = new ArrayList<>();
+//            ListGamesResult result = new ListGamesResult(emptyStringList);
+//            result.setMessage("Error: Not Authorized");
+//            return result;
+            throw new UnauthorizedException("Error: Not Authorized");
         }
 
         String dbUsername =  memoryAuthTokenDA.getUser(authTokenRequest.getAuthToken());
