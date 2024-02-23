@@ -3,37 +3,29 @@ import dataAccess.MemoryAuthTokenDA;
 import dataAccess.MemoryUserDA;
 import models.AuthData;
 import models.UserData;
+import org.eclipse.jetty.util.log.Log;
 import requests.LoginRequest;
+import requests.RegisterRequest;
 import results.UserResult;
 
 import java.util.UUID;
 
-public class LoginService{
+public class LoginService extends UserService {
     public LoginService(){}
-    public String createAuthToken() { return UUID.randomUUID().toString(); }
 
     public UserResult login(LoginRequest request) throws UnauthorizedException{
-        UserData inputData = new UserData(request.getUsername(), request.getPassword(), null);
-        MemoryUserDA userDao = new MemoryUserDA(inputData);
-        UserData dbUser = userDao.getUser();
+        UserData dataBaseUser = getUser(request.getUsername(), request.getPassword(), null);
 
-        if (dbUser == null){
-            throw new UnauthorizedException("Error: User not found in database. Register before logging in");
-        } else {
-            //user is in database
-            if (!request.getPassword().equals(dbUser.getPassword())){
-                throw new UnauthorizedException("Error: Incorrect Password");
-            } else {
-                //correct password
-                //create AuthToken
-                String newAuthToken = createAuthToken();
-                //create Session
-                MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
-                memoryAuthTokenDA.createSession(new AuthData(request.getUsername(), newAuthToken));
-                //return result
-                return new UserResult(request.getUsername(), newAuthToken);
-            }
+        if (dataBaseUser == null){ throw new UnauthorizedException("Error: User not found in database. Register before logging in");}
+        else if (!request.getPassword().equals(dataBaseUser.getPassword())){ throw new UnauthorizedException("Error: Incorrect Password"); }
+        else {
+            //add AuthToken to db
+            MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
+            String newAuthToken = createAuthToken();
+            memoryAuthTokenDA.createSession(new AuthData(request.getUsername(), newAuthToken));
+            return new UserResult(request.getUsername(), newAuthToken);
         }
+
     }
 }
 
