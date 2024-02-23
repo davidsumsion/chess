@@ -1,17 +1,31 @@
 package myUnitTests;
 
+import handlers.DeleteAllHandler;
+import models.GameData;
+import org.eclipse.jetty.server.Authentication;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import requests.*;
 import results.CreateGameResult;
+import results.ListGamesResult;
 import results.MessageOnlyResult;
 import results.UserResult;
 import services.*;
 
+import java.util.ArrayList;
+
 public class myServiceTests {
 
+    @AfterEach
+    public void cleanUp() {
+        DeleteAllService deleteAllService = new DeleteAllService();
+        deleteAllService.DeleteAll();
+        GameData gameData = new GameData();
+        gameData.resetCounter();
+    }
 
     /////////////////////
     ////Register Tests///
@@ -140,6 +154,9 @@ public class myServiceTests {
         Assertions.assertEquals("Error: Not Authorized", createGameResult.getMessage(), "Incorrect Username");
     }
 
+    ///////////////////////
+    ///////Join game///////
+    ///////////////////////
     @Test
     @DisplayName("Join Game")
     public void JoinGame() {
@@ -158,6 +175,83 @@ public class myServiceTests {
         MessageOnlyResult messageOnlyResult = joinGameService.joinGame(joinGameRequest);
 
         Assertions.assertEquals("", messageOnlyResult.getMessage(), "Error when expected none");
+    }
+
+    /////////////////////////
+    ///////Delete All///////
+    /////////////////////////
+    @Test
+    @DisplayName("Delete All")
+    public void DeleteAll(){
+        //new user and auth
+        RegisterRequest registerRequest = new RegisterRequest("testUsernameCreateGame3", "testPasswordCreateGame3", "testEmail");
+        RegisterService registerService = new RegisterService();
+        UserResult userResult =  registerService.register(registerRequest);
+
+        //new game
+        CreateGameRequest createGameRequest = new CreateGameRequest("MyNewGame");
+        createGameRequest.setAuthToken(userResult.getAuthToken());
+        CreateGameService createGameService = new CreateGameService();
+        CreateGameResult createGameResult = createGameService.createGame(createGameRequest);
+
+        DeleteAllService deleteAllService = new DeleteAllService();
+        deleteAllService.DeleteAll();
+
+        //Test User Memory
+        LoginRequest loginRequest = new LoginRequest("myUsername", "myPassword");
+        LoginService loginService = new LoginService();
+        UserResult userResult1 = loginService.login(loginRequest);
+        Assertions.assertEquals("Error: User not found in database. Register before logging in", userResult1.getMessage(), "Error occured");
+
+        //Test Game Memory
+        JoinGameRequest joinGameRequest = new JoinGameRequest(createGameResult.getGameID(), "WHITE");
+        JoinGameService joinGameService = new JoinGameService();
+        MessageOnlyResult messageOnlyResult = joinGameService.joinGame(joinGameRequest);
+        Assertions.assertNotNull(messageOnlyResult.getMessage(), "No error when there should have been");
+
+        //Test AuthToken Memory
+        AuthTokenRequest authTokenRequest = new AuthTokenRequest(userResult.getAuthToken());
+        ListGamesService listGamesService = new ListGamesService();
+        ListGamesResult listGamesResult = listGamesService.listGames(authTokenRequest);
+        Assertions.assertEquals("Error: Not Authorized", listGamesResult.getMessage(), "Incorrect Message");
+
+    }
+
+    ///////////////////////
+    ////LIST GAMES///////
+    ///////////////////////
+    @Test
+    @DisplayName("List Games")
+    public void ListGames() {
+        RegisterRequest registerRequest = new RegisterRequest("testUsernameCreateGame3", "testPasswordCreateGame3", "testEmail");
+        RegisterService registerService = new RegisterService();
+        UserResult userResult =  registerService.register(registerRequest);
+
+        CreateGameRequest createGameRequest = new CreateGameRequest("JUST ");
+        createGameRequest.setAuthToken(userResult.getAuthToken());
+        CreateGameService createGameService = new CreateGameService();
+        CreateGameResult createGameResult = createGameService.createGame(createGameRequest);
+
+        CreateGameRequest createGameRequest1 = new CreateGameRequest("NOT A ");
+        createGameRequest1.setAuthToken(userResult.getAuthToken());
+        CreateGameResult createGameResult1 = createGameService.createGame(createGameRequest1);
+
+        CreateGameRequest createGameRequest2 = new CreateGameRequest("NOT A ");
+        createGameRequest2.setAuthToken(userResult.getAuthToken());
+        CreateGameResult createGameResult2 = createGameService.createGame(createGameRequest2);
+
+        CreateGameRequest createGameRequest3 = new CreateGameRequest("SUPER ONE");
+        createGameRequest3.setAuthToken(userResult.getAuthToken());
+        CreateGameResult createGameResult3 = createGameService.createGame(createGameRequest3);
+
+        AuthTokenRequest authTokenRequest = new AuthTokenRequest(userResult.getAuthToken());
+        ListGamesService listGamesService = new ListGamesService();
+        ListGamesResult listGamesResult = listGamesService.listGames(authTokenRequest);
+
+
+        Assertions.assertEquals(
+                "[{gameID=1, gameName='JUST ', whiteUsername='null', blackUsername='null'}, {gameID=2, gameName='NOT A ', whiteUsername='null', blackUsername='null'}, {gameID=4, gameName='SUPER ONE', whiteUsername='null', blackUsername='null'}]"
+                , listGamesResult.getGames().toString(),  "Didin't return games");
     }
 
 

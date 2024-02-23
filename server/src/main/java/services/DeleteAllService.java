@@ -27,6 +27,5 @@ public class DeleteAllService {
         UserData user = new UserData(null, null, null);
         MemoryUserDA users = new MemoryUserDA(user);
         users.delete();
-        //Authtoken???
     }
 }

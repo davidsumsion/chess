@@ -13,11 +13,6 @@ public class MemoryGameDA {
     }
 
     public ArrayList<GameData> getListGames(){
-//        ArrayList<ArrayList<String>> retArr = new ArrayList<>();
-//        ArrayList<String> retArr = new ArrayList<>();
-//        for (GameData game: gameArr){
-//            retArr.add(game.toString());
-//        }
         return gameArr;
     }
 

@@ -60,6 +60,11 @@ public class GameData {
         }
     }
 
+    public void resetCounter(){
+        counter = 0;
+    }
+
+
     @Override
     public String toString() {
         return "{gameID=" + this.gameID + ", gameName='" + this.gameName + "', whiteUsername='" + this.whiteUsername + "', blackUsername='" + this.blackUsername + "'}";
