@@ -1,0 +1,135 @@
+## Relational Databases
+## day one
+- 3 days of lecture, next phase next time
+- CS 452 all about databases, most of it in 3 days
+- MySQL
+- Relational Model
+- DBMS - databases are implemented by software systems called database management systems
+  - scales to large amounts of data
+- Embedded vs client/server
+  - integrated/imbedded
+    - not accessable from anywhere else
+  - program, server, db
+    - more common
+    - this is what we're going to do
+- Relations = Tables
+  - columns like a spreadsheet, classes
+- Tuples = Rows
+  - primary key, uniquely identifies the row
+  - data
+- Schema = all the info
+- Relational model
+  - table class
+  - row object
+  - relationship (primary and foreign key) relationship (reference)
+- foreign keys in tables are primary keys in other tables
+- Join: which book has bob read (member, books_read, book)
+  - books_read is many-to-many relationship, primary keys of book and member included in books_read
+- one to many genre, one genre for many books
+- Keys
+  - artificial primary keys (has no meaning outside of database)
+  - primary key
+    - unique for every row
+    - every row has to have one
+  - natural keys
+    - SSN
+      - not everyone has one, just US students, not a good primary key
+      - don't want people to look for it, identity theft
+      - used to recycle SSN numbers
+    - some books say always make an artificial key
+      - not always the best thing
+      - harder to query your db, less efficient
+    - performance problems with db is usually with artificial keys instead of natural keys
+    - composit key
+      - primary key is a combination of attributes
+        - 3 columns that are unique
+  - Relationions
+    - one to one
+      - smash all attributes into one table
+      - or primary key of one table becomes the other one
+        - if it's optional, person has a SSN, could have a person who doesn't have a SSN, save memory not smashing them
+          - better than null in database
+    - one to many
+      - a book has one genre a genre has many books
+      - category has one parent, parent has many sub categories
+    - many to many
+      - join table, 3 tables
+- Modeling a database schema
+  - draw a diagram, communicate what DB looks like
+    - ERD entity relationship diagram
+      - crows feet, hash, optional
+    - UML diagram -- not just entity, for other software
+      - cardinality 1, 0...*
+      - 0, 1 if nul
+    - RDBMS Mapping
+      - Vertical/Horizontal partitioning are both good for differnt reasons
+        - total of accounts
+        - empty rows
+- SQL
+  - create/delete tables
+  - insert/update/delete rows
+  - query for matching rows
+  - Data Types
+    - Strings
+      - character or CHAR
+        - every value is n-length character string
+      - character varying or varchar (length specified for max)
+        - var wideth of string
+      - Bit strings
+        - bit -- array of n bits
+        - bit varying - up to n bits (give max length)
+      - numbers
+        - integer and smallint
+          - usually 32 64, 8 or 16
+        - float, real, double precision
+          - may or may not be different
+        - numberic(precision, scale) or decimal(precision, scale)
+      - Large objects
+        - binary large objects (img, sound, video)
+        - clob - character large object (text documents)
+          - usually just store data in file and store link in DB
+          - backups take a long time if you use thses
+    - Date
+    - time
+    - time wit tie zone or TIMETZ
+    - TIMESTAMP
+    - TIMESTAMP with time zone or TIMESTAMPTZ
+  - Create a table
+    - not imperative (loops, ifs)
+    - calc and algebra, give it everything in a single statement
+    - CREATE TABLE name {
+    - name dataType not null -- automatic null available 
+    - id integer not null primary key auto_increment
+    - foreign key(name) references category(id) -- now the db knows, not required but helpful
+    - }
+    - Foreign key contraints
+      - not required
+      - enforece tha values used as foreign keys exist in their parent tables
+      - disallow deletes of the parent table row when refereced as a foreign key in another table
+      - disallows update of parent row that would orphan the foreign keys
+      - on update cascade on delete restrict
+        - when updating current values will go update other tables with correct info
+      - available actions
+        - no action
+        - restrict 
+        - set null
+        - set default
+        - cascate
+  - Drop table book;
+    - deletes db
+    - drop table if exists book;
+      - put these for every table at the top of your file
+  - INSERT
+    - insert into book
+    - (title, author, genre, category_id) values ('the work and the glory', 'gerald lund', 'historical fiction', 3);
+  - UPDATE
+    - update table
+    - set column = value, column = value, ...
+    - WHERE condition
+  - DELETE
+    - DELETE FROM member
+    - WHERE id = 3;
+    - DELETE FRO bookes_read
+    - WHERE member_id = 3;
+    - DELETE FROM book; -- deletes all books
+  - 
