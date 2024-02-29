@@ -132,4 +132,98 @@
     - DELETE FRO bookes_read
     - WHERE member_id = 3;
     - DELETE FROM book; -- deletes all books
-  - 
+
+Day 2
+- query
+  - select column, column
+  - from table, table
+  - where condition
+- SELECT meber.name book.title
+  FROM member, vooks_read, book
+- WEHRE member.id = boos_read.member_id AND
+  - book.id = books_read.book_id
+    (books read by each member)
+- SELECT member.name, book.title
+- FROM member
+INNER JOIN books_read ON member.id = books_read.member_id
+  - INNER JOIN book ON books_read.book_id = book_id
+  - WHERE genre = 'NonFiction'
+DatabaseTransactions
+- BEGIN TRANSACTiON
+  - SQL statement1
+  - SQL statement2
+  - COMMIT TRANSACTION or ROLLBACK TRANSACTION
+DatabaseAccess from Java
+  - J.sql package if part JDBC
+    - load a db driver, automatic (used to be explicit, now automatic)
+      - try {
+        - Class.forName("org.sqlite.JDBC");
+      - } catch (ClassNotFound Exception e) {
+        - //error could not load db driver
+      - }
+      - set of implememnting classes for a db
+    - open a database connection
+      - import java.sql.*;
+      - ...
+      - String connectionURL = "jdbc:mysql://localhost:3306/BookClub?" + "user=jerodw&password=myPassword"; (bad idea to specify username/password in code)
+      - Connection connection = null;
+      - try (Connection c = DriverManager.getConnection(connectionURL)){    //try with resources, don't have to close DB manually -- won't close what it didn't open, don't close a transaction before you commit or rollback your transaction if you don't have try w/ resources
+        - connection = c;
+        - //start transaction
+        - connection.setAutoCommit(false); //statements are autocommited, this is how you start a transaction
+        - commit
+      - } catch (SQLException ex) {
+        - //ERROR
+        - rollback
+      - }
+    - start a transction (if needed)
+    - execute quereies and/or updates
+      - List<Book> book = new arrList
+    - String sql = "select id, title, author, genre, category_id from book";
+    - try(PreparedStatment stmt = connection.prepareStatment(sql); -- prepared statments prevent hackers SQL injection use a preparedStatment
+      - ResultSt rs = stmt.executeQuery()) {
+      - while(rs.next()) {
+        - int id = rs.getInt(1); 1 based not 0 based!!
+        - String title = rs.getString(2);
+        - String author = rs.getString(3);
+        - String genre = rs.getString(4);
+        - int categoryId = rs.getInt(5);
+        - books.add(new Book(id, title, author, genre, categoryId));
+      - }
+    - } catch (SQLException ex) {
+      - //error
+    - }
+    - commit/rollback the transaction (if needed)
+      - in catch 
+        if connection!= null
+        -   connection.rollback();
+    - close the db connection (close in a finally block!!)
+    - retreiving auto-increment ids
+      - want to put it into the object maybe
+        - try(PreparedStatment stmt = connection.prepareStatment(sql, Statement.RETURN_GENERATED_KEYS)){    //try w/ resources again!!
+          - if(stmt.executeUpdate() == 1) {
+            - try(ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+              - generatedKeys.next();
+              - int id = generatedKeys.getInt(1); //ID of the insertedbook
+              - book.setId(id);
+            - }
+      - }
+- String sql = "update book " + 
+  - "set title = ?, author = ?, genre = ?, category_id = ? " +
+    - "wehre id = ?";         //dangerous sql injection attack, use substitiution
+- stmt.exeduteUpdate() == 1 -- something that effected the db, insert, update & delete!
+- JDBC & user permissions
+  - make it a maven project
+    - server.pom.xml
+      - have the dependency thing for groupID com.mysql
+- do a .gitIgnore, 
+  - readME befoer you can run this create a file with jerodw and mypassword
+project
+  - create interface DAOs
+  - create DB w/ actual tables
+  - install MySQL workbench
+  - figure out how to write a script to run in MySQL
+- have to write JDBC code to create DB if not exists
+  - starter code has it, but it won't put tables in it
+  - look at petShop example (only has 1 DAO)
+  - use password algorithm to hash your password
