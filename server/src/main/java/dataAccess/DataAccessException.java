@@ -8,6 +8,6 @@ public class DataAccessException extends Exception{
         super(message);
     }
 
-
+    public DataAccessException(Integer in, String message) {super(message);}
 
 }
