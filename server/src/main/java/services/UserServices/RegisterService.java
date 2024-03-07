@@ -23,18 +23,18 @@ public class RegisterService extends UserService {
                 String newAuthToken = createAuthToken();
                 user.setAuthToken(newAuthToken);
                 //add AuthToken to DB
-
+                MySqlAuthTokenDA mySqlAuthTokenDA = new MySqlAuthTokenDA();
+                mySqlAuthTokenDA.createSession(conn, new AuthData(user.getUsername(), user.getAuthToken()));
                 //createUser
-
-
-
-                //add AuthToken to DB
-                MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
-                memoryAuthTokenDA.createSession(new AuthData(user.getUsername(), user.getAuthToken()));
-                //createUser
-                MemoryUserDA dao = new MemoryUserDA(user);
-                dao.createUser(user);
+                MySqlUserDA mySqlUserDA = new MySqlUserDA();
+                mySqlUserDA.createUser(conn, user);
                 return new UserResult(user.getUsername(), user.getAuthToken());
+//                //add AuthToken to DB
+//                MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
+//                memoryAuthTokenDA.createSession(new AuthData(user.getUsername(), user.getAuthToken()));
+//                //createUser
+//                MemoryUserDA dao = new MemoryUserDA(user);
+//                dao.createUser(user);
             }
         } catch (DataAccessException | SQLException e) {
             System.out.println(e.getMessage());

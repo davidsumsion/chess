@@ -4,6 +4,8 @@ package dataAccess;
 import com.google.gson.Gson;
 import models.AuthData;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,29 +15,39 @@ import static java.sql.Types.NULL;
 
 public class MySqlAuthTokenDA {
 
-    MySqlAuthTokenDA() throws DataAccessException {
-            configureDatabase();
-    }
+    public MySqlAuthTokenDA() throws DataAccessException {}
 
-    public void createSession(AuthData authData) throws DataAccessException {
-        var statement = "INSERT INTO auth (username, authToken) VALUES (?,?)";
-        var json = new Gson().toJson(authData);
-        var id = executeUpdate(statement, authData.getUsername(), authData.getAuthToken(), json);
-    }
+    public void createSession(Connection conn, AuthData authData) throws DataAccessException {
+        String sql = "INSERT INTO AuthDataTable (username, authToken) VALUES (?,?)";
 
-    public String getUser(String authToken) throws DataAccessException, SQLException {
-        try (var conn = DatabaseManager.getConnection()) {
-            var statement = "SELECT * FROM AuthData WHERE authToken=?";
-            try (var ps = conn.prepareStatement(statement)){
-                try (var rs = ps.executeQuery()){
-                    if (rs.next()) {
-                        return rs.getString("username");
-                    }
-                }
+        try (PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setString(1, authData.getUsername());
+            stmt.setString(2, authData.getAuthToken());
+
+            if (stmt.executeUpdate() == 1) {
+                System.out.println("successfully inserted");
+            } else {
+                System.out.println("unsuccessful insert");
             }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
+
+//    public String getUser(String authToken) throws DataAccessException, SQLException {
+//        try (var conn = DatabaseManager.getConnection()) {
+//            var statement = "SELECT * FROM AuthData WHERE authToken=?";
+//            try (var ps = conn.prepareStatement(statement)){
+//                try (var rs = ps.executeQuery()){
+//                    if (rs.next()) {
+//                        return rs.getString("username");
+//                    }
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
     public boolean deleteSession(String authToken){
 //        AuthData removable = null;

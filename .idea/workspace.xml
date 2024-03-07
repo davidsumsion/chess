@@ -7,9 +7,12 @@
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/DatabaseManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlAuthTokenDA.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlAuthTokenDA.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlUserDA.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlUserDA.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/services/UserServices/RegisterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/UserServices/RegisterService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/services/UserServices/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/UserServices/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/myUnitTests/myServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/myUnitTests/myServiceTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/main/java/models/UserData.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/models/UserData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,10 +49,16 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Server.executor": "Run",
+    "Application.Server.executor": "Debug",
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.All in server.executor": "Debug",
     "JUnit.All in shared.executor": "Debug",
+    "JUnit.StandardAPITests.successLogin.executor": "Debug",
+    "JUnit.StandardAPITests.successRegister.executor": "Debug",
+    "JUnit.myServiceTests.executor": "Run",
+    "JUnit.myServiceTests.registerExistingUser.executor": "Debug",
+    "JUnit.myUnitTests in server.executor": "Run",
+    "JUnit.passoffTests.serverTests in server.executor": "Run",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "false",
@@ -74,19 +83,35 @@
       <recent name="$PROJECT_DIR$/shared/src/main/java" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="All in server" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.myServiceTests">
+    <configuration name="StandardAPITests.successLogin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.StandardAPITests" />
+      <option name="METHOD_NAME" value="successLogin" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in shared" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="shared" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
+    <configuration name="StandardAPITests.successRegister" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.StandardAPITests" />
+      <option name="METHOD_NAME" value="successRegister" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -106,7 +131,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="myServiceTests.CreateGameSameName" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="myServiceTests.registerExistingUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
         <pattern>
@@ -116,35 +141,33 @@
       </extension>
       <option name="PACKAGE_NAME" value="myUnitTests" />
       <option name="MAIN_CLASS_NAME" value="myUnitTests.myServiceTests" />
-      <option name="METHOD_NAME" value="CreateGameSameName" />
+      <option name="METHOD_NAME" value="registerExistingUser" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="myServiceTests.LoginNonExistingUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="passoffTests.serverTests in server" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="myUnitTests.*" />
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="myUnitTests" />
-      <option name="MAIN_CLASS_NAME" value="myUnitTests.myServiceTests" />
-      <option name="METHOD_NAME" value="LoginNonExistingUser" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.All in server" />
-        <item itemvalue="JUnit.All in shared" />
         <item itemvalue="JUnit.myServiceTests" />
-        <item itemvalue="JUnit.myServiceTests.CreateGameSameName" />
-        <item itemvalue="JUnit.myServiceTests.LoginNonExistingUser" />
+        <item itemvalue="JUnit.myServiceTests.registerExistingUser" />
+        <item itemvalue="JUnit.StandardAPITests.successRegister" />
+        <item itemvalue="JUnit.StandardAPITests.successLogin" />
+        <item itemvalue="JUnit.passoffTests.serverTests in server" />
       </list>
     </recent_temporary>
   </component>
@@ -230,6 +253,41 @@
           <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/StandardAPITests.java</url>
           <line>570</line>
           <option name="timeStamp" value="290" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/services/UserServices/UserService.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="308" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/services/UserServices/RegisterService.java</url>
+          <line>16</line>
+          <option name="timeStamp" value="310" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/services/UserServices/RegisterService.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="311" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlAuthTokenDA.java</url>
+          <line>20</line>
+          <option name="timeStamp" value="312" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlUserDA.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="313" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/StandardAPITests.java</url>
+          <line>94</line>
+          <option name="timeStamp" value="314" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/test/java/myUnitTests/myServiceTests.java</url>
+          <line>88</line>
+          <option name="timeStamp" value="317" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

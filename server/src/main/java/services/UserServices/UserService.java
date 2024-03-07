@@ -28,11 +28,13 @@ class UserService {
         try (PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setString(1, username);
             try (ResultSet rs = stmt.executeQuery()){
-                String usernameDB = rs.getString("username");
-                String hashedPasswordDB = rs.getString("hashedPassword");
-                String emailDB = rs.getString("email");
+                if (rs.next()){
+                    String usernameDB = rs.getString("username");
+                    String hashedPasswordDB = rs.getString("hashedPassword");
+                    String emailDB = rs.getString("email");
 //                String authToken = rs.getString("authToken");
-                userData = new UserData(usernameDB,hashedPasswordDB, emailDB);
+                    userData = new UserData(usernameDB,hashedPasswordDB, emailDB);
+                }
                 return userData;
             }
         } catch (SQLException e){

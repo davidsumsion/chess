@@ -36,4 +36,10 @@ public class UserData {
         return this.username.equals(obj.username) && this.password.equals(obj.password);
 //        return super.equals(obj);
     }
+
+
+    public String getEmail() {
+        return email;
+    }
+
 }

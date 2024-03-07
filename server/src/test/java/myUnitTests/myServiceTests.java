@@ -1,4 +1,6 @@
 package myUnitTests;
+import dataAccess.DataAccessException;
+import dataAccess.DatabaseManager;
 import models.GameData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -20,6 +22,9 @@ import services.UserServices.LoginService;
 import services.LogoutService;
 import services.UserServices.RegisterService;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 
 public class myServiceTests {
 
@@ -29,6 +34,17 @@ public class myServiceTests {
         deleteAllService.deleteAll();
         GameData gameData = new GameData();
         gameData.resetCounter();
+        try (Connection conn = DatabaseManager.getConnection()){
+            String sql = "DROP DATABASE IF EXISTS myChessDataBase;";
+            try (var preparedStatement = conn.prepareStatement(sql)) {
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            DatabaseManager.createDatabase();
+        } catch (DataAccessException | SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /////////////////////

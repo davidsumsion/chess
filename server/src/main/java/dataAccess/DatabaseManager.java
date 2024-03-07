@@ -53,7 +53,7 @@ public class DatabaseManager {
                 preparedStatement.executeUpdate();
             }
 
-            var authTableStatment = "CREATE TABLE IF NOT EXISTS myChessDataBase.AuthDataTable (" +
+            var authTableStatment = "CREATE TABLE IF NOT EXISTS " + databaseName +".AuthDataTable (" +
                     "authToken VARCHAR(50) not null primary key," +
                     "    username VARCHAR(32) not null" +
                     ");";
@@ -62,7 +62,7 @@ public class DatabaseManager {
                 preparedStatement.executeUpdate();
             }
 
-            var gameDataTableStatment = "CREATE TABLE IF NOT EXISTS myChessDataBase.GameDataTable (" +
+            var gameDataTableStatment = "CREATE TABLE IF NOT EXISTS "+ databaseName + ".GameDataTable (" +
                     "    gameID INT not null primary key auto_increment," +
                     "    whiteUsername VARCHAR(32)," +
                     "    blackUsername VARCHAR(32)," +
