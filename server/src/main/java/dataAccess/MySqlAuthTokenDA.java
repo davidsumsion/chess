@@ -59,7 +59,7 @@ public class MySqlAuthTokenDA {
         }
     }
 
-    public boolean verifyAuthToken(Connection connection, String authToken){
+    public boolean verifyAuthToken(Connection connection, String authToken) throws DataAccessException {
         String sql = "SELECT * FROM AuthDataTable WHERE authToken = ?";
         String authDB = null;
         try (PreparedStatement stmt = connection.prepareStatement(sql)){
@@ -70,7 +70,7 @@ public class MySqlAuthTokenDA {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DataAccessException(e.getMessage());
         }
         return authDB != null;
     }

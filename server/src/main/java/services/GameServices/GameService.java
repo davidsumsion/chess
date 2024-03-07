@@ -22,7 +22,7 @@ public class GameService {
         if (!exists){ throw new UnauthorizedException("Error: Not Authorized"); }
     }
 
-    public void verifyAuthToken(Connection connection, String authToken) throws UnauthorizedException{
+    public void verifyAuthToken(Connection connection, String authToken) throws UnauthorizedException, DataAccessException{
         try {
             MySqlAuthTokenDA mySqlAuthTokenDA = new MySqlAuthTokenDA();
             boolean exists = mySqlAuthTokenDA.verifyAuthToken(connection, authToken);

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class MySqlGameDataDA {
     public MySqlGameDataDA() {}
 
-    public Integer createGame(Connection connection, GameData gameData){
+    public Integer createGame(Connection connection, GameData gameData) throws DataAccessException{
         //see if name is in use
         String sql = "SELECT * FROM GameDataTable WHERE gameName = ?";
 
@@ -23,7 +23,7 @@ public class MySqlGameDataDA {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Error accessing DB" + e.getMessage());
+            throw new DataAccessException(e.getMessage());
         }
 
         //add game if not in use
@@ -31,13 +31,11 @@ public class MySqlGameDataDA {
                 "VALUES (?);";
         try (PreparedStatement statement = connection.prepareStatement(addGameSql)){
             statement.setString(1, gameData.getGameName());
-            if (statement.executeUpdate() == 1) {
-                System.out.println("successfully inserted gameName into GameDataTable");
-            } else {
-                System.out.println("unsuccessful insert into GameDataTable");
+            if (statement.executeUpdate() != 1) {
+                throw new DataAccessException("unsuccessful insert into GameDataTable");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DataAccessException(e.getMessage());
         }
 
         //get gameID
@@ -52,7 +50,7 @@ public class MySqlGameDataDA {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Error accessing DB" + e.getMessage());
+            throw new DataAccessException(e.getMessage());
         }
         return gameInt;
     }

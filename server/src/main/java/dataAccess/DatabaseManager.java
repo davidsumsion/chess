@@ -77,7 +77,6 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
-            System.out.println("ERROR");
             throw new DataAccessException("Cannot Create DB or tables");
         }
     }

@@ -39,7 +39,6 @@ public class JoinGameService extends GameService{
             }
             throw new BadRequestException("Error: Game not found in DB");
         } catch (SQLException | DataAccessException e) {
-            System.out.println("ERROR " + e.getMessage());
             return null;
         }
     }
