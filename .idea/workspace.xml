@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
-      <change afterPath="$PROJECT_DIR$/server/src/test/java/myUnitTests/MyDatabaseTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/test/java/myUnitTests/MyAuthDatabaseTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlAuthTokenDA.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlAuthTokenDA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlGameDataDA.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlGameDataDA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/GameServices/JoinGameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/GameServices/JoinGameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/test/java/myUnitTests/myServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/myUnitTests/MyServiceTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/java/models/GameData.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/models/GameData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +51,11 @@
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.All in server.executor": "Run",
     "JUnit.All in shared.executor": "Debug",
+    "JUnit.MyAuthDatabaseTests.createSessionCorrectly.executor": "Run",
+    "JUnit.MyAuthDatabaseTests.createSessionWrong.executor": "Run",
+    "JUnit.MyAuthDatabaseTests.deleteSessionCorrectly.executor": "Run",
+    "JUnit.MyAuthDatabaseTests.getUser.executor": "Run",
+    "JUnit.MyAuthDatabaseTests.getUserDNE.executor": "Run",
     "JUnit.MyDatabaseTests.createGameCorectly.executor": "Debug",
     "JUnit.MyDatabaseTests.createGameIncorrectly.executor": "Debug",
     "JUnit.MyDatabaseTests.executor": "Run",
@@ -102,7 +103,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MyGameDatabaseTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MyAuthDatabaseTests.deleteSessionCorrectly" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
         <pattern>
@@ -111,29 +112,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="myUnitTests" />
-      <option name="MAIN_CLASS_NAME" value="myUnitTests.MyGameDatabaseTests" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MyGameDatabaseTests.getGameDNE" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="myUnitTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="myUnitTests" />
-      <option name="MAIN_CLASS_NAME" value="myUnitTests.MyGameDatabaseTests" />
-      <option name="METHOD_NAME" value="getGameDNE" />
+      <option name="MAIN_CLASS_NAME" value="myUnitTests.MyAuthDatabaseTests" />
+      <option name="METHOD_NAME" value="deleteSessionCorrectly" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MyGameDatabaseTests.getGameList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MyAuthDatabaseTests.deleteSessionWrong" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
         <pattern>
@@ -142,14 +128,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="myUnitTests" />
-      <option name="MAIN_CLASS_NAME" value="myUnitTests.MyGameDatabaseTests" />
-      <option name="METHOD_NAME" value="getGameList" />
+      <option name="MAIN_CLASS_NAME" value="myUnitTests.MyAuthDatabaseTests" />
+      <option name="METHOD_NAME" value="deleteSessionWrong" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MyGameDatabaseTests.updateGame" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MyAuthDatabaseTests.verifyAuthToken" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
         <pattern>
@@ -158,8 +144,24 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="myUnitTests" />
-      <option name="MAIN_CLASS_NAME" value="myUnitTests.MyGameDatabaseTests" />
-      <option name="METHOD_NAME" value="updateGame" />
+      <option name="MAIN_CLASS_NAME" value="myUnitTests.MyAuthDatabaseTests" />
+      <option name="METHOD_NAME" value="verifyAuthToken" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MyAuthDatabaseTests.verifyAuthTokenWrong" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="myUnitTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="myUnitTests" />
+      <option name="MAIN_CLASS_NAME" value="myUnitTests.MyAuthDatabaseTests" />
+      <option name="METHOD_NAME" value="verifyAuthTokenWrong" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -168,10 +170,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.All in server" />
-        <item itemvalue="JUnit.MyGameDatabaseTests.updateGame" />
-        <item itemvalue="JUnit.MyGameDatabaseTests.getGameList" />
-        <item itemvalue="JUnit.MyGameDatabaseTests" />
-        <item itemvalue="JUnit.MyGameDatabaseTests.getGameDNE" />
+        <item itemvalue="JUnit.MyAuthDatabaseTests.verifyAuthTokenWrong" />
+        <item itemvalue="JUnit.MyAuthDatabaseTests.verifyAuthToken" />
+        <item itemvalue="JUnit.MyAuthDatabaseTests.deleteSessionWrong" />
+        <item itemvalue="JUnit.MyAuthDatabaseTests.deleteSessionCorrectly" />
       </list>
     </recent_temporary>
   </component>
@@ -297,16 +299,6 @@
           <url>file://$PROJECT_DIR$/server/src/main/java/services/GameServices/JoinGameService.java</url>
           <line>25</line>
           <option name="timeStamp" value="355" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/test/java/myUnitTests/MyDatabaseTests.java</url>
-          <line>36</line>
-          <option name="timeStamp" value="359" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/test/java/myUnitTests/MyDatabaseTests.java</url>
-          <line>70</line>
-          <option name="timeStamp" value="368" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

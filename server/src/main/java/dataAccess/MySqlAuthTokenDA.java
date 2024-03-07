@@ -23,15 +23,11 @@ public class MySqlAuthTokenDA {
         try (PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setString(1, authData.getUsername());
             stmt.setString(2, authData.getAuthToken());
-
-            if (stmt.executeUpdate() == 1) {
-                System.out.println("successfully inserted");
-            } else {
-                System.out.println("unsuccessful insert");
+            if (stmt.executeUpdate() != 1) {
+                throw new DataAccessException("incorrectly inserted");
             }
-
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DataAccessException(e.getMessage());
         }
     }
 
@@ -54,10 +50,8 @@ public class MySqlAuthTokenDA {
         try (PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setString(1, authToken);
             if (stmt.executeUpdate() == 1) {
-                System.out.println("successful logged out");
                 return true;
             } else {
-                System.out.println("unsuccessful logged out");
                 return false;
             }
         } catch (SQLException e) {
