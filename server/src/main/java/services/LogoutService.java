@@ -16,8 +16,6 @@ public class LogoutService {
             MySqlAuthTokenDA mySqlAuthTokenDA = new MySqlAuthTokenDA();
             boolean result = mySqlAuthTokenDA.deleteSession(conn, request.getAuthToken());
 
-//            MemoryAuthTokenDA dao = new MemoryAuthTokenDA();
-//            boolean result = dao.deleteSession(request.getAuthToken());
             if (!result){ throw new BadRequestException("Error: unable to delete"); }
             else { return new UserResult(null, null); }
         } catch (DataAccessException | SQLException e) {

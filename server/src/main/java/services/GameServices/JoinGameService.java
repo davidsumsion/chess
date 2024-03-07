@@ -16,6 +16,7 @@ public class JoinGameService extends GameService{
         return games.findGame(gameID);
     }
     public MessageOnlyResult joinGame(JoinGameRequest joinGameRequest) throws UnauthorizedException, ForbiddenException, BadRequestException {
+
         verifyAuthToken(joinGameRequest.getAuthToken());
         String dataBaseUsername = findUsername(joinGameRequest.getAuthToken());
         GameData dataBaseGame = findGame(joinGameRequest.getGameID());

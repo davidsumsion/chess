@@ -62,16 +62,17 @@ public class DatabaseManager {
                 preparedStatement.executeUpdate();
             }
 
-            var gameDataTableStatment = "CREATE TABLE IF NOT EXISTS "+ databaseName + ".GameDataTable (" +
+            var gameDataTableStatement = "CREATE TABLE IF NOT EXISTS "+ databaseName + ".GameDataTable (" +
                     "    gameID INT not null primary key auto_increment," +
                     "    whiteUsername VARCHAR(32)," +
                     "    blackUsername VARCHAR(32)," +
                     "    gameName VARCHAR(32)," +
+                    "    chessGame JSON," +
                     "    foreign key(whiteUsername) references UserTable(username)," +
                     "    foreign key(blackUsername) references UserTable(username)" +
                     ");";
 
-            try (var preparedStatement = conn.prepareStatement(gameDataTableStatment)) {
+            try (var preparedStatement = conn.prepareStatement(gameDataTableStatement)) {
                 preparedStatement.executeUpdate();
             }
 
@@ -80,6 +81,8 @@ public class DatabaseManager {
             throw new DataAccessException("Cannot Create DB or tables");
         }
     }
+
+
 
     /**
      * Create a connection to the database and sets the catalog based upon the

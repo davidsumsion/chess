@@ -64,32 +64,26 @@ public class MySqlAuthTokenDA {
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
         }
-//        AuthData removable = null;
-//        for (AuthData session: authArr){
-//            if (session.getAuthToken().equals(authToken)){
-//                session.setAuthToken("");
-//                session.setUsername("");
-//                removable = session;
-//            }
-//        }
-//        if (removable == null) {
-//            return false;
-//        }
-//        authArr.remove(removable);
-
     }
 
     public void delete() {
 //        authArr = new ArrayList<>();
     }
 
-    public boolean verifyAuthToken(String authToken){
-//        for (AuthData authData: authArr){
-//            if (authData.getAuthToken().equals(authToken)){
-//                return true;
-//            }
-//        }
-        return false;
+    public boolean verifyAuthToken(Connection connection, String authToken){
+        String sql = "SELECT * FROM AuthDataTable WHERE authToken = ?";
+        String authDB = null;
+        try (PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1, authToken);
+            try (ResultSet rs = stmt.executeQuery()){
+                if (rs.next()){
+                    authDB = rs.getString("authToken");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return authDB != null;
     }
 
     private AuthData readAuthData(ResultSet rs) throws DataAccessException, SQLException {
