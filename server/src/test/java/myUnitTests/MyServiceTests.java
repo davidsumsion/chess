@@ -26,14 +26,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 
-public class myServiceTests {
+public class MyServiceTests {
 
     @AfterEach
     public void cleanUp() {
-        DeleteAllService deleteAllService = new DeleteAllService();
-        deleteAllService.deleteAll();
-        GameData gameData = new GameData();
-        gameData.resetCounter();
         try (Connection conn = DatabaseManager.getConnection()){
             String sql = "DROP DATABASE IF EXISTS myChessDataBase;";
             try (var preparedStatement = conn.prepareStatement(sql)) {
@@ -64,7 +60,6 @@ public class myServiceTests {
             throw new RuntimeException(e);
         }
         Assertions.assertEquals("testUsername3", userResultA.getUsername(), "Username was not testUsername");
-//        Assertions.assertNotNull(UserResult.getAuthToken(), "authToken is NULL");
         Assertions.assertNull(userResultA.getMessage(), "A message was set");
     }
 

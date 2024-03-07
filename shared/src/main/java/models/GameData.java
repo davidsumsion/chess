@@ -35,6 +35,9 @@ public class GameData {
         counter += 1;
         this.gameID = counter;
     }
+    public void setGameID(Integer id) {
+        this.gameID = id;
+    }
     public void setWhiteUsername(String whiteUsername) {
         this.whiteUsername = whiteUsername;
     }

@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
+      <change afterPath="$PROJECT_DIR$/server/src/test/java/myUnitTests/MyDatabaseTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlAuthTokenDA.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlAuthTokenDA.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlGameDataDA.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlGameDataDA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/GameServices/CreateGameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/GameServices/CreateGameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/GameServices/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/GameServices/GameService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/services/GameServices/JoinGameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/GameServices/JoinGameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/GameServices/ListGamesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/GameServices/ListGamesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/myUnitTests/myServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/myUnitTests/MyServiceTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shared/src/main/java/models/GameData.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/models/GameData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,8 +53,15 @@
   "keyToString": {
     "Application.Server.executor": "Debug",
     "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.All in server.executor": "Debug",
+    "JUnit.All in server.executor": "Run",
     "JUnit.All in shared.executor": "Debug",
+    "JUnit.MyDatabaseTests.createGameCorectly.executor": "Debug",
+    "JUnit.MyDatabaseTests.createGameIncorrectly.executor": "Debug",
+    "JUnit.MyDatabaseTests.executor": "Run",
+    "JUnit.MyDatabaseTests.getGame.executor": "Debug",
+    "JUnit.MyDatabaseTests.getGameDNE.executor": "Run",
+    "JUnit.MyDatabaseTests.getGameList.executor": "Run",
+    "JUnit.MyDatabaseTests.updateGame.executor": "Run",
     "JUnit.StandardAPITests.executor": "Run",
     "JUnit.StandardAPITests.successLogin.executor": "Debug",
     "JUnit.StandardAPITests.successRegister.executor": "Debug",
@@ -96,38 +102,38 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StandardAPITests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MyGameDatabaseTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="PATTERN" value="myUnitTests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
-      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.StandardAPITests" />
+      <option name="PACKAGE_NAME" value="myUnitTests" />
+      <option name="MAIN_CLASS_NAME" value="myUnitTests.MyGameDatabaseTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StandardAPITests.successRegister" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MyGameDatabaseTests.getGameDNE" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="PATTERN" value="myUnitTests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
-      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.StandardAPITests" />
-      <option name="METHOD_NAME" value="successRegister" />
+      <option name="PACKAGE_NAME" value="myUnitTests" />
+      <option name="MAIN_CLASS_NAME" value="myUnitTests.MyGameDatabaseTests" />
+      <option name="METHOD_NAME" value="getGameDNE" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="myServiceTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MyGameDatabaseTests.getGameList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
         <pattern>
@@ -136,13 +142,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="myUnitTests" />
-      <option name="MAIN_CLASS_NAME" value="myUnitTests.myServiceTests" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="myUnitTests.MyGameDatabaseTests" />
+      <option name="METHOD_NAME" value="getGameList" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="myServiceTests.registerExistingUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MyGameDatabaseTests.updateGame" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
         <pattern>
@@ -151,8 +158,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="myUnitTests" />
-      <option name="MAIN_CLASS_NAME" value="myUnitTests.myServiceTests" />
-      <option name="METHOD_NAME" value="registerExistingUser" />
+      <option name="MAIN_CLASS_NAME" value="myUnitTests.MyGameDatabaseTests" />
+      <option name="METHOD_NAME" value="updateGame" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -161,10 +168,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.All in server" />
-        <item itemvalue="JUnit.myServiceTests" />
-        <item itemvalue="JUnit.StandardAPITests" />
-        <item itemvalue="JUnit.myServiceTests.registerExistingUser" />
-        <item itemvalue="JUnit.StandardAPITests.successRegister" />
+        <item itemvalue="JUnit.MyGameDatabaseTests.updateGame" />
+        <item itemvalue="JUnit.MyGameDatabaseTests.getGameList" />
+        <item itemvalue="JUnit.MyGameDatabaseTests" />
+        <item itemvalue="JUnit.MyGameDatabaseTests.getGameDNE" />
       </list>
     </recent_temporary>
   </component>
@@ -271,21 +278,6 @@
           <line>20</line>
           <option name="timeStamp" value="333" />
         </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/test/java/myUnitTests/myServiceTests.java</url>
-          <line>76</line>
-          <option name="timeStamp" value="336" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/test/java/myUnitTests/myServiceTests.java</url>
-          <line>84</line>
-          <option name="timeStamp" value="337" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/test/java/myUnitTests/myServiceTests.java</url>
-          <line>85</line>
-          <option name="timeStamp" value="338" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/services/GameServices/ListGamesService.java</url>
           <line>24</line>
@@ -297,24 +289,24 @@
           <option name="timeStamp" value="352" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlGameDataDA.java</url>
-          <line>83</line>
-          <option name="timeStamp" value="353" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/services/GameServices/JoinGameService.java</url>
-          <line>29</line>
+          <line>27</line>
           <option name="timeStamp" value="354" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/services/GameServices/JoinGameService.java</url>
-          <line>27</line>
+          <line>25</line>
           <option name="timeStamp" value="355" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlGameDataDA.java</url>
-          <line>63</line>
-          <option name="timeStamp" value="356" />
+          <url>file://$PROJECT_DIR$/server/src/test/java/myUnitTests/MyDatabaseTests.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="359" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/test/java/myUnitTests/MyDatabaseTests.java</url>
+          <line>70</line>
+          <option name="timeStamp" value="368" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

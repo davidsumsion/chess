@@ -19,7 +19,6 @@ public class MySqlGameDataDA {
             stmt.setString(1, gameData.getGameName());
             try (ResultSet rs = stmt.executeQuery()){
                 if (rs.next()){
-                    //set indicator to not null
                     return null;
                 }
             }
@@ -58,7 +57,7 @@ public class MySqlGameDataDA {
         return gameInt;
     }
 
-    public GameData getGame(Connection connection, Integer gameID){
+    public GameData getGame(Connection connection, Integer gameID) throws DataAccessException, SQLException {
         String sql = "SELECT * FROM GameDataTable WHERE gameID=?";
         try (PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setInt(1, gameID);
@@ -74,12 +73,10 @@ public class MySqlGameDataDA {
                 }
                 return null;
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
-    public ArrayList<GameData> getListGames(Connection conn){
+    public ArrayList<GameData> getListGames(Connection conn) throws SQLException {
         ArrayList<GameData> games = new ArrayList<>();
         String sql = "SELECT * FROM GameDataTable";
 
@@ -96,23 +93,18 @@ public class MySqlGameDataDA {
                 }
 
             }
-        } catch (SQLException e) {
-            System.out.println("error querying DB");
         }
         return games;
     }
 
-    public void updateGame(Connection connection, GameData gameData){
+    public void updateGame(Connection connection, GameData gameData) throws SQLException{
         String sql = "UPDATE GameDataTable SET whiteUsername = ?, blackUsername = ?, gameName = ? WHERE gameID = ?";
-
         try (PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setInt(4, gameData.getGameID());
             statement.setString(1, gameData.getWhiteUsername());
             statement.setString(2, gameData.getBlackUsername());
             statement.setString(3, gameData.getGameName());
             statement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Error updating GameDataTable");
         }
     }
 

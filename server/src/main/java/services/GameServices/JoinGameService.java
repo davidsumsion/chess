@@ -16,12 +16,10 @@ import java.sql.SQLException;
 
 public class JoinGameService extends GameService{
     public JoinGameService(){};
-    public GameData findGame(Connection connection, Integer gameID){
-//        GameData game = new GameData();
+    public GameData findGame(Connection connection, Integer gameID) throws DataAccessException, SQLException{
         MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
         return mySqlGameDataDA.getGame(connection, gameID);
-//        MemoryGameDA games = new MemoryGameDA(game);
-//        return games.findGame(gameID);
+
     }
     public MessageOnlyResult joinGame(JoinGameRequest joinGameRequest) throws UnauthorizedException, ForbiddenException, BadRequestException {
         try (Connection connection = DatabaseManager.getConnection()){
@@ -42,7 +40,7 @@ public class JoinGameService extends GameService{
             throw new BadRequestException("Error: Game not found in DB");
         } catch (SQLException | DataAccessException e) {
             System.out.println("ERROR " + e.getMessage());
+            return null;
         }
-        return null;
     }
 }
