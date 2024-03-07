@@ -49,7 +49,21 @@ public class MySqlAuthTokenDA {
 //        return null;
 //    }
 
-    public boolean deleteSession(String authToken){
+    public boolean deleteSession(Connection conn, String authToken) throws DataAccessException {
+        String sql = "DELETE FROM AuthDataTable WHERE authToken = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setString(1, authToken);
+            if (stmt.executeUpdate() == 1) {
+                System.out.println("successful logged out");
+                return true;
+            } else {
+                System.out.println("unsuccessful logged out");
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        }
 //        AuthData removable = null;
 //        for (AuthData session: authArr){
 //            if (session.getAuthToken().equals(authToken)){
@@ -62,7 +76,7 @@ public class MySqlAuthTokenDA {
 //            return false;
 //        }
 //        authArr.remove(removable);
-        return true;
+
     }
 
     public void delete() {
