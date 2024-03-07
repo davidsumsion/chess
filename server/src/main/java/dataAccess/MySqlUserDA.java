@@ -1,17 +1,10 @@
 package dataAccess;
 
-import models.AuthData;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
-public class UserSQL {
-    public UserSQL(Connection conn) {};
+public class MySqlUserDA {
+    public MySqlUserDA() {};
+
 
 
 

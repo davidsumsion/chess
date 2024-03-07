@@ -34,15 +34,50 @@ public class DatabaseManager {
     /**
      * Creates the database if it does not already exist.
      */
-    static void createDatabase() throws DataAccessException {
+    public static void createDatabase() throws DataAccessException {
         try {
             var statement = "CREATE DATABASE IF NOT EXISTS " + databaseName;
             var conn = DriverManager.getConnection(connectionUrl, user, password);
             try (var preparedStatement = conn.prepareStatement(statement)) {
                 preparedStatement.executeUpdate();
             }
+
+            var userTableStatment = "CREATE TABLE IF NOT EXISTS " + databaseName +  ".UserTable (" +
+                    "username VARCHAR(32) not null primary key," +
+                    "    hashedPassword VARCHAR(255) not null," +
+                    "    email VARCHAR(32) not null," +
+                    "    authToken VARCHAR(50)" +
+                    ");";
+
+            try (var preparedStatement = conn.prepareStatement(userTableStatment)) {
+                preparedStatement.executeUpdate();
+            }
+
+            var authTableStatment = "CREATE TABLE IF NOT EXISTS myChessDataBase.AuthDataTable (" +
+                    "authToken VARCHAR(50) not null primary key," +
+                    "    username VARCHAR(32) not null" +
+                    ");";
+
+            try (var preparedStatement = conn.prepareStatement(authTableStatment)) {
+                preparedStatement.executeUpdate();
+            }
+
+            var gameDataTableStatment = "CREATE TABLE IF NOT EXISTS myChessDataBase.GameDataTable (" +
+                    "    gameID INT not null primary key auto_increment," +
+                    "    whiteUsername VARCHAR(32)," +
+                    "    blackUsername VARCHAR(32)," +
+                    "    gameName VARCHAR(32)," +
+                    "    foreign key(whiteUsername) references UserTable(username)," +
+                    "    foreign key(blackUsername) references UserTable(username)" +
+                    ");";
+
+            try (var preparedStatement = conn.prepareStatement(gameDataTableStatment)) {
+                preparedStatement.executeUpdate();
+            }
+
         } catch (SQLException e) {
-            throw new DataAccessException(e.getMessage());
+            System.out.println("ERROR");
+            throw new DataAccessException("Cannot Create DB or tables");
         }
     }
 

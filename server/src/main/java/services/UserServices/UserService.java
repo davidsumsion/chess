@@ -4,6 +4,7 @@ import dataAccess.MemoryUserDA;
 import models.UserData;
 import requests.RegisterRequest;
 
+import java.sql.Connection;
 import java.util.UUID;
 
 class UserService {
@@ -11,6 +12,14 @@ class UserService {
     public String createAuthToken() { return UUID.randomUUID().toString(); }
 
     public UserData getUser(String username, String password, String email){
+        UserData user = new UserData(username, password, email);
+        MemoryUserDA dao = new MemoryUserDA(user);
+        return dao.getUser();
+    }
+
+    public UserData getUser(Connection conn, String username, String password, String email){
+
+
         UserData user = new UserData(username, password, email);
         MemoryUserDA dao = new MemoryUserDA(user);
         return dao.getUser();

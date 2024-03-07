@@ -1,7 +1,11 @@
 package server;
 
+import dataAccess.DataAccessException;
+import dataAccess.DatabaseManager;
 import spark.*;
 import handlers.*;
+
+import javax.xml.crypto.Data;
 
 public class Server {
 
@@ -12,6 +16,12 @@ public class Server {
 
     public int run(int desiredPort) {
         Spark.port(desiredPort);
+
+        try {
+            DatabaseManager.createDatabase();
+        } catch (DataAccessException e) {
+            System.out.println("Cannot Create DB or Tables");
+        }
 
         Spark.staticFiles.location("web");
 
