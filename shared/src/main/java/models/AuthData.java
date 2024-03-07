@@ -3,9 +3,18 @@ package models;
 public class AuthData {
     private String username;
     private String authToken;
+    private Integer id;
     public AuthData(String username, String authToken) {
         this.authToken = authToken;
         this.username = username;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getUsername() {

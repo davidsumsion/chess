@@ -12,7 +12,6 @@ public class MemoryAuthTokenDA {
     public MemoryAuthTokenDA() {}
 
     public void createSession(AuthData authData){
-        //if username already in database update authToken
         authArr.add(authData);
     }
 
@@ -49,5 +48,4 @@ public class MemoryAuthTokenDA {
         }
         return false;
     }
-
 }
