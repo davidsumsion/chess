@@ -227,3 +227,23 @@ project
   - starter code has it, but it won't put tables in it
   - look at petShop example (only has 1 DAO)
   - use password algorithm to hash your password
+
+
+Debugging
+- conditional breakpoint
+  - valid java code at that point
+- runtocursor
+- run
+  - view breakpoints
+    - you can uncheck breakpoints so that you won't have to go back and set it later
+    - You can set a breakpoint when there is an exception thrown, can do all or specefic exceptions
+    - specefic breakpoint
+      - pass count, stop if i've hit it some number of times
+      - disable until hitting another breakpoint
+
+
+
+Speed
+- if else faster than terinary operator 
+- pointer array faster than objects in linked list
+- 
