@@ -25,9 +25,6 @@ public class CreateGameService extends GameService{
             GameData gameData = createAndSetGameName(createGameRequest.getGameName());
             MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
             Integer generatedGameID = mySqlGameDataDA.createGame(conn, gameData);
-
-//            MemoryGameDA dao = new MemoryGameDA(gameData);
-//            boolean bool = dao.createGame();
             if (generatedGameID == null){ throw new UnauthorizedException("Error: Game Name Already in use"); }
             return new CreateGameResult(generatedGameID);
         } catch (SQLException | DataAccessException e) {

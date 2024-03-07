@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class MySqlGameDataDA {
     public MySqlGameDataDA() {}
@@ -55,6 +56,64 @@ public class MySqlGameDataDA {
             System.out.println("Error accessing DB" + e.getMessage());
         }
         return gameInt;
+    }
+
+    public GameData getGame(Connection connection, Integer gameID){
+        String sql = "SELECT * FROM GameDataTable WHERE gameID=?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setInt(1, gameID);
+            try (ResultSet rs = statement.executeQuery()){
+                if (rs.next()){
+                    Integer id = rs.getInt("gameID");
+                    String whiteUsername = rs.getString("whiteUsername");
+                    String blackUsername = rs.getString("blackUsername");
+                    String gameName = rs.getString("gameName");
+                    //add chessGame in when you need it
+                    String chessGame = rs.getString("chessGame");
+                    return new GameData(id, whiteUsername,blackUsername, gameName);
+                }
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<GameData> getListGames(Connection conn){
+        ArrayList<GameData> games = new ArrayList<>();
+        String sql = "SELECT * FROM GameDataTable";
+
+        try (PreparedStatement statement = conn.prepareStatement(sql)){
+            try (ResultSet rs = statement.executeQuery()){
+                while(rs.next()){
+                    Integer id = rs.getInt("gameID");
+                    String whiteUsername = rs.getString("whiteUsername");
+                    String blackUsername = rs.getString("blackUsername");
+                    String gameName = rs.getString("gameName");
+                    //add chessGame in when you need it
+                    String chessGame = rs.getString("chessGame");
+                    games.add(new GameData(id, whiteUsername, blackUsername, gameName));
+                }
+
+            }
+        } catch (SQLException e) {
+            System.out.println("error querying DB");
+        }
+        return games;
+    }
+
+    public void updateGame(Connection connection, GameData gameData){
+        String sql = "UPDATE GameDataTable SET whiteUsername = ?, blackUsername = ?, gameName = ? WHERE gameID = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setInt(4, gameData.getGameID());
+            statement.setString(1, gameData.getWhiteUsername());
+            statement.setString(2, gameData.getBlackUsername());
+            statement.setString(3, gameData.getGameName());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error updating GameDataTable");
+        }
     }
 
 

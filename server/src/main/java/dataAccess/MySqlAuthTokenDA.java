@@ -35,19 +35,18 @@ public class MySqlAuthTokenDA {
         }
     }
 
-//    public String getUser(String authToken) throws DataAccessException, SQLException {
-//        try (var conn = DatabaseManager.getConnection()) {
-//            var statement = "SELECT * FROM AuthData WHERE authToken=?";
-//            try (var ps = conn.prepareStatement(statement)){
-//                try (var rs = ps.executeQuery()){
-//                    if (rs.next()) {
-//                        return rs.getString("username");
-//                    }
-//                }
-//            }
-//        }
-//        return null;
-//    }
+    public String getUser(Connection connection, String authToken) throws DataAccessException, SQLException {
+        var statement = "SELECT * FROM AuthDataTable WHERE authToken=?";
+        try (var ps = connection.prepareStatement(statement)){
+            ps.setString(1, authToken);
+            try (var rs = ps.executeQuery()){
+                if (rs.next()) {
+                    return rs.getString("username");
+                }
+            }
+        }
+        return null;
+    }
 
     public boolean deleteSession(Connection conn, String authToken) throws DataAccessException {
         String sql = "DELETE FROM AuthDataTable WHERE authToken = ?";

@@ -5,15 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlGameDataDA.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/DatabaseManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlAuthTokenDA.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlAuthTokenDA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/DeleteAllService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/DeleteAllService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlGameDataDA.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlGameDataDA.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/services/GameServices/CreateGameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/GameServices/CreateGameService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/services/GameServices/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/GameServices/GameService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/services/GameServices/JoinGameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/GameServices/JoinGameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/LogoutService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/LogoutService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/GameServices/ListGamesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/GameServices/ListGamesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/main/java/models/GameData.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/models/GameData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +36,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -54,7 +56,7 @@
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.All in server.executor": "Debug",
     "JUnit.All in shared.executor": "Debug",
-    "JUnit.StandardAPITests.executor": "Debug",
+    "JUnit.StandardAPITests.executor": "Run",
     "JUnit.StandardAPITests.successLogin.executor": "Debug",
     "JUnit.StandardAPITests.successRegister.executor": "Debug",
     "JUnit.myServiceTests.executor": "Run",
@@ -85,7 +87,15 @@
       <recent name="$PROJECT_DIR$/shared/src/main/java" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.StandardAPITests">
+  <component name="RunManager" selected="JUnit.All in server">
+    <configuration name="All in server" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="StandardAPITests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
@@ -97,22 +107,6 @@
       <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
       <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.StandardAPITests" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="StandardAPITests.successLogin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="passoffTests.serverTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
-      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.StandardAPITests" />
-      <option name="METHOD_NAME" value="successLogin" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -166,11 +160,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.StandardAPITests" />
+        <item itemvalue="JUnit.All in server" />
         <item itemvalue="JUnit.myServiceTests" />
+        <item itemvalue="JUnit.StandardAPITests" />
         <item itemvalue="JUnit.myServiceTests.registerExistingUser" />
         <item itemvalue="JUnit.StandardAPITests.successRegister" />
-        <item itemvalue="JUnit.StandardAPITests.successLogin" />
       </list>
     </recent_temporary>
   </component>
@@ -293,14 +287,34 @@
           <option name="timeStamp" value="338" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/services/GameServices/CreateGameService.java</url>
-          <line>23</line>
-          <option name="timeStamp" value="345" />
+          <url>file://$PROJECT_DIR$/server/src/main/java/services/GameServices/ListGamesService.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="348" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/services/GameServices/ListGamesService.java</url>
+          <line>20</line>
+          <option name="timeStamp" value="352" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlGameDataDA.java</url>
-          <line>19</line>
-          <option name="timeStamp" value="347" />
+          <line>83</line>
+          <option name="timeStamp" value="353" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/services/GameServices/JoinGameService.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="354" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/services/GameServices/JoinGameService.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="355" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlGameDataDA.java</url>
+          <line>63</line>
+          <option name="timeStamp" value="356" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

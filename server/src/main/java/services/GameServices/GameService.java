@@ -6,12 +6,15 @@ import dataAccess.MySqlAuthTokenDA;
 import services.Exceptions.UnauthorizedException;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class GameService {
     public GameService(){};
-    public String findUsername(String authToken){
-        MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
-        return memoryAuthTokenDA.getUser(authToken);
+    public String findUsername(Connection conn, String authToken) throws DataAccessException, SQLException {
+        MySqlAuthTokenDA mySqlAuthTokenDA = new MySqlAuthTokenDA();
+        return mySqlAuthTokenDA.getUser(conn, authToken);
+//        MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();
+//        return memoryAuthTokenDA.getUser(authToken);
     }
     public void verifyAuthToken(String authToken) throws UnauthorizedException{
         MemoryAuthTokenDA memoryAuthTokenDA = new MemoryAuthTokenDA();

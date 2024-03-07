@@ -12,8 +12,12 @@ public class GameData {
     private String blackUsername;
     private String gameName;
     private static int counter = 0;
-    public GameData() {
-        setGameID();
+    public GameData() {}
+    public GameData(Integer id, String whiteUsername, String blackUsername, String gameName){
+        this.gameID = id;
+        this.whiteUsername = whiteUsername;
+        this.blackUsername = blackUsername;
+        this.gameName = gameName;
     }
     public int getGameID() {
         return gameID;
