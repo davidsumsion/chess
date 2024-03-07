@@ -2,6 +2,7 @@ package services.UserServices;
 
 import dataAccess.MemoryUserDA;
 import models.UserData;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import requests.RegisterRequest;
 
 import java.sql.Connection;
@@ -14,10 +15,10 @@ class UserService {
     public UserService(){};
     public String createAuthToken() { return UUID.randomUUID().toString(); }
 
-    public UserData getUser(String username, String password, String email){
-        UserData user = new UserData(username, password, email);
-        MemoryUserDA dao = new MemoryUserDA(user);
-        return dao.getUser();
+    public String encryptPassword(String clearPassword) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String hashedPassword = encoder.encode(clearPassword);
+        return hashedPassword;
     }
 
     public UserData getUser(Connection conn, String username) {

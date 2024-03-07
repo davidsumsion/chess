@@ -11,12 +11,12 @@ import java.sql.Statement;
 public class MySqlUserDA {
     public MySqlUserDA() {};
 
-    public void createUser(Connection conn, UserData user) {
+    public void createUser(Connection conn, UserData user, String encryptedPassword) {
         String sql = "INSERT INTO UserTable (username, hashedPassword, email, authToken) VALUES (?,?,?,?)";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getPassword());
+            stmt.setString(2, encryptedPassword);
             stmt.setString(3, user.getEmail());
             stmt.setString(4, user.getAuthToken());
 
