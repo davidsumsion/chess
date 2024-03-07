@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
-      <change afterPath="$PROJECT_DIR$/server/src/test/java/myUnitTests/MyAuthDatabaseTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlAuthTokenDA.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlAuthTokenDA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlUserDA.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlUserDA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/myUnitTests/MyUserDatabaseTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/myUnitTests/MyUserDatabaseTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,8 +53,11 @@
     "JUnit.MyAuthDatabaseTests.createSessionCorrectly.executor": "Run",
     "JUnit.MyAuthDatabaseTests.createSessionWrong.executor": "Run",
     "JUnit.MyAuthDatabaseTests.deleteSessionCorrectly.executor": "Run",
+    "JUnit.MyAuthDatabaseTests.deleteSessionWrong.executor": "Run",
     "JUnit.MyAuthDatabaseTests.getUser.executor": "Run",
     "JUnit.MyAuthDatabaseTests.getUserDNE.executor": "Run",
+    "JUnit.MyAuthDatabaseTests.verifyAuthToken.executor": "Run",
+    "JUnit.MyAuthDatabaseTests.verifyAuthTokenWrong.executor": "Run",
     "JUnit.MyDatabaseTests.createGameCorectly.executor": "Debug",
     "JUnit.MyDatabaseTests.createGameIncorrectly.executor": "Debug",
     "JUnit.MyDatabaseTests.executor": "Run",
@@ -103,38 +105,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MyAuthDatabaseTests.deleteSessionCorrectly" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="myUnitTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="myUnitTests" />
-      <option name="MAIN_CLASS_NAME" value="myUnitTests.MyAuthDatabaseTests" />
-      <option name="METHOD_NAME" value="deleteSessionCorrectly" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MyAuthDatabaseTests.deleteSessionWrong" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="myUnitTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="myUnitTests" />
-      <option name="MAIN_CLASS_NAME" value="myUnitTests.MyAuthDatabaseTests" />
-      <option name="METHOD_NAME" value="deleteSessionWrong" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="MyAuthDatabaseTests.verifyAuthToken" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
@@ -167,13 +137,45 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MyUserDatabaseTests.createSessionCorrectly" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="myUnitTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="myUnitTests" />
+      <option name="MAIN_CLASS_NAME" value="myUnitTests.MyUserDatabaseTests" />
+      <option name="METHOD_NAME" value="createSessionCorrectly" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MyUserDatabaseTests.createSessionWrong" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="myUnitTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="myUnitTests" />
+      <option name="MAIN_CLASS_NAME" value="myUnitTests.MyUserDatabaseTests" />
+      <option name="METHOD_NAME" value="createSessionWrong" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.All in server" />
+        <item itemvalue="JUnit.MyUserDatabaseTests.createSessionWrong" />
+        <item itemvalue="JUnit.MyUserDatabaseTests.createSessionCorrectly" />
         <item itemvalue="JUnit.MyAuthDatabaseTests.verifyAuthTokenWrong" />
         <item itemvalue="JUnit.MyAuthDatabaseTests.verifyAuthToken" />
-        <item itemvalue="JUnit.MyAuthDatabaseTests.deleteSessionWrong" />
-        <item itemvalue="JUnit.MyAuthDatabaseTests.deleteSessionCorrectly" />
       </list>
     </recent_temporary>
   </component>
