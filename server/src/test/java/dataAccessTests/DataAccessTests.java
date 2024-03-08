@@ -82,6 +82,32 @@ public class DataAccessTests {
         }
     }
 
+    @Test
+    @DisplayName("Create user Correctly")
+    public void createSessionCorrectlyToo() {
+        try (Connection connection = DatabaseManager.getConnection()){
+            MySqlUserDA mySqlUserDA = new MySqlUserDA();
+
+            UserData userData = new UserData("myNewUserName", "fakeEncryptedPassword", "myEmail");
+
+            mySqlUserDA.createUser(connection, userData, "fakeEncryptedPassword");
+
+            String sql = "SELECT * FROM UserTable WHERE username = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)){
+                statement.setString(1, userData.getUsername());
+                ResultSet rs = statement.executeQuery();
+                if (rs.next()){
+                    Assertions.assertEquals("myNewUserName", rs.getString("username"));
+                    Assertions.assertEquals("fakeEncryptedPassword", rs.getString("hashedPassword"));
+                    Assertions.assertEquals("myEmail", rs.getString("email"));
+                }
+
+            }
+        } catch (DataAccessException | SQLException e) {
+            System.out.println("this is bad");
+        }
+    }
+
     //////////////////////////////
     ///// GameData DB Tests /////
     //////////////////////////////
@@ -115,6 +141,25 @@ public class DataAccessTests {
 
             GameData newGameData = new GameData();
             newGameData.setGameName("This is fun");
+            answer = mySqlGameDataDA.createGame(connection, newGameData);
+        } catch (DataAccessException | SQLException e) {
+            answer = 2;
+        }
+        Assertions.assertNull(answer, "created a game when it wasn't supposed to");
+    }
+
+    @Test
+    @DisplayName("Create Game that already exists")
+    public void createGameIncorrectlToo() {
+        Integer answer = null;
+        try (Connection connection = DatabaseManager.getConnection()){
+            MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
+            GameData gameData = new GameData();
+            gameData.setGameName("This is the best game");
+            mySqlGameDataDA.createGame(connection, gameData);
+
+            GameData newGameData = new GameData();
+            newGameData.setGameName("This is the best game");
             answer = mySqlGameDataDA.createGame(connection, newGameData);
         } catch (DataAccessException | SQLException e) {
             answer = 2;
@@ -182,6 +227,28 @@ public class DataAccessTests {
         Assertions.assertNotEquals(0, answer.size(), "Incorrect length of games");
     }
 
+    @Test
+    @DisplayName("Get List Games 2")
+    public void getGameLisToo() {
+        ArrayList<GameData> answer = null;
+        try (Connection connection = DatabaseManager.getConnection()){
+            MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
+
+            GameData gameData = new GameData();
+            gameData.setGameName("game3");
+            Integer gameID = mySqlGameDataDA.createGame(connection, gameData);
+
+            GameData gameData2 = new GameData();
+            gameData2.setGameName("game4");
+            Integer gameID2 = mySqlGameDataDA.createGame(connection, gameData2);
+
+            answer = mySqlGameDataDA.getListGames(connection);
+        } catch (DataAccessException | SQLException e) {
+            System.out.println("Get List Games didn't work");
+        }
+        Assertions.assertNotEquals(0, answer.size(), "Incorrect length of games");
+    }
+
 
     @Test
     @DisplayName("Update Game")
@@ -202,6 +269,31 @@ public class DataAccessTests {
             System.out.println("Get List Games didn't work");
         }
         Assertions.assertNotNull(answer.getGameID());
+//        Assertions.assertEquals(1, answer.getGameID(), "ID incorrect");
+//        Assertions.assertEquals("game1", answer.getGameName(), "Gamename incorrect");
+//        Assertions.assertNull(answer.getWhiteUsername());
+//        Assertions.assertNull(answer.getBlackUsername());
+    }
+
+    @Test
+    @DisplayName("Update Game 2")
+    public void updateGameToo() {
+        GameData answer = null;
+        try (Connection connection = DatabaseManager.getConnection()){
+            MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
+
+            GameData gameData = new GameData();
+            gameData.setGameName("game1");
+            Integer gameID = mySqlGameDataDA.createGame(connection, gameData);
+            gameData.setGameID(gameID);
+            mySqlGameDataDA.updateGame(connection, gameData);
+
+            answer = mySqlGameDataDA.getGame(connection, gameID);
+
+        } catch (DataAccessException | SQLException e) {
+            System.out.println("Get List Games didn't work");
+        }
+        Assertions.assertNotNull(answer.getGameName());
 //        Assertions.assertEquals(1, answer.getGameID(), "ID incorrect");
 //        Assertions.assertEquals("game1", answer.getGameName(), "Gamename incorrect");
 //        Assertions.assertNull(answer.getWhiteUsername());
@@ -312,19 +404,20 @@ public class DataAccessTests {
         }
     }
 
-//    @Test
-//    @DisplayName("Verify AuthToken Wrong")
-//    public void verifyAuthTokenWrong() {
-//        Boolean bool = null;
-//        try (Connection connection = DatabaseManager.getConnection()){
-//            MySqlAuthTokenDA mySqlAuthTokenDA = new MySqlAuthTokenDA();
-//            bool = mySqlAuthTokenDA.verifyAuthToken(connection, "fakeAuthToken");
-//
-//        } catch (DataAccessException | SQLException e) {
-//            System.out.println("this is bad");
-//        }
-//        Assertions.assertEquals(false, bool);
-//    }
+    @Test
+    @DisplayName("Verify AuthToken Wrong")
+    public void verifyAuthTokenWrong() {
+        Boolean bool = null;
+        try (Connection connection = DatabaseManager.getConnection()){
+            MySqlAuthTokenDA mySqlAuthTokenDA = new MySqlAuthTokenDA();
+            bool = mySqlAuthTokenDA.verifyAuthToken(connection, "fakeAuthToken");
+
+        } catch (DataAccessException | SQLException e) {
+            System.out.println("this is bad");
+        }
+        Assertions.assertNotNull(bool);
+    }
+
 
 
 

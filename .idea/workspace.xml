@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/test/java/dataAccessTests/DataAccessTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/dataAccessTests/DataAccessTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,10 +51,12 @@
     "JUnit.All in server.executor": "Run",
     "JUnit.All in shared.executor": "Debug",
     "JUnit.DataAccessTests.createGameCorectly.executor": "Run",
+    "JUnit.DataAccessTests.createSessionCorrectlyToo.executor": "Run",
     "JUnit.DataAccessTests.getGame.executor": "Run",
     "JUnit.DataAccessTests.getGameDNE.executor": "Run",
     "JUnit.DataAccessTests.getGameList.executor": "Run",
     "JUnit.DataAccessTests.getNewGame.executor": "Run",
+    "JUnit.DataAccessTests.updateGame.executor": "Run",
     "JUnit.DataAccessTests.verifyAuthTokenWrong.executor": "Run",
     "JUnit.MyAuthDatabaseTests.createSessionCorrectly.executor": "Run",
     "JUnit.MyAuthDatabaseTests.createSessionWrong.executor": "Run",
@@ -105,8 +108,8 @@
       <recent name="$PROJECT_DIR$/shared/src/main/java" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.DataAccessTests.getGameList">
-    <configuration name="DataAccessTests.createGameCorectly" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.DataAccessTests.createSessionCorrectlyToo">
+    <configuration name="DataAccessTests.createSessionCorrectlyToo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
         <pattern>
@@ -116,23 +119,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="dataAccessTests" />
       <option name="MAIN_CLASS_NAME" value="dataAccessTests.DataAccessTests" />
-      <option name="METHOD_NAME" value="createGameCorectly" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DataAccessTests.getGameDNE" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="dataAccessTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="dataAccessTests" />
-      <option name="MAIN_CLASS_NAME" value="dataAccessTests.DataAccessTests" />
-      <option name="METHOD_NAME" value="getGameDNE" />
+      <option name="METHOD_NAME" value="createSessionCorrectlyToo" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -170,6 +157,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DataAccessTests.updateGame" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dataAccessTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dataAccessTests" />
+      <option name="MAIN_CLASS_NAME" value="dataAccessTests.DataAccessTests" />
+      <option name="METHOD_NAME" value="updateGame" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="DataAccessTests.verifyAuthTokenWrong" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
@@ -188,11 +191,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.DataAccessTests.createSessionCorrectlyToo" />
+        <item itemvalue="JUnit.DataAccessTests.updateGame" />
         <item itemvalue="JUnit.DataAccessTests.getGameList" />
         <item itemvalue="JUnit.DataAccessTests.getNewGame" />
         <item itemvalue="JUnit.DataAccessTests.verifyAuthTokenWrong" />
-        <item itemvalue="JUnit.DataAccessTests.createGameCorectly" />
-        <item itemvalue="JUnit.DataAccessTests.getGameDNE" />
       </list>
     </recent_temporary>
   </component>
