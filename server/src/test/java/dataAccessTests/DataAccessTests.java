@@ -4,10 +4,7 @@ import dataAccess.*;
 import models.AuthData;
 import models.GameData;
 import models.UserData;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,8 +13,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DataAccessTests {
-    @BeforeEach
+    @AfterEach
     public void cleanUp() {
+        try (Connection conn = DatabaseManager.getConnection()){
+            String sql = "DROP DATABASE IF EXISTS myChessDataBase;";
+            try (var preparedStatement = conn.prepareStatement(sql)) {
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            DatabaseManager.createDatabase();
+        } catch (DataAccessException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @BeforeEach
+    public void cleanUpToo() {
         try (Connection conn = DatabaseManager.getConnection()){
             String sql = "DROP DATABASE IF EXISTS myChessDataBase;";
             try (var preparedStatement = conn.prepareStatement(sql)) {
@@ -101,7 +112,6 @@ public class DataAccessTests {
             answer = null;
         }
         Assertions.assertNotNull(answer);
-//        Assertions.assertEquals(1, answer, "Did not create the correct game");
     }
 
     @Test
@@ -123,43 +133,43 @@ public class DataAccessTests {
         Assertions.assertNull(answer, "created a game when it wasn't supposed to");
     }
 
-//    @Test
-//    @DisplayName("Get Game")
-//    public void getGame() {
-//        GameData answer = null;
-//        try (Connection connection = DatabaseManager.getConnection()){
-//            MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
-//            GameData gameData = new GameData();
-//            gameData.setGameName("This is fun");
-//            Integer gameID = mySqlGameDataDA.createGame(connection, gameData);
-//            gameData.setGameID(gameID);
-//            answer = mySqlGameDataDA.getGame(connection, gameData.getGameID());
-//        } catch (DataAccessException | SQLException e) {
-//            answer = null;
-//        }
-//
-//        Assertions.assertEquals(1, answer.getGameID(), "ID incorrect");
-//        Assertions.assertEquals("This is fun", answer.getGameName(), "Gamename incorrect");
-//        Assertions.assertNull(answer.getWhiteUsername());
-//        Assertions.assertNull(answer.getBlackUsername());
-//    }
+    @Test
+    @DisplayName("Get Game")
+    public void getGame() {
+        GameData answer = null;
+        try (Connection connection = DatabaseManager.getConnection()){
+            MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
+            GameData gameData = new GameData();
+            gameData.setGameName("This is fun");
+            Integer gameID = mySqlGameDataDA.createGame(connection, gameData);
+            gameData.setGameID(gameID);
+            answer = mySqlGameDataDA.getGame(connection, gameData.getGameID());
+        } catch (DataAccessException | SQLException e) {
+            answer = null;
+        }
+
+        Assertions.assertEquals(1, answer.getGameID(), "ID incorrect");
+        Assertions.assertEquals("This is fun", answer.getGameName(), "Gamename incorrect");
+        Assertions.assertNull(answer.getWhiteUsername());
+        Assertions.assertNull(answer.getBlackUsername());
+    }
 
 
-//    @Test
-//    @DisplayName("Get Game DNE")
-//    public void getGameDNE() {
-//        GameData answer = null;
-//        try (Connection connection = DatabaseManager.getConnection()){
-//            MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
-//            GameData gameData = new GameData();
-//            gameData.setGameName("This is fun");
-//            answer = mySqlGameDataDA.getGame(connection, 1);
-//        } catch (DataAccessException | SQLException e) {
-//            answer = null;
-//        }
-//
-//        Assertions.assertNull(answer);
-//    }
+    @Test
+    @DisplayName("Get Game DNE")
+    public void getGameDNE() {
+        GameData answer = null;
+        try (Connection connection = DatabaseManager.getConnection()){
+            MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
+            GameData gameData = new GameData();
+            gameData.setGameName("This is fun");
+            answer = mySqlGameDataDA.getGame(connection, 1);
+        } catch (DataAccessException | SQLException e) {
+            answer = null;
+        }
+
+        Assertions.assertNull(answer);
+    }
 
 //    @Test
 //    @DisplayName("Get List Games")
