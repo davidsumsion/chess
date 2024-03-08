@@ -268,7 +268,7 @@ public class DataAccessTests {
         } catch (DataAccessException | SQLException e) {
             System.out.println("Get List Games didn't work");
         }
-        Assertions.assertNotNull(answer.getGameID());
+        Assertions.assertNull(answer.getWhiteUsername());
 //        Assertions.assertEquals(1, answer.getGameID(), "ID incorrect");
 //        Assertions.assertEquals("game1", answer.getGameName(), "Gamename incorrect");
 //        Assertions.assertNull(answer.getWhiteUsername());
