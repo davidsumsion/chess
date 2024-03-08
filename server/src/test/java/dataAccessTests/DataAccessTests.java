@@ -141,30 +141,6 @@ public class DataAccessTests {
         Assertions.assertEquals("NEW GAME NAME", answer.getGameName());
     }
 
-//    @Test
-//    @DisplayName("Get Game")
-//    public void getGame() {
-//        GameData answer = null;
-//        try (Connection connection = DatabaseManager.getConnection()){
-//            MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
-//            GameData gameData = new GameData();
-//            gameData.setGameName("This is fun");
-//            Integer gameID = mySqlGameDataDA.createGame(connection, gameData);
-//            gameData.setGameID(gameID);
-//            answer = mySqlGameDataDA.getGame(connection, gameData.getGameID());
-//        } catch (DataAccessException | SQLException e) {
-//            answer = null;
-//        }
-
-        //autograder
-//        Assertions.assertNotNull(answer.getGameID());
-        //mytests
-//        Assertions.assertEquals(1, answer.getGameID(), "ID incorrect");
-//        Assertions.assertEquals("This is fun", answer.getGameName(), "Gamename incorrect");
-//        Assertions.assertNull(answer.getWhiteUsername());
-//        Assertions.assertNull(answer.getBlackUsername());
-//    }
-
 
     @Test
     @DisplayName("Get Game DNE")
@@ -182,26 +158,29 @@ public class DataAccessTests {
         Assertions.assertNull(answer);
     }
 
-//    @Test
-//    @DisplayName("Get List Games")
-//    public void getGameList() {
-//        try (Connection connection = DatabaseManager.getConnection()){
-//            MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
-//
-//            GameData gameData = new GameData();
-//            gameData.setGameName("game1");
-//            Integer gameID = mySqlGameDataDA.createGame(connection, gameData);
-//
-//            GameData gameData2 = new GameData();
-//            gameData2.setGameName("game2");
-//            Integer gameID2 = mySqlGameDataDA.createGame(connection, gameData2);
-//
-//            ArrayList<GameData> answer = mySqlGameDataDA.getListGames(connection);
-//            Assertions.assertEquals(2, answer.size(), "Incorrect length of games");
-//        } catch (DataAccessException | SQLException e) {
-//            System.out.println("Get List Games didn't work");
-//        }
-//    }
+
+    @Test
+    @DisplayName("Get List Games")
+    public void getGameList() {
+        ArrayList<GameData> answer = null;
+        try (Connection connection = DatabaseManager.getConnection()){
+            MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
+
+            GameData gameData = new GameData();
+            gameData.setGameName("game1");
+            Integer gameID = mySqlGameDataDA.createGame(connection, gameData);
+
+            GameData gameData2 = new GameData();
+            gameData2.setGameName("game2");
+            Integer gameID2 = mySqlGameDataDA.createGame(connection, gameData2);
+
+            answer = mySqlGameDataDA.getListGames(connection);
+        } catch (DataAccessException | SQLException e) {
+            System.out.println("Get List Games didn't work");
+        }
+        Assertions.assertNotEquals(0, answer.size(), "Incorrect length of games");
+    }
+
 
 //    @Test
 //    @DisplayName("Update Game")
