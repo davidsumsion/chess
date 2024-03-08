@@ -183,29 +183,30 @@ public class DataAccessTests {
     }
 
 
-//    @Test
-//    @DisplayName("Update Game")
-//    public void updateGame() {
-//        GameData answer = null;
-//        try (Connection connection = DatabaseManager.getConnection()){
-//            MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
-//
-//            GameData gameData = new GameData();
-//            gameData.setGameName("game1");
-//            Integer gameID = mySqlGameDataDA.createGame(connection, gameData);
-//            gameData.setGameID(gameID);
-//            mySqlGameDataDA.updateGame(connection, gameData);
-//
-//            answer = mySqlGameDataDA.getGame(connection, gameID);
-//
-//        } catch (DataAccessException | SQLException e) {
-//            System.out.println("Get List Games didn't work");
-//        }
+    @Test
+    @DisplayName("Update Game")
+    public void updateGame() {
+        GameData answer = null;
+        try (Connection connection = DatabaseManager.getConnection()){
+            MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
+
+            GameData gameData = new GameData();
+            gameData.setGameName("game1");
+            Integer gameID = mySqlGameDataDA.createGame(connection, gameData);
+            gameData.setGameID(gameID);
+            mySqlGameDataDA.updateGame(connection, gameData);
+
+            answer = mySqlGameDataDA.getGame(connection, gameID);
+
+        } catch (DataAccessException | SQLException e) {
+            System.out.println("Get List Games didn't work");
+        }
+        Assertions.assertNotNull(answer.getGameID());
 //        Assertions.assertEquals(1, answer.getGameID(), "ID incorrect");
 //        Assertions.assertEquals("game1", answer.getGameName(), "Gamename incorrect");
 //        Assertions.assertNull(answer.getWhiteUsername());
 //        Assertions.assertNull(answer.getBlackUsername());
-//    }
+    }
 
     //////////////////////////////
     ///// Auth DB Tests /////
