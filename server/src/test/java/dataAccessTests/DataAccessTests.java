@@ -88,20 +88,21 @@ public class DataAccessTests {
     //////////////////////////////
     ///// GameData DB Tests /////
     //////////////////////////////
-//    @Test
-//    @DisplayName("Create Game Correctly")
-//    public void createGameCorectly() {
-//        Integer answer = null;
-//        try (Connection connection = DatabaseManager.getConnection()){
-//            MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
-//            GameData gameData = new GameData();
-//            gameData.setGameName("This is fun");
-//            answer = mySqlGameDataDA.createGame(connection, gameData);
-//        } catch (DataAccessException | SQLException e) {
-//            answer = 2;
-//        }
+    @Test
+    @DisplayName("Create Game Correctly")
+    public void createGameCorectly() {
+        Integer answer = null;
+        try (Connection connection = DatabaseManager.getConnection()){
+            MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
+            GameData gameData = new GameData();
+            gameData.setGameName("This is fun");
+            answer = mySqlGameDataDA.createGame(connection, gameData);
+        } catch (DataAccessException | SQLException e) {
+            answer = null;
+        }
+        Assertions.assertNotNull(answer);
 //        Assertions.assertEquals(1, answer, "Did not create the correct game");
-//    }
+    }
 
     @Test
     @DisplayName("Create Game that already exists")
