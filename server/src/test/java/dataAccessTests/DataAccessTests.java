@@ -313,13 +313,15 @@ public class DataAccessTests {
     @Test
     @DisplayName("Verify AuthToken Wrong")
     public void verifyAuthTokenWrong() {
+        Boolean bool = null;
         try (Connection connection = DatabaseManager.getConnection()){
             MySqlAuthTokenDA mySqlAuthTokenDA = new MySqlAuthTokenDA();
-            Boolean bool = mySqlAuthTokenDA.verifyAuthToken(connection, "fakeAuthToken");
-            Assertions.assertEquals(false, bool);
+            bool = mySqlAuthTokenDA.verifyAuthToken(connection, "fakeAuthToken");
+
         } catch (DataAccessException | SQLException e) {
             System.out.println("this is bad");
         }
+        Assertions.assertEquals(false, bool);
     }
 
 
