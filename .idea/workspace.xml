@@ -309,11 +309,6 @@
           <line>25</line>
           <option name="timeStamp" value="355" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/test/java/dataAccessTests/DataAccessTests.java</url>
-          <line>315</line>
-          <option name="timeStamp" value="372" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
