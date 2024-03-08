@@ -151,6 +151,7 @@ public class DataAccessTests {
 //            GameData gameData = new GameData();
 //            gameData.setGameName("This is fun");
             answer = mySqlGameDataDA.getGame(connection, 3);
+            answer = null;
         } catch (DataAccessException | SQLException e) {
             answer = new GameData();
         }
