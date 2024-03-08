@@ -138,7 +138,7 @@ public class DataAccessTests {
             System.out.println("broken");
         }
 
-        Assertions.assertNotNull("NEW GAME NAME", answer.getGameName());
+        Assertions.assertEquals("NEW GAME NAME", answer.getGameName());
     }
 
 //    @Test
