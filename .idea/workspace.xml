@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
-      <change afterPath="$PROJECT_DIR$/server/src/test/java/myUnitTests/dataAccessTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/test/java/myUnitTests/MyAuthDatabaseTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/myUnitTests/MyAuthDatabaseTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/test/java/myUnitTests/MyGameDatabaseTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/myUnitTests/MyGameDatabaseTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/test/java/myUnitTests/MyUserDatabaseTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/myUnitTests/MyUserDatabaseTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +111,7 @@
       <module name="server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="myUnitTests.*" />
+          <option name="PATTERN" value="dataAccessTests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -130,7 +127,7 @@
       <module name="server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="myUnitTests.*" />
+          <option name="PATTERN" value="dataAccessTests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -146,7 +143,7 @@
       <module name="server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="myUnitTests.*" />
+          <option name="PATTERN" value="dataAccessTests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -162,12 +159,12 @@
       <module name="server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="myUnitTests.*" />
+          <option name="PATTERN" value="dataAccessTests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="myUnitTests" />
-      <option name="MAIN_CLASS_NAME" value="myUnitTests.dataAccessTests" />
+      <option name="PACKAGE_NAME" value="dataAccessTests" />
+      <option name="MAIN_CLASS_NAME" value="dataAccessTests.dataAccessTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
