@@ -1,4 +1,4 @@
-package myUnitTests;
+package dataAccessTests;
 
 import dataAccess.DataAccessException;
 import dataAccess.DatabaseManager;
