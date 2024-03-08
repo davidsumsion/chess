@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/test/java/dataAccessTests/DataAccessTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/dataAccessTests/DataAccessTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,6 +52,7 @@
     "JUnit.DataAccessTests.createGameCorectly.executor": "Run",
     "JUnit.DataAccessTests.getGame.executor": "Run",
     "JUnit.DataAccessTests.getGameDNE.executor": "Run",
+    "JUnit.DataAccessTests.verifyAuthTokenWrong.executor": "Run",
     "JUnit.MyAuthDatabaseTests.createSessionCorrectly.executor": "Run",
     "JUnit.MyAuthDatabaseTests.createSessionWrong.executor": "Run",
     "JUnit.MyAuthDatabaseTests.deleteSessionCorrectly.executor": "Run",
@@ -103,26 +103,11 @@
       <recent name="$PROJECT_DIR$/shared/src/main/java" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.DataAccessTests.createGameCorectly">
+  <component name="RunManager" selected="JUnit.DataAccessTests.verifyAuthTokenWrong">
     <configuration name="All in server" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <option name="PACKAGE_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DataAccessTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="dataAccessTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="dataAccessTests" />
-      <option name="MAIN_CLASS_NAME" value="dataAccessTests.DataAccessTests" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -175,13 +160,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DataAccessTests.verifyAuthTokenWrong" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dataAccessTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dataAccessTests" />
+      <option name="MAIN_CLASS_NAME" value="dataAccessTests.DataAccessTests" />
+      <option name="METHOD_NAME" value="verifyAuthTokenWrong" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.DataAccessTests.verifyAuthTokenWrong" />
         <item itemvalue="JUnit.DataAccessTests.createGameCorectly" />
         <item itemvalue="JUnit.DataAccessTests.getGameDNE" />
         <item itemvalue="JUnit.DataAccessTests.getGame" />
         <item itemvalue="JUnit.All in server" />
-        <item itemvalue="JUnit.DataAccessTests" />
       </list>
     </recent_temporary>
   </component>
@@ -307,6 +308,11 @@
           <url>file://$PROJECT_DIR$/server/src/main/java/services/GameServices/JoinGameService.java</url>
           <line>25</line>
           <option name="timeStamp" value="355" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/test/java/dataAccessTests/DataAccessTests.java</url>
+          <line>315</line>
+          <option name="timeStamp" value="372" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
