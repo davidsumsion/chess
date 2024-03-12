@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
-      <change afterPath="$PROJECT_DIR$/notes_5.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Chess/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/client.iml" beforeDir="false" afterPath="$PROJECT_DIR$/client/client.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes_5.md" beforeDir="false" afterPath="$PROJECT_DIR$/notes_5.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +109,7 @@
       <recent name="$PROJECT_DIR$/shared/src/main/java" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.DataAccessTests">
     <configuration name="DataAccessTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
