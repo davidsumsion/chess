@@ -58,7 +58,6 @@ public class ChessBoardUI {
         if (chessPiece == null) return EMPTY;
         ChessGame.TeamColor teamColor = chessPiece.getTeamColor();
         ChessPiece.PieceType pieceType = chessPiece.getPieceType();
-//        if (pieceType == null) return EMPTY;
         if (pieceType == ChessPiece.PieceType.KING && teamColor == ChessGame.TeamColor.WHITE) return WHITE_KING;
         if (pieceType == ChessPiece.PieceType.KING && teamColor == ChessGame.TeamColor.BLACK) return BLACK_KING;
         if (pieceType == ChessPiece.PieceType.QUEEN && teamColor == ChessGame.TeamColor.WHITE) return WHITE_QUEEN;
@@ -75,12 +74,12 @@ public class ChessBoardUI {
     }
 
     private static String setTileColor(String color, PrintStream out){
-        if (Objects.equals(color, SET_BG_COLOR_BLACK)) {
-            setBackGroundWhite(out);
-            return SET_BG_COLOR_WHITE;
+        if (Objects.equals(color, SET_BG_COLOR_BLUE)) {
+            setBackGroundLightGrey(out);
+            return SET_BG_COLOR_LIGHT_GREY;
         } else {
-            setBackGroundBlack(out);
-            return SET_BG_COLOR_BLACK;
+            setBackGroundBlue(out);
+            return SET_BG_COLOR_BLUE;
         }
 
     }
@@ -122,6 +121,16 @@ public class ChessBoardUI {
 
     private static void setBackGroundWhite(PrintStream out) {
         out.print(EscapeSequences.SET_BG_COLOR_WHITE);
+        out.print(EscapeSequences.SET_TEXT_COLOR_BLACK);
+    }
+
+    private static void setBackGroundLightGrey(PrintStream out){
+        out.print(SET_BG_COLOR_LIGHT_GREY);
+        out.print(EscapeSequences.SET_TEXT_COLOR_BLACK);
+    }
+
+    private static void setBackGroundBlue(PrintStream out){
+        out.print(SET_BG_COLOR_BLUE);
         out.print(EscapeSequences.SET_TEXT_COLOR_BLACK);
     }
 
