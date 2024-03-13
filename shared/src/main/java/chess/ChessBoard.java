@@ -111,24 +111,24 @@ public class ChessBoard implements Cloneable {
         return Arrays.deepHashCode(squares);
     }
 
-//    @Override
-//    public String toString() {
-//        String end = "";
-//        for (int i = 7; i >= 0; i--){
-//            end += i + 1;
-//            end += "|";
-//            for (int j = 0; j < 8; j++){
-//                if (squares[i][j] == null) {
-//                    end += "           ";
-//                }
-//                else {
-//                    end += squares[i][j].toString();
-//                }
-//                end += "|";
-//            }
-//            end += "\n";
-//        }
-//        end += "        1           2           3           4           5           6           7           8\n";
-//        return end;
-//    }
+    @Override
+    public String toString() {
+        String end = "";
+        for (int i = 7; i >= 0; i--){
+            end += i + 1;
+            end += "|";
+            for (int j = 0; j < 8; j++){
+                if (squares[i][j] == null) {
+                    end += "           ";
+                }
+                else {
+                    end += squares[i][j].toString();
+                }
+                end += "|";
+            }
+            end += "\n";
+        }
+        end += "        1           2           3           4           5           6           7           8\n";
+        return end;
+    }
 }
