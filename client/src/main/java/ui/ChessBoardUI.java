@@ -5,9 +5,7 @@ import java.util.Objects;
 
 import static ui.EscapeSequences.*;
 
-import chess.ChessBoard;
-import chess.ChessMove;
-import chess.ChessPiece;
+import chess.*;
 
 public class ChessBoardUI {
 
@@ -17,9 +15,6 @@ public class ChessBoardUI {
         out.print(EscapeSequences.ERASE_SCREEN);
 
         drawChessBoard(out);
-
-//        out.print(SET_BG_COLOR_BLACK);
-//        out.print(SET_TEXT_COLOR_WHITE);
     }
 
     private static void drawChessBoard(PrintStream out) {
@@ -33,11 +28,10 @@ public class ChessBoardUI {
     }
 
     private static void printIndex(PrintStream out, int i){
-        out.print(EMPTY.repeat(1));
         out.print(SET_BG_COLOR_BLACK);
         out.print(SET_TEXT_COLOR_WHITE);
         out.print(i + 1);
-        out.print(EMPTY.repeat(1));
+        out.print(" ");
         setBackGroundBlack(out);
 
     }
@@ -45,23 +39,39 @@ public class ChessBoardUI {
     private static void drawRows(PrintStream out, ChessBoard chessBoard) {
         String color = SET_BG_COLOR_BLACK;
         for (int boardRow = 0; boardRow < 8; ++boardRow) {
+            out.print(EMPTY);
             printIndex(out, boardRow);
             color = setTileColor(color, out);
             for (int boardColumn = 0; boardColumn < 8; ++boardColumn){
                 color = setTileColor(color, out);
-                out.print(WHITE_KING);
-//                out.print(EMPTY.repeat(1));
-
+                out.print(getPieceName(chessBoard, boardRow, boardColumn));
             }
-//            out.print(" " + boardRow + " ");
+            setBackGroundBlack(out);
+            out.print(" ");
+            printIndex(out, boardRow);
             out.println();
-//            drawRowOfSquares(out, boardRow, chessBoard);
-
-//            if (boardRow < 8 - 1) {
-////                drawVerticalLine(out);
-////                setBlack(out);
-//            }
         }
+    }
+
+    private static String getPieceName(ChessBoard chessBoard, int boardRow, int boardColumn){
+        ChessPiece chessPiece = chessBoard.getPiece(new ChessPosition(boardRow + 1, boardColumn + 1));
+        if (chessPiece == null) return EMPTY;
+        ChessGame.TeamColor teamColor = chessPiece.getTeamColor();
+        ChessPiece.PieceType pieceType = chessPiece.getPieceType();
+//        if (pieceType == null) return EMPTY;
+        if (pieceType == ChessPiece.PieceType.KING && teamColor == ChessGame.TeamColor.WHITE) return WHITE_KING;
+        if (pieceType == ChessPiece.PieceType.KING && teamColor == ChessGame.TeamColor.BLACK) return BLACK_KING;
+        if (pieceType == ChessPiece.PieceType.QUEEN && teamColor == ChessGame.TeamColor.WHITE) return WHITE_QUEEN;
+        if (pieceType == ChessPiece.PieceType.QUEEN && teamColor == ChessGame.TeamColor.BLACK) return BLACK_QUEEN;
+        if (pieceType == ChessPiece.PieceType.BISHOP && teamColor == ChessGame.TeamColor.WHITE) return WHITE_BISHOP;
+        if (pieceType == ChessPiece.PieceType.BISHOP && teamColor == ChessGame.TeamColor.BLACK) return BLACK_BISHOP;
+        if (pieceType == ChessPiece.PieceType.KNIGHT && teamColor == ChessGame.TeamColor.WHITE) return WHITE_KNIGHT;
+        if (pieceType == ChessPiece.PieceType.KNIGHT && teamColor == ChessGame.TeamColor.BLACK) return DARK_KNIGHT;
+        if (pieceType == ChessPiece.PieceType.ROOK && teamColor == ChessGame.TeamColor.WHITE) return WHITE_ROOK;
+        if (pieceType == ChessPiece.PieceType.ROOK && teamColor == ChessGame.TeamColor.BLACK) return BLACK_ROOK;
+        if (pieceType == ChessPiece.PieceType.PAWN && teamColor == ChessGame.TeamColor.WHITE) return WHITE_PAWN;
+        if (pieceType == ChessPiece.PieceType.PAWN && teamColor == ChessGame.TeamColor.BLACK) return BLACK_PAWN;
+        return EMPTY;
     }
 
     private static String setTileColor(String color, PrintStream out){
@@ -74,13 +84,10 @@ public class ChessBoardUI {
         }
 
     }
-//    private static void drawRowOfSquares(PrintStream out, int boardRow, ChessBoard chessBoard) {
-//
-//    }
 
     private  static void drawHeaders(PrintStream out) {
         String[] headers = { EMPTY, "A", "B", "C", "D", "E", "F", "G", "H", EMPTY};
-        out.print(EMPTY.repeat(1));
+        out.print(" ");
         for (int boardCol = 0; boardCol < 10; ++boardCol) {
             drawHeader(out, headers[boardCol]);
             if (boardCol < 10 - 1) {

@@ -84,7 +84,7 @@ public class EscapeSequences {
     public static final String BLACK_KING = " ♚ ";
     public static final String BLACK_QUEEN = " ♛ ";
     public static final String BLACK_BISHOP = " ♝ ";
-    public static final String BLACK_KNIGHT = " ♞ ";
+    public static final String DARK_KNIGHT = " ♞ ";
     public static final String BLACK_ROOK = " ♜ ";
     public static final String BLACK_PAWN = " ♟ ";
     public static final String EMPTY = " \u2003 ";

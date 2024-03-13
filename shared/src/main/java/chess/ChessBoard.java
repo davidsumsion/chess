@@ -55,7 +55,7 @@ public class ChessBoard implements Cloneable {
      *
      * @param position The position to get the piece from
      * @return Either the piece at the position, or null if no piece is at that
-     * position
+     * positionnm
      */
     public ChessPiece getPiece(ChessPosition position) {
         return squares[position.getRow()-1][position.getColumn()-1];
