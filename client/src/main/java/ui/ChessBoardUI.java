@@ -55,26 +55,6 @@ public class ChessBoardUI {
         }
     }
 
-//    private static String getPieceName(ChessBoard chessBoard, int boardRow, int boardColumn){
-//        ChessPiece chessPiece = chessBoard.getPiece(new ChessPosition(boardRow + 1, boardColumn + 1));
-//        if (chessPiece == null) return EMPTY;
-//        ChessGame.TeamColor teamColor = chessPiece.getTeamColor();
-//        ChessPiece.PieceType pieceType = chessPiece.getPieceType();
-//        if (pieceType == ChessPiece.PieceType.KING && teamColor == ChessGame.TeamColor.WHITE) return WHITE_KING;
-//        if (pieceType == ChessPiece.PieceType.KING && teamColor == ChessGame.TeamColor.BLACK) return BLACK_KING;
-//        if (pieceType == ChessPiece.PieceType.QUEEN && teamColor == ChessGame.TeamColor.WHITE) return WHITE_QUEEN;
-//        if (pieceType == ChessPiece.PieceType.QUEEN && teamColor == ChessGame.TeamColor.BLACK) return BLACK_QUEEN;
-//        if (pieceType == ChessPiece.PieceType.BISHOP && teamColor == ChessGame.TeamColor.WHITE) return WHITE_BISHOP;
-//        if (pieceType == ChessPiece.PieceType.BISHOP && teamColor == ChessGame.TeamColor.BLACK) return BLACK_BISHOP;
-//        if (pieceType == ChessPiece.PieceType.KNIGHT && teamColor == ChessGame.TeamColor.WHITE) return WHITE_KNIGHT;
-//        if (pieceType == ChessPiece.PieceType.KNIGHT && teamColor == ChessGame.TeamColor.BLACK) return DARK_KNIGHT;
-//        if (pieceType == ChessPiece.PieceType.ROOK && teamColor == ChessGame.TeamColor.WHITE) return WHITE_ROOK;
-//        if (pieceType == ChessPiece.PieceType.ROOK && teamColor == ChessGame.TeamColor.BLACK) return BLACK_ROOK;
-//        if (pieceType == ChessPiece.PieceType.PAWN && teamColor == ChessGame.TeamColor.WHITE) return WHITE_PAWN;
-//        if (pieceType == ChessPiece.PieceType.PAWN && teamColor == ChessGame.TeamColor.BLACK) return BLACK_PAWN;
-//        return EMPTY;
-//    }
-
     final static Map<Integer, Integer> reverseMap = Map.of(
                 0,7,
                 1,6,
