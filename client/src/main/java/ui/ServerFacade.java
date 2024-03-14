@@ -3,7 +3,9 @@ package ui;
 import java.util.Scanner;
 
 public class ServerFacade {
+    private String facadeAuthToken = "";
     public static void main(String[] args) throws Exception {
+
         preLoginMenu();
     }
 

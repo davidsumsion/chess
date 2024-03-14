@@ -22,4 +22,74 @@ Phase 5
 
 ServerFascade -- put it somewhere other than the client
 - LoginResponse login(LoginRequest)
+
+
+phase 5
+- draw board
+- create menus
+- access server
+- write tests for server fascade
+  - test that data is being sent back and forth correctly
+
+
+Access Server
 - 
+HTTP Code examples, cut and paste directly into project
+
+
+Client
+- main
+- manages methods
+- just provides a menu
+UIChessBoard client references (depends on UI)
+- join game or observe game form client
+- just draws a chess board
+Server client references (depends on server)
+Server Facade Class
+- - WHAT YOU UNIT TEST
+- login method
+- logout method
+- register method
+- ... one for each endpoint
+Client Comunicator (Server Facade depends on  Client Communicator depends on )
+- Method for GET and POST
+- inheritence only one function for GET/POST/DELETE
+
+
+
+
+Logging
+- important for
+  - software devs
+  - system admins
+  - customer support agent
+    - user gets an error, stack tracers don't help users, something went wrong contact customer support at this number
+    - log the error, file in this place, customer support can fix or send it to Developers
+  - Programs send log messages to "loggers"
+  - Each message has a level
+    - SEVER, WARNING, INFO, CONFIG, FINE, FINER, FINEST
+      - shows everything at that level and everything below
+      - never need to remove them
+    - Logger.setLevel(level) method
+    - types
+      - ConsoleHandler -- sends messages to the console
+      - FileHandler -- sends messages to a file
+      - SocketHandler -- sends messages to a network socket
+    - format
+      - each handler has a formatter
+        - default SimpleFormatter
+        - XMLFormatter -- industry is leaving XML
+        - Could write more
+- Log4J is used more than the standard build in Logger
+  -very similar to java.util.logging
+- SFL4J sends your logs to Log4J or java.util.logging depending on configs
+- 
+
+
+
+
+
+
+
+
+

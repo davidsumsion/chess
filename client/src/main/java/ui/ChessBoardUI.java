@@ -38,7 +38,7 @@ public class ChessBoardUI {
 
     private static void drawRows(PrintStream out, ChessBoard chessBoard) {
         //this is where you choose if you are printing which board
-        Boolean reverse = false;
+        Boolean reverse = true;
         String color = SET_BG_COLOR_BLACK;
         for (int boardRow = 0; boardRow < 8; ++boardRow) {
             out.print(EMPTY);
