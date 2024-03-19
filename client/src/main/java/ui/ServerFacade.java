@@ -2,6 +2,7 @@ package ui;
 
 import com.google.gson.Gson;
 import models.GameData;
+import requests.AuthTokenRequest;
 import requests.CreateGameRequest;
 import requests.LoginRequest;
 import requests.RegisterRequest;
@@ -72,6 +73,18 @@ public class ServerFacade {
         } catch (IOException e) {
             System.out.println("Unauthorized: AuthToken not in Database");
             return "";
+        }
+    }
+
+    public void logout(){
+        try {
+            ClientCommunicator clientCommunicator = new ClientCommunicator();
+            UserResult userResult = clientCommunicator.logoutDelete("http://localhost:8080/session", this.authToken);
+            this.authToken = "";
+        } catch (IOException e) {
+            System.out.println("Unauthorized: AuthToken not in Database");
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
     }
 }

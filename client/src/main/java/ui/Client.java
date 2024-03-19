@@ -13,23 +13,20 @@ public class Client {
         System.out.print(PRELOGIN_TEXT);
         Scanner menuScanner = new Scanner(System.in);
         String menuLine = menuScanner.nextLine();
-        while (true) {
-            if (menuLine.equals(Integer.toString(1))) {
-                //register
-                registerUI();
-            } else if (menuLine.equals(Integer.toString(2))) {
-                //login
-                loginUI();
-                System.out.print("LOGIN REACHED");
-                postLoginMenu();
-            } else if (menuLine.equals(Integer.toString(3))) {
-                //quit
-                break;
-            } else if (menuLine.equals(Integer.toString(4))) {
-                //display menu again
-                preLoginMenu();
-            }
+        if (menuLine.equals(Integer.toString(1))) {
+            //register
+            registerUI();
+        } else if (menuLine.equals(Integer.toString(2))) {
+            //login
+            loginUI();
+            postLoginMenu();
+        } else if (menuLine.equals(Integer.toString(3))) {
+            System.out.print("Play again soon!");
+        } else if (menuLine.equals(Integer.toString(4))) {
+            //display menu again
+            preLoginMenu();
         }
+
     }
 
     public static void postLoginMenu(){
@@ -37,9 +34,8 @@ public class Client {
         System.out.print(POSTLOGIN_TEXT);
         Scanner menuScanner = new Scanner(System.in);
         String menuLine = menuScanner.nextLine();
-        ServerFacade serverFacade = new ServerFacade();
         if (menuLine.equals(Integer.toString(1))) {
-            System.out.print("LOGOUT REACHED");
+            logoutUI();
         } else if (menuLine.equals(Integer.toString(2))){
             createGameUI();
 //            System.out.print("CREATE GAME REACHED");
@@ -50,6 +46,9 @@ public class Client {
         } else if (menuLine.equals(Integer.toString(5))){
             System.out.print("JOIN OBSERVER REACHED");
         } else if (menuLine.equals(Integer.toString(6))){postLoginMenu(); }
+
+
+
     }
 
     public static void registerUI(){
@@ -71,6 +70,15 @@ public class Client {
 
         postLoginMenu();
     }
+
+    public static void logoutUI(){
+        ServerFacade serverFacade = new ServerFacade();
+        serverFacade.logout();
+        System.out.println("Goodbye, play again soon ");
+
+        preLoginMenu();
+    }
+
     public static void loginUI(){
         System.out.print("Enter a Username\n>>> ");
         Scanner usernameScanner = new Scanner(System.in);

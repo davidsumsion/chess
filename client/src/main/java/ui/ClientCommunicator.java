@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import requests.AuthTokenRequest;
 import requests.RegisterRequest;
 import results.CreateGameResult;
 import results.ListGamesResult;
@@ -22,7 +23,7 @@ public class ClientCommunicator {
     public ListGamesResult getCommunicator(String urlString, String authToken) throws IOException {
         URL url = new URL(urlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//        connection.setReadTimeout(5000);
+        connection.setReadTimeout(5000);
         connection.setRequestMethod("GET");
         connection.addRequestProperty("Authorization", authToken);
         connection.connect();
@@ -153,6 +154,44 @@ public class ClientCommunicator {
         }
 
     }
+
+    public UserResult logoutDelete(String urlString, String authToken) throws IOException, URISyntaxException {
+        URL url = (new URI(urlString)).toURL();
+
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        connection.setReadTimeout(5000);
+        connection.setRequestMethod("DELETE");
+        connection.setDoOutput(true);
+
+//         Set HTTP request headers, if necessary
+        connection.addRequestProperty("Authorization", authToken);
+
+        connection.connect();
+        String jsonString= "{}";
+
+        try(OutputStream requestBody = connection.getOutputStream();) {
+            requestBody.write(jsonString.getBytes());
+        }
+
+        if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+            InputStream responseBody = connection.getInputStream();
+            InputStreamReader reader = new InputStreamReader(responseBody);
+            Gson gson = new Gson();
+            UserResult userResult =  gson.fromJson(reader, UserResult.class);
+            return userResult;
+            // Read response body from InputStream ...
+//            return "ok";
+        }
+        else {
+            // SERVER RETURNED AN HTTP ERROR
+            InputStream responseBody = connection.getErrorStream();
+            // Read and process error response body from InputStream ...
+            return null;
+        }
+
+    }
+
 
 
 }
