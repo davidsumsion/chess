@@ -13,15 +13,23 @@ public class Client {
         System.out.print(PRELOGIN_TEXT);
         Scanner menuScanner = new Scanner(System.in);
         String menuLine = menuScanner.nextLine();
-        if (menuLine.equals(Integer.toString(1))) {
-            System.out.print("REGISTER REACHED");
-            postLoginMenu();
-        } else if (menuLine.equals(Integer.toString(2))){
-            System.out.print("LOGIN REACHED");
-            postLoginMenu();
-        } else if (menuLine.equals(Integer.toString(3))){
-            System.out.print("QUIT REACHED");
-        } else if (menuLine.equals(Integer.toString(4))){ preLoginMenu(); }
+        while (true) {
+            if (menuLine.equals(Integer.toString(1))) {
+                //register
+                registerUI();
+            } else if (menuLine.equals(Integer.toString(2))) {
+                //login
+                loginUI();
+                System.out.print("LOGIN REACHED");
+                postLoginMenu();
+            } else if (menuLine.equals(Integer.toString(3))) {
+                //quit
+                break;
+            } else if (menuLine.equals(Integer.toString(4))) {
+                //display menu again
+                preLoginMenu();
+            }
+        }
     }
 
     public static void postLoginMenu(){
@@ -29,11 +37,14 @@ public class Client {
         System.out.print(POSTLOGIN_TEXT);
         Scanner menuScanner = new Scanner(System.in);
         String menuLine = menuScanner.nextLine();
+        ServerFacade serverFacade = new ServerFacade();
         if (menuLine.equals(Integer.toString(1))) {
             System.out.print("LOGOUT REACHED");
         } else if (menuLine.equals(Integer.toString(2))){
             System.out.print("CREATE GAME REACHED");
         } else if (menuLine.equals(Integer.toString(3))){
+            serverFacade.listGames("");
+            System.out.println();
             System.out.print("LIST GAMES REACHED");
         } else if (menuLine.equals(Integer.toString(4))){
             System.out.print("JOIN GAME REACHED");
@@ -42,6 +53,40 @@ public class Client {
         } else if (menuLine.equals(Integer.toString(6))){postLoginMenu(); }
     }
 
+    public static void loginUI(){
+        System.out.print("Enter a Username\n>>> ");
+        Scanner usernameScanner = new Scanner(System.in);
+        String username = usernameScanner.nextLine();
+
+        System.out.print("Enter a Password\n>>> ");
+        Scanner passwordScanner = new Scanner(System.in);
+        String password = passwordScanner.nextLine();
+
+        ServerFacade serverFacade = new ServerFacade();
+        String dbUsername = serverFacade.login(username, password);
+        System.out.println("Welcome " + dbUsername);
+
+        postLoginMenu();
+    }
+    public static void registerUI(){
+        System.out.print("Enter a Username\n>>> ");
+        Scanner usernameScanner = new Scanner(System.in);
+        String username = usernameScanner.nextLine();
+
+        System.out.print("Enter a Password\n>>> ");
+        Scanner passwordScanner = new Scanner(System.in);
+        String password = passwordScanner.nextLine();
+
+        System.out.print("Enter an Email\n>>> ");
+        Scanner emailScanner = new Scanner(System.in);
+        String email = emailScanner.nextLine();
+
+        ServerFacade serverFacade = new ServerFacade();
+        String dbUsername = serverFacade.register(username, password, email);
+        System.out.println("Welcome " + dbUsername);
+
+        postLoginMenu();
+    }
 
     private static final String WELCOME_TEXT = "\n\n\n\n" +
             EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_KING+ EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.EMPTY +
