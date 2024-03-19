@@ -12,9 +12,11 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import requests.AuthTokenRequest;
+import requests.JoinGameRequest;
 import requests.RegisterRequest;
 import results.CreateGameResult;
 import results.ListGamesResult;
+import results.MessageOnlyResult;
 import results.UserResult;
 
 public class ClientCommunicator {
@@ -180,6 +182,42 @@ public class ClientCommunicator {
             Gson gson = new Gson();
             UserResult userResult =  gson.fromJson(reader, UserResult.class);
             return userResult;
+            // Read response body from InputStream ...
+//            return "ok";
+        }
+        else {
+            // SERVER RETURNED AN HTTP ERROR
+            InputStream responseBody = connection.getErrorStream();
+            // Read and process error response body from InputStream ...
+            return null;
+        }
+
+    }
+
+    public MessageOnlyResult joinPlayer(String urlString, String  jsonString, String authToken) throws IOException, URISyntaxException {
+        URL url = (new URI(urlString)).toURL();
+
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+//        connection.setReadTimeout(5000);
+        connection.setRequestMethod("PUT");
+        connection.setDoOutput(true);
+
+//         Set HTTP request headers, if necessary
+        connection.addRequestProperty("Authorization", authToken);
+
+        connection.connect();
+
+        try(OutputStream requestBody = connection.getOutputStream();) {
+            requestBody.write(jsonString.getBytes());
+        }
+
+        if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+            InputStream responseBody = connection.getInputStream();
+            InputStreamReader reader = new InputStreamReader(responseBody);
+            Gson gson = new Gson();
+            MessageOnlyResult messageOnlyResult =  gson.fromJson(reader, MessageOnlyResult.class);
+            return messageOnlyResult;
             // Read response body from InputStream ...
 //            return "ok";
         }

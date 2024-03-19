@@ -2,6 +2,7 @@ package ui;
 
 import java.util.Scanner;
 
+
 public class Client {
     private String facadeAuthToken = "";
     public static void main(String[] args) throws Exception {
@@ -38,17 +39,13 @@ public class Client {
             logoutUI();
         } else if (menuLine.equals(Integer.toString(2))){
             createGameUI();
-//            System.out.print("CREATE GAME REACHED");
         } else if (menuLine.equals(Integer.toString(3))){
             listGamesUI();
         } else if (menuLine.equals(Integer.toString(4))){
-            System.out.print("JOIN GAME REACHED");
+            joinToPlayGameUI();
         } else if (menuLine.equals(Integer.toString(5))){
             System.out.print("JOIN OBSERVER REACHED");
         } else if (menuLine.equals(Integer.toString(6))){postLoginMenu(); }
-
-
-
     }
 
     public static void registerUI(){
@@ -77,6 +74,31 @@ public class Client {
         System.out.println("Goodbye, play again soon ");
 
         preLoginMenu();
+    }
+
+    public static void joinToPlayGameUI(){
+        System.out.print("Enter a gameID\n>>> ");
+        Scanner gameIDScanner = new Scanner(System.in);
+        String gameID = gameIDScanner.nextLine();
+
+        System.out.print("Choose a color\n\t1 - DARK\n\t2 - LIGHT\n>>> ");
+        Scanner colorScanner = new Scanner(System.in);
+        String colorChecker = colorScanner.nextLine();
+        String playerColor = "";
+        if ((colorChecker.equals(Integer.toString(1)))) {
+            playerColor = "BLACK";
+        } else {
+            playerColor = "WHITE";
+        }
+
+        ServerFacade serverFacade = new ServerFacade();
+        serverFacade.joinGamePlayer(gameID, playerColor);
+        System.out.println("Enjoy your game ");
+        String[] args = new String[]{"nothing"};
+        ChessBoardUI.main(args);
+
+
+        //display board here!
     }
 
     public static void loginUI(){
@@ -111,6 +133,7 @@ public class Client {
         String games = serverFacade.listGames();
         System.out.print(games);
 //        System.out.print("LIST GAMES REACHED");
+        postLoginMenu();
     }
 
     private static final String WELCOME_TEXT = "\n\n\n\n" +

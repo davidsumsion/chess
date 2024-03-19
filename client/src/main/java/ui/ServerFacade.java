@@ -2,12 +2,10 @@ package ui;
 
 import com.google.gson.Gson;
 import models.GameData;
-import requests.AuthTokenRequest;
-import requests.CreateGameRequest;
-import requests.LoginRequest;
-import requests.RegisterRequest;
+import requests.*;
 import results.CreateGameResult;
 import results.ListGamesResult;
+import results.MessageOnlyResult;
 import results.UserResult;
 
 import java.io.IOException;
@@ -81,6 +79,19 @@ public class ServerFacade {
             ClientCommunicator clientCommunicator = new ClientCommunicator();
             UserResult userResult = clientCommunicator.logoutDelete("http://localhost:8080/session", this.authToken);
             this.authToken = "";
+        } catch (IOException e) {
+            System.out.println("Unauthorized: AuthToken not in Database");
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void joinGamePlayer(String gameID, String playerColor){
+        try {
+            Gson gson = new Gson();
+            String jsonString = gson.toJson(new JoinGameRequest(Integer.parseInt(gameID), playerColor));
+            ClientCommunicator clientCommunicator = new ClientCommunicator();
+            MessageOnlyResult messageOnlyResult = clientCommunicator.joinPlayer("http://localhost:8080/game", jsonString, this.authToken);
         } catch (IOException e) {
             System.out.println("Unauthorized: AuthToken not in Database");
         } catch (URISyntaxException e) {
