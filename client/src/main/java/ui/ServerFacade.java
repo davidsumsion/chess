@@ -1,16 +1,20 @@
 package ui;
 
 import com.google.gson.Gson;
+import models.GameData;
+import requests.CreateGameRequest;
 import requests.LoginRequest;
 import requests.RegisterRequest;
+import results.CreateGameResult;
 import results.ListGamesResult;
 import results.UserResult;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 public class ServerFacade {
-    private String authToken = "";
+    private static String authToken = "";
     public ServerFacade() {
     }
 
@@ -44,11 +48,26 @@ public class ServerFacade {
         }
     }
 
-    public String listGames(String authToken){
+    public String createGame(String gameName) {
+        try {
+            Gson gson = new Gson();
+            String jsonString = gson.toJson(new CreateGameRequest(gameName));
+            ClientCommunicator clientCommunicator = new ClientCommunicator();
+            CreateGameResult res = clientCommunicator.postGameCommunicator("http://localhost:8080/game", jsonString, this.authToken);
+            return res.getGameID().toString();
+
+        } catch (IOException | URISyntaxException e) {
+            System.out.println("User Already Exists");
+            return "";
+        }
+    }
+
+    public String listGames(){
         try {
             ClientCommunicator clientCommunicator = new ClientCommunicator();
-            String listGames = clientCommunicator.getCommunicator("/game", authToken);
-            return listGames;
+            ListGamesResult listGamesResult = clientCommunicator.getCommunicator("http://localhost:8080/game", this.authToken);
+            return listGamesResult.toString();
+//             return listGames;
 
         } catch (IOException e) {
             System.out.println("Unauthorized: AuthToken not in Database");

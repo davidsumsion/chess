@@ -11,6 +11,7 @@ import services.Exceptions.UnauthorizedException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ListGamesService extends GameService{
     public ListGamesService() {}
@@ -22,7 +23,8 @@ public class ListGamesService extends GameService{
                 throw new UnauthorizedException("Error: incorrect authtoken - no user associated");
             } else {
                 MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
-                return new ListGamesResult(mySqlGameDataDA.getListGames(connection));
+                ArrayList<GameData> myList = mySqlGameDataDA.getListGames(connection);
+                return new ListGamesResult(myList);
 
 
 //                MemoryGameDA game = new MemoryGameDA(new GameData());

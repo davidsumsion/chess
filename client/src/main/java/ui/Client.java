@@ -41,11 +41,10 @@ public class Client {
         if (menuLine.equals(Integer.toString(1))) {
             System.out.print("LOGOUT REACHED");
         } else if (menuLine.equals(Integer.toString(2))){
-            System.out.print("CREATE GAME REACHED");
+            createGameUI();
+//            System.out.print("CREATE GAME REACHED");
         } else if (menuLine.equals(Integer.toString(3))){
-            serverFacade.listGames("");
-            System.out.println();
-            System.out.print("LIST GAMES REACHED");
+            listGamesUI();
         } else if (menuLine.equals(Integer.toString(4))){
             System.out.print("JOIN GAME REACHED");
         } else if (menuLine.equals(Integer.toString(5))){
@@ -53,21 +52,6 @@ public class Client {
         } else if (menuLine.equals(Integer.toString(6))){postLoginMenu(); }
     }
 
-    public static void loginUI(){
-        System.out.print("Enter a Username\n>>> ");
-        Scanner usernameScanner = new Scanner(System.in);
-        String username = usernameScanner.nextLine();
-
-        System.out.print("Enter a Password\n>>> ");
-        Scanner passwordScanner = new Scanner(System.in);
-        String password = passwordScanner.nextLine();
-
-        ServerFacade serverFacade = new ServerFacade();
-        String dbUsername = serverFacade.login(username, password);
-        System.out.println("Welcome " + dbUsername);
-
-        postLoginMenu();
-    }
     public static void registerUI(){
         System.out.print("Enter a Username\n>>> ");
         Scanner usernameScanner = new Scanner(System.in);
@@ -86,6 +70,39 @@ public class Client {
         System.out.println("Welcome " + dbUsername);
 
         postLoginMenu();
+    }
+    public static void loginUI(){
+        System.out.print("Enter a Username\n>>> ");
+        Scanner usernameScanner = new Scanner(System.in);
+        String username = usernameScanner.nextLine();
+
+        System.out.print("Enter a Password\n>>> ");
+        Scanner passwordScanner = new Scanner(System.in);
+        String password = passwordScanner.nextLine();
+
+        ServerFacade serverFacade = new ServerFacade();
+        String dbUsername = serverFacade.login(username, password);
+        System.out.println("Welcome " + dbUsername);
+
+        postLoginMenu();
+    }
+    public static void createGameUI(){
+        System.out.print("Enter a new Game Name\n>>> ");
+        Scanner nameScanner = new Scanner(System.in);
+        String gameName = nameScanner.nextLine();
+
+        ServerFacade serverFacade = new ServerFacade();
+        String dbGameID = serverFacade.createGame(gameName);
+        System.out.print("You created " + gameName + " with ID: "+ dbGameID);
+//        System.out.println("done");
+        postLoginMenu();
+    }
+
+    public static void listGamesUI(){
+        ServerFacade serverFacade = new ServerFacade();
+        String games = serverFacade.listGames();
+        System.out.print(games);
+//        System.out.print("LIST GAMES REACHED");
     }
 
     private static final String WELCOME_TEXT = "\n\n\n\n" +

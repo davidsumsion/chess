@@ -9,6 +9,8 @@
       <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/ClientCommunicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/ClientCommunicator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/GameServices/ListGamesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/GameServices/ListGamesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/main/java/results/ListGamesResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/results/ListGamesResult.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -292,16 +294,6 @@
           <option name="timeStamp" value="330" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/services/GameServices/ListGamesService.java</url>
-          <line>24</line>
-          <option name="timeStamp" value="348" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/services/GameServices/ListGamesService.java</url>
-          <line>20</line>
-          <option name="timeStamp" value="352" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/services/GameServices/JoinGameService.java</url>
           <line>27</line>
           <option name="timeStamp" value="354" />
@@ -318,23 +310,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
-          <line>53</line>
+          <line>72</line>
           <option name="timeStamp" value="358" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ClientCommunicator.java</url>
-          <line>70</line>
-          <option name="timeStamp" value="360" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
-          <line>21</line>
+          <line>25</line>
           <option name="timeStamp" value="361" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ClientCommunicator.java</url>
-          <line>62</line>
-          <option name="timeStamp" value="362" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/handlers/RegisterHandler.java</url>
@@ -342,9 +324,39 @@
           <option name="timeStamp" value="363" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="365" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
+          <line>52</line>
+          <option name="timeStamp" value="367" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ClientCommunicator.java</url>
-          <line>72</line>
-          <option name="timeStamp" value="364" />
+          <line>120</line>
+          <option name="timeStamp" value="368" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ClientCommunicator.java</url>
+          <line>137</line>
+          <option name="timeStamp" value="369" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/services/GameServices/ListGamesService.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="371" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
+          <line>68</line>
+          <option name="timeStamp" value="372" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="373" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

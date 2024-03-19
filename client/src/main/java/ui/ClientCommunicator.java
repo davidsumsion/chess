@@ -19,10 +19,10 @@ import results.UserResult;
 public class ClientCommunicator {
     public ClientCommunicator() {
     }
-    public String getCommunicator(String urlString, String authToken) throws IOException {
+    public ListGamesResult getCommunicator(String urlString, String authToken) throws IOException {
         URL url = new URL(urlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setReadTimeout(5000);
+//        connection.setReadTimeout(5000);
         connection.setRequestMethod("GET");
         connection.addRequestProperty("Authorization", authToken);
         connection.connect();
@@ -32,16 +32,17 @@ public class ClientCommunicator {
             connection.getHeaderField("Authorization");
 
             InputStream responseBody = connection.getInputStream();
+            InputStreamReader reader = new InputStreamReader(responseBody);
             Gson gson = new Gson();
-            ListGamesResult listGamesResult =  gson.fromJson(responseBody.toString(), ListGamesResult.class);
-            return listGamesResult.toString();
+            ListGamesResult listGamesResult =  gson.fromJson(reader, ListGamesResult.class);
+            return listGamesResult;
         } else {
             // SERVER RETURNED AN HTTP ERROR
 
             InputStream responseBody = connection.getErrorStream();
             Gson gson = new Gson();
             ListGamesResult listGamesResult =  gson.fromJson(responseBody.toString(), ListGamesResult.class);
-            return listGamesResult.toString();
+            return listGamesResult;
         }
     }
 
@@ -116,7 +117,7 @@ public class ClientCommunicator {
 
     }
 
-    public CreateGameResult postGameCommunicator(String urlString, String jsonString) throws IOException, URISyntaxException {
+    public CreateGameResult postGameCommunicator(String urlString, String jsonString, String authToken) throws IOException, URISyntaxException {
         URL url = (new URI(urlString)).toURL();
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -126,7 +127,7 @@ public class ClientCommunicator {
         connection.setDoOutput(true);
 
 //         Set HTTP request headers, if necessary
-//         connection.addRequestProperty("Authorization", "fakeAuthToken");
+         connection.addRequestProperty("Authorization", authToken);
 
         connection.connect();
 
@@ -135,13 +136,6 @@ public class ClientCommunicator {
         }
 
         if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-            // Get HTTP response headers, if necessary
-//            Map<String, List<String>> headers = connection.getHeaderFields();
-
-            // OR
-
-//            String authToken = connection.getHeaderField("Authorization");
-
             InputStream responseBody = connection.getInputStream();
             InputStreamReader reader = new InputStreamReader(responseBody);
             Gson gson = new Gson();

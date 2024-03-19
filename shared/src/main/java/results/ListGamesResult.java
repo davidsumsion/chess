@@ -25,14 +25,16 @@ public class ListGamesResult {
 
     public String toString() {
         StringBuilder retString = new StringBuilder();
+        retString.append("ID\t\tGame Name\t\t\tWhite Username\t\tBlack Username\n");
         for (GameData game : this.games) {
             retString.append(game.getGameID());
-            retString.append("\t");
+            retString.append("\t\t\t");
             retString.append(game.getGameName());
-            retString.append("\t");
+            retString.append("\t\t");
             retString.append(game.getWhiteUsername());
-            retString.append("\t");
+            retString.append("\t\t\t");
             retString.append(game.getBlackUsername());
+            retString.append("\n");
         }
         return retString.toString();
     }
