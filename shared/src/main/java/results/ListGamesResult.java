@@ -22,4 +22,18 @@ public class ListGamesResult {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public String toString() {
+        StringBuilder retString = new StringBuilder();
+        for (GameData game : this.games) {
+            retString.append(game.getGameID());
+            retString.append("\t");
+            retString.append(game.getGameName());
+            retString.append("\t");
+            retString.append(game.getWhiteUsername());
+            retString.append("\t");
+            retString.append(game.getBlackUsername());
+        }
+        return retString.toString();
+    }
 }
