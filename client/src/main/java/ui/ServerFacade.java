@@ -26,9 +26,8 @@ public class ServerFacade {
             this.authToken = res.getAuthToken();
             return res.getUsername();
 
-        } catch (IOException | URISyntaxException e) {
-            System.out.println("User Already Exists");
-            return "";
+        } catch (IOException | NullPointerException | URISyntaxException e) {
+            return "User Already Exists";
         }
     }
 

@@ -44,8 +44,11 @@ public class Client {
         } else if (menuLine.equals(Integer.toString(4))){
             joinToPlayGameUI();
         } else if (menuLine.equals(Integer.toString(5))){
-            System.out.print("JOIN OBSERVER REACHED");
-        } else if (menuLine.equals(Integer.toString(6))){postLoginMenu(); }
+            joinToObserveUI();
+//            System.out.print("JOIN OBSERVER REACHED");
+        } else if (menuLine.equals(Integer.toString(6))){
+            postLoginMenu();
+        }
     }
 
     public static void registerUI(){
@@ -63,9 +66,13 @@ public class Client {
 
         ServerFacade serverFacade = new ServerFacade();
         String dbUsername = serverFacade.register(username, password, email);
-        System.out.println("Welcome " + dbUsername);
-
-        postLoginMenu();
+        if (dbUsername.equals("User Already Exists")){
+            System.out.println("User Already Exists");
+            preLoginMenu();
+        } else {
+            System.out.println("Welcome " + dbUsername);
+            postLoginMenu();
+        }
     }
 
     public static void logoutUI(){
@@ -93,6 +100,19 @@ public class Client {
 
         ServerFacade serverFacade = new ServerFacade();
         serverFacade.joinGamePlayer(gameID, playerColor);
+        System.out.println("Enjoy your game ");
+        String[] args = new String[]{"nothing"};
+        ChessBoardUI.main(args);
+    }
+
+    public static void joinToObserveUI(){
+        System.out.print("Enter a gameID\n>>> ");
+        Scanner gameIDScanner = new Scanner(System.in);
+        String gameID = gameIDScanner.nextLine();
+
+
+        ServerFacade serverFacade = new ServerFacade();
+        serverFacade.joinGamePlayer(gameID, null);
         System.out.println("Enjoy your game ");
         String[] args = new String[]{"nothing"};
         ChessBoardUI.main(args);

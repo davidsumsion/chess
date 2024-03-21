@@ -28,7 +28,8 @@ public class JoinGameService extends GameService{
             GameData dataBaseGame = findGame(connection, joinGameRequest.getGameID());
 
             if (dataBaseGame != null){
-                if (dataBaseGame.getWhiteUsername() != null && joinGameRequest.getPlayerColor().equals("WHITE") ||  dataBaseGame.getBlackUsername() != null && joinGameRequest.getPlayerColor().equals("BLACK")){
+
+                if (joinGameRequest.getPlayerColor() != null && dataBaseGame.getWhiteUsername() != null && joinGameRequest.getPlayerColor().equals("WHITE") ||  joinGameRequest.getPlayerColor() != null && dataBaseGame.getBlackUsername() != null && joinGameRequest.getPlayerColor().equals("BLACK")){
                     throw new ForbiddenException("Error: Color already occupied");
                 } else {
                     dataBaseGame.setColor(joinGameRequest.getPlayerColor(), dataBaseUsername);
