@@ -1,19 +1,38 @@
 package clientTests;
 
+import dataAccess.DataAccessException;
+import dataAccess.DatabaseManager;
 import org.junit.jupiter.api.*;
 import server.Server;
 import ui.ServerFacade;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 
 public class ServerFacadeTests {
-    //NOTE RUN THE SERVER BEFORE!!
     private static Server server;
-
+    @AfterEach
+    public void cleanUp() {
+        try (Connection conn = DatabaseManager.getConnection()){
+            String sql = "DROP DATABASE IF EXISTS myChessDataBase;";
+            try (var preparedStatement = conn.prepareStatement(sql)) {
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            DatabaseManager.createDatabase();
+        } catch (DataAccessException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @BeforeAll
     public static void init() {
         server = new Server();
-        var port = server.run(0);
-        System.out.println("Started test HTTP server on " + port);
+        String[] args = new String[]{"nothing"};
+        server.main(args);
+//        var port = server.run(0);
+//        System.out.println("Started test HTTP server on " + port);
     }
 
     @AfterAll
@@ -150,6 +169,31 @@ public class ServerFacadeTests {
 
     @Test
     public void  joinGameNegative3() {
+        ServerFacade serverFacade = new ServerFacade();
+        String result = serverFacade.joinGamePlayer("1", "BLACK");
+        Assertions.assertEquals("Unauthorized", result);
+    }
+
+    @Test
+    public void  joinGameObserverPositive() {
+        ServerFacade serverFacade = new ServerFacade();
+        serverFacade.register("user","pass", "email");
+        serverFacade.createGame("GAME A");
+        String result = serverFacade.joinGamePlayer("1", null);
+        Assertions.assertEquals("", result);
+    }
+
+    @Test
+    public void joinGameObserverNegative() {
+        ServerFacade serverFacade = new ServerFacade();
+        serverFacade.register("user","pass", "email");
+        serverFacade.createGame("GAME A");
+        String result = serverFacade.joinGamePlayer("2", "BLACK");
+        Assertions.assertEquals("Error Game", result);
+    }
+
+    @Test
+    public void joinGameObserverNegative2() {
         ServerFacade serverFacade = new ServerFacade();
         String result = serverFacade.joinGamePlayer("1", "BLACK");
         Assertions.assertEquals("Unauthorized", result);

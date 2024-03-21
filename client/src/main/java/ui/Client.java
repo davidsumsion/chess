@@ -144,10 +144,26 @@ public class Client {
         String gameID = gameIDScanner.nextLine();
 
         ServerFacade serverFacade = new ServerFacade();
-        serverFacade.joinGamePlayer(gameID, null);
-        System.out.println("Enjoy your game ");
-        String[] args = new String[]{"nothing"};
-        ChessBoardUI.main(args);
+        String result =  serverFacade.joinGamePlayer(gameID, null);
+//        System.out.println("Enjoy your game ");
+//        String[] args = new String[]{"nothing"};
+//        ChessBoardUI.main(args);
+
+        if (result.isEmpty()) {
+            System.out.format("Enjoy the show\n");
+            String[] args = new String[]{"OBSERVER"};
+            ChessBoardUI.main(args);
+        } else if (result.equals("Start the Server")) {
+            System.out.println("Start the Server");
+            preLoginMenu();
+        } else if (result.equals("Unauthorized")) {
+            System.out.println("please log in before playing");
+            preLoginMenu();
+        } else if (result.equals("Error Game")) {
+            System.out.println("Game Does not exist");
+            postLoginMenu();
+        }
+
     }
 
     public static void loginUI() {
