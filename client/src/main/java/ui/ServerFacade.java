@@ -72,15 +72,15 @@ public class ServerFacade {
         }
     }
 
-    public void logout(){
+    public String logout(){
         try {
             ClientCommunicator clientCommunicator = new ClientCommunicator();
             UserResult userResult = clientCommunicator.logoutDelete("http://localhost:8080/session", this.authToken);
+            if (userResult == null) { return "Unauthorized: AuthToken not in Database"; }
             this.authToken = "";
-        } catch (IOException e) {
-            System.out.println("Unauthorized: AuthToken not in Database");
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            return "";
+        } catch (IOException | URISyntaxException e) {
+            return "Start the Server";
         }
     }
 

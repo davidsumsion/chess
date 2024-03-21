@@ -7,6 +7,8 @@ public class Client {
     private String facadeAuthToken = "";
     public static void main(String[] args) throws Exception {
         preLoginMenu();
+//        postLoginMenu();
+
     }
 
     public static void preLoginMenu(){
@@ -77,10 +79,18 @@ public class Client {
 
     public static void logoutUI(){
         ServerFacade serverFacade = new ServerFacade();
-        serverFacade.logout();
-        System.out.println("Goodbye, play again soon ");
+        String result = serverFacade.logout();
+        if (result.equals("")){
+            System.out.println("Goodbye, play again soon ");
+            preLoginMenu();
+        } else if (result.equals("Start the Server")){
+            System.out.println("Start the Server");
+            preLoginMenu();
+        } else if (result.equals("Unauthorized: AuthToken not in Database")){
+            System.out.println("Unauthorized: AuthToken not in Database");
+            preLoginMenu();
+        }
 
-        preLoginMenu();
     }
 
     public static void joinToPlayGameUI(){

@@ -60,4 +60,20 @@ public class ServerFacadeTests {
         Assertions.assertEquals("Username or Password Incorrect", result);
     }
 
+    @Test
+    public void logoutPositive() {
+        // log out a logged in user
+        ServerFacade serverFacade = new ServerFacade();
+        serverFacade.register("USERNAME", "PASSWORD", "EMAIL@GMAIL.COM");
+        String result = serverFacade.logout();
+        Assertions.assertEquals("", result);
+    }
+
+    @Test
+    public void logoutNegative(){
+        ServerFacade serverFacade = new ServerFacade();
+        String result = serverFacade.logout();
+        Assertions.assertEquals("Unauthorized: AuthToken not in Database", result);
+    }
+
 }
