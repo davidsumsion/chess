@@ -40,7 +40,9 @@ public class ServerFacade {
             this.authToken = res.getAuthToken();
             return res.getUsername();
 
-        } catch (IOException | URISyntaxException | NullPointerException e) {
+        } catch (IOException | URISyntaxException e) {
+            return "Start the Server";
+        } catch (NullPointerException e) {
             return "Username or Password Incorrect";
         }
     }
@@ -51,11 +53,13 @@ public class ServerFacade {
             String jsonString = gson.toJson(new CreateGameRequest(gameName));
             ClientCommunicator clientCommunicator = new ClientCommunicator();
             CreateGameResult res = clientCommunicator.postGameCommunicator("http://localhost:8080/game", jsonString, this.authToken);
+            if (res == null) { throw new NullPointerException(); }
             return res.getGameID().toString();
 
+        } catch (NullPointerException e) {
+            return "Game Already Exists or Unauthorized";
         } catch (IOException | URISyntaxException e) {
-            System.out.println("User Already Exists");
-            return "";
+            return "Start the Server";
         }
     }
 
@@ -64,8 +68,6 @@ public class ServerFacade {
             ClientCommunicator clientCommunicator = new ClientCommunicator();
             ListGamesResult listGamesResult = clientCommunicator.getCommunicator("http://localhost:8080/game", this.authToken);
             return listGamesResult.toString();
-//             return listGames;
-
         } catch (IOException e) {
             System.out.println("Unauthorized: AuthToken not in Database");
             return "";

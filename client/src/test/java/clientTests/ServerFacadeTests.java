@@ -76,4 +76,20 @@ public class ServerFacadeTests {
         Assertions.assertEquals("Unauthorized: AuthToken not in Database", result);
     }
 
+    @Test
+    public void createGamePositive() {
+        ServerFacade serverFacade = new ServerFacade();
+        serverFacade.register("user","pass", "email");
+        String result = serverFacade.createGame("GAME");
+        Assertions.assertEquals("1", result);
+    }
+
+    @Test
+    public void createGameNegative() {
+        ServerFacade serverFacade = new ServerFacade();
+        serverFacade.register("user","pass", "email");
+        serverFacade.createGame("GAME");
+        String result = serverFacade.createGame("GAME");
+        Assertions.assertEquals("Game Already Exists or Unauthorized", result);
+    }
 }

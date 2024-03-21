@@ -7,8 +7,6 @@ public class Client {
     private String facadeAuthToken = "";
     public static void main(String[] args) throws Exception {
         preLoginMenu();
-//        postLoginMenu();
-
     }
 
     public static void preLoginMenu(){
@@ -131,7 +129,7 @@ public class Client {
         //display board here!
     }
 
-    public static void loginUI(){
+    public static void loginUI() {
         System.out.print("Enter a Username\n>>> ");
         Scanner usernameScanner = new Scanner(System.in);
         String username = usernameScanner.nextLine();
@@ -142,8 +140,11 @@ public class Client {
 
         ServerFacade serverFacade = new ServerFacade();
         String dbUsername = serverFacade.login(username, password);
-        if (dbUsername.equals("Username or Password Incorrect")){
+        if (dbUsername.equals("Username or Password Incorrect")) {
             System.out.println("Username or Password Incorrect");
+            preLoginMenu();
+        } else if (dbUsername.equals("Start the Server")) {
+            System.out.println("Start the Server");
             preLoginMenu();
         } else {
             System.out.println("Welcome " + dbUsername);
@@ -158,9 +159,16 @@ public class Client {
 
         ServerFacade serverFacade = new ServerFacade();
         String dbGameID = serverFacade.createGame(gameName);
-        System.out.print("You created " + gameName + " with ID: "+ dbGameID);
-//        System.out.println("done");
-        postLoginMenu();
+        if (dbGameID.equals("Game Already Exists or Unauthorized")) {
+            System.out.println("Game Already Exists with this name or Unauthorized (need to login)");
+            postLoginMenu();
+        } else if (dbGameID.equals("Start the Server")) {
+            System.out.println("Start the Server");
+            postLoginMenu();
+        } else {
+            System.out.print("You created " + gameName + " with ID: "+ dbGameID);
+            postLoginMenu();
+        }
     }
 
     public static void listGamesUI(){
