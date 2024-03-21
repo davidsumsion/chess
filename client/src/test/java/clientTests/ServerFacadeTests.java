@@ -121,5 +121,37 @@ public class ServerFacadeTests {
                 "3\t\t\tGAME C\t\tnull\t\t\tnull\n", result);
     }
 
+    @Test void joinGamePositive() {
+        ServerFacade serverFacade = new ServerFacade();
+        serverFacade.register("user","pass", "email");
+        serverFacade.createGame("GAME A");
+        String result = serverFacade.joinGamePlayer("1", "BLACK");
+        Assertions.assertEquals("", result);
+    }
 
+    @Test
+    public void  joinGameNegative() {
+        ServerFacade serverFacade = new ServerFacade();
+        serverFacade.register("user","pass", "email");
+        serverFacade.createGame("GAME A");
+        String result = serverFacade.joinGamePlayer("2", "BLACK");
+        Assertions.assertEquals("Error Game", result);
+    }
+
+    @Test
+    public void  joinGameNegative2() {
+        ServerFacade serverFacade = new ServerFacade();
+        serverFacade.register("user","pass", "email");
+        serverFacade.createGame("GAME A");
+        serverFacade.joinGamePlayer("1", "BLACK");
+        String result = serverFacade.joinGamePlayer("1", "BLACK");
+        Assertions.assertEquals("Error Color", result);
+    }
+
+    @Test
+    public void  joinGameNegative3() {
+        ServerFacade serverFacade = new ServerFacade();
+        String result = serverFacade.joinGamePlayer("1", "BLACK");
+        Assertions.assertEquals("Unauthorized", result);
+    }
 }

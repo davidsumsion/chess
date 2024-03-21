@@ -199,7 +199,7 @@ public class ClientCommunicator {
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-//        connection.setReadTimeout(5000);
+        connection.setReadTimeout(5000);
         connection.setRequestMethod("PUT");
         connection.setDoOutput(true);
 
@@ -217,19 +217,17 @@ public class ClientCommunicator {
             InputStreamReader reader = new InputStreamReader(responseBody);
             Gson gson = new Gson();
             MessageOnlyResult messageOnlyResult =  gson.fromJson(reader, MessageOnlyResult.class);
+            messageOnlyResult.setMessage("CORRECT");
             return messageOnlyResult;
-            // Read response body from InputStream ...
-//            return "ok";
-        }
-        else {
-            // SERVER RETURNED AN HTTP ERROR
-            InputStream responseBody = connection.getErrorStream();
-            // Read and process error response body from InputStream ...
-            return null;
-        }
 
+        } else if (connection.getResponseCode() == 403){
+            return new MessageOnlyResult("Error: Color already occupied");
+        } else if (connection.getResponseCode() == 400) {
+            return new MessageOnlyResult("Error: Game not found in DB");
+        } else if (connection.getResponseCode() == 401) {
+            return new MessageOnlyResult("Unauthorized");
+        } else {
+            return new MessageOnlyResult("ERROR");
+        }
     }
-
-
-
 }

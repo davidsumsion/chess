@@ -7,6 +7,7 @@
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/ClientCommunicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/ClientCommunicator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/test/java/clientTests/ServerFacadeTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/test/java/clientTests/ServerFacadeTests.java" afterDir="false" />
     </list>
@@ -86,6 +87,10 @@
     "JUnit.MyUserDatabaseTests.createSessionWrong.executor": "Run",
     "JUnit.ServerFacadeTests.createGameNegative.executor": "Run",
     "JUnit.ServerFacadeTests.createGamePositive.executor": "Run",
+    "JUnit.ServerFacadeTests.joinGameNegative2.executor": "Run",
+    "JUnit.ServerFacadeTests.joinGamePositive.executor": "Run",
+    "JUnit.ServerFacadeTests.listGamesNegativee.executor": "Run",
+    "JUnit.ServerFacadeTests.listGmaesPositive.executor": "Run",
     "JUnit.ServerFacadeTests.loginNegative.executor": "Run",
     "JUnit.ServerFacadeTests.loginPositive.executor": "Run",
     "JUnit.ServerFacadeTests.logoutNegative.executor": "Run",
@@ -125,7 +130,7 @@
       <recent name="$PROJECT_DIR$/shared/src/main/java" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ServerFacadeTests.listGamesNegativee">
+  <component name="RunManager" selected="JUnit.ServerFacadeTests.joinGameNegative3">
     <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.Client" />
       <module name="client" />
@@ -152,7 +157,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServerFacadeTests.createGameNegative" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ServerFacadeTests.joinGameNegative2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="client" />
       <extension name="coverage">
         <pattern>
@@ -162,13 +167,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="clientTests" />
       <option name="MAIN_CLASS_NAME" value="clientTests.ServerFacadeTests" />
-      <option name="METHOD_NAME" value="createGameNegative" />
+      <option name="METHOD_NAME" value="joinGameNegative2" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServerFacadeTests.listGamesNegativee" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ServerFacadeTests.joinGameNegative3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="client" />
       <extension name="coverage">
         <pattern>
@@ -178,13 +183,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="clientTests" />
       <option name="MAIN_CLASS_NAME" value="clientTests.ServerFacadeTests" />
-      <option name="METHOD_NAME" value="listGamesNegativee" />
+      <option name="METHOD_NAME" value="joinGameNegative3" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServerFacadeTests.listGmaesPositive" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ServerFacadeTests.joinGamePositive" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="client" />
       <extension name="coverage">
         <pattern>
@@ -194,7 +199,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="clientTests" />
       <option name="MAIN_CLASS_NAME" value="clientTests.ServerFacadeTests" />
-      <option name="METHOD_NAME" value="listGmaesPositive" />
+      <option name="METHOD_NAME" value="joinGamePositive" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -202,11 +207,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ServerFacadeTests.listGamesNegativee" />
+        <item itemvalue="JUnit.ServerFacadeTests.joinGameNegative3" />
+        <item itemvalue="JUnit.ServerFacadeTests.joinGameNegative2" />
         <item itemvalue="Application.Server" />
-        <item itemvalue="JUnit.ServerFacadeTests.listGmaesPositive" />
+        <item itemvalue="JUnit.ServerFacadeTests.joinGamePositive" />
         <item itemvalue="Application.Client" />
-        <item itemvalue="JUnit.ServerFacadeTests.createGameNegative" />
       </list>
     </recent_temporary>
   </component>
@@ -324,20 +329,29 @@
           <option name="timeStamp" value="356" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/Client.java</url>
+          <line>115</line>
+          <option name="timeStamp" value="400" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/Client.java</url>
+          <line>114</line>
+          <option name="timeStamp" value="402" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ClientCommunicator.java</url>
-          <line>214</line>
-          <option name="timeStamp" value="381" />
+          <line>197</line>
+          <option name="timeStamp" value="403" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
-          <line>82</line>
-          <option name="timeStamp" value="388" />
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ClientCommunicator.java</url>
+          <line>222</line>
+          <option name="timeStamp" value="404" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/test/java/clientTests/ServerFacadeTests.java</url>
-          <line>103</line>
-          <option name="timeStamp" value="395" />
-        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="396" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

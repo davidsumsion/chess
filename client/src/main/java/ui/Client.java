@@ -6,8 +6,7 @@ import java.util.Scanner;
 public class Client {
     private String facadeAuthToken = "";
     public static void main(String[] args) throws Exception {
-//        preLoginMenu();
-        postLoginMenu();
+        preLoginMenu();
     }
 
     public static void preLoginMenu(){
@@ -21,9 +20,8 @@ public class Client {
         } else if (menuLine.equals(Integer.toString(2))) {
             //login
             loginUI();
-            postLoginMenu();
         } else if (menuLine.equals(Integer.toString(3))) {
-            System.out.print("Play again soon!");
+            System.out.print("Goodbye! Play again soon!");
         } else if (menuLine.equals(Integer.toString(4))) {
             //display menu again
             preLoginMenu();
@@ -103,7 +101,7 @@ public class Client {
         Scanner gameIDScanner = new Scanner(System.in);
         String gameID = gameIDScanner.nextLine();
 
-        System.out.print("Choose a color\n\t1 - DARK\n\t2 - LIGHT\n>>> ");
+        System.out.print("Choose a color\n\t1 - BLACK\n\t2 - WHITE\n>>> ");
         Scanner colorScanner = new Scanner(System.in);
         String colorChecker = colorScanner.nextLine();
         String playerColor = "";
@@ -114,10 +112,30 @@ public class Client {
         }
 
         ServerFacade serverFacade = new ServerFacade();
-        serverFacade.joinGamePlayer(gameID, playerColor);
-        System.out.println("Enjoy your game ");
-        String[] args = new String[]{"nothing"};
-        ChessBoardUI.main(args);
+        String result = serverFacade.joinGamePlayer(gameID, playerColor);
+        if (result.isEmpty()) {
+            System.out.format("Enjoy your game, you are %s\n", playerColor);
+            if (playerColor.equals("WHITE")) {
+                String[] args = new String[]{"WHITE"};
+                ChessBoardUI.main(args);
+            } else {
+                String[] args = new String[]{"BLACK"};
+                ChessBoardUI.main(args);
+            }
+
+        } else if (result.equals("Start the Server")) {
+            System.out.println("Start the Server");
+            preLoginMenu();
+        } else if (result.equals("Unauthorized")) {
+            System.out.println("please log in before playing");
+            preLoginMenu();
+        } else if (result.equals("Error Game")) {
+            System.out.println("Game Does not exist");
+            postLoginMenu();
+        } else if (result.equals("Error Color")) {
+            System.out.println("Game Color already occupied");
+            postLoginMenu();
+        }
     }
 
     public static void joinToObserveUI(){
@@ -201,7 +219,7 @@ public class Client {
             "3 - QUIT\n\tTo Stop Playing\n" +
             "4 - HELP\n\tDisplays this menu\n>>> ";
 
-    private static final String LOGGED_IN_TEXT = "\n\n\n\n" +
+    private static final String LOGGED_IN_TEXT = "\n" +
             EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_KING+ EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.EMPTY +
             EscapeSequences.EMPTY + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_KING+ EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK +
             String.format("\n%s%s%s   Welcome User   %s%s%s\n\n", EscapeSequences.DARK_KNIGHT, EscapeSequences.BLACK_BISHOP, EscapeSequences.BLACK_QUEEN, EscapeSequences.WHITE_QUEEN, EscapeSequences.WHITE_BISHOP, EscapeSequences.WHITE_KNIGHT);

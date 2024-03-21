@@ -90,16 +90,25 @@ public class ServerFacade {
         }
     }
 
-    public void joinGamePlayer(String gameID, String playerColor){
+    public String joinGamePlayer(String gameID, String playerColor){
         try {
             Gson gson = new Gson();
             String jsonString = gson.toJson(new JoinGameRequest(Integer.parseInt(gameID), playerColor));
             ClientCommunicator clientCommunicator = new ClientCommunicator();
             MessageOnlyResult messageOnlyResult = clientCommunicator.joinPlayer("http://localhost:8080/game", jsonString, this.authToken);
-        } catch (IOException e) {
-            System.out.println("Unauthorized: AuthToken not in Database");
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            if (messageOnlyResult.getMessage().equals("CORRECT")){
+                return "";
+            } else if (messageOnlyResult.getMessage().equals("Error: Color already occupied")) {
+                return "Error Color";
+            } else if (messageOnlyResult.getMessage().equals("Error: Game not found in DB")) {
+                return "Error Game";
+            } else if (messageOnlyResult.getMessage().equals("Unauthorized")) {
+                return "Unauthorized";
+            } else { throw new IOException(); }
+        } catch (IOException | URISyntaxException e) {
+            return "Start the Server";
+        } catch (NullPointerException e) {
+            return "Unauthorized";
         }
     }
 }
