@@ -92,4 +92,34 @@ public class ServerFacadeTests {
         String result = serverFacade.createGame("GAME");
         Assertions.assertEquals("Game Already Exists or Unauthorized", result);
     }
+
+    @Test
+    public void listGamesPositive() {
+        ServerFacade serverFacade = new ServerFacade();
+        serverFacade.register("user","pass", "email");
+        serverFacade.createGame("GAME A");
+        serverFacade.createGame("GAME B");
+        serverFacade.createGame("GAME C");
+        String result = serverFacade.listGames();
+        Assertions.assertEquals("ID\t\tGame Name\t\t\tWhite Username\t\tBlack Username\n" +
+                "1\t\t\tGAME A\t\tnull\t\t\tnull\n" +
+                "2\t\t\tGAME B\t\tnull\t\t\tnull\n" +
+                "3\t\t\tGAME C\t\tnull\t\t\tnull\n", result);
+    }
+
+    @Test
+    public void listGamesNegativee() {
+        ServerFacade serverFacade = new ServerFacade();
+        serverFacade.register("user","pass", "email");
+        serverFacade.createGame("GAME A");
+        serverFacade.createGame("GAME B");
+        serverFacade.createGame("GAME D");
+        String result = serverFacade.listGames();
+        Assertions.assertNotEquals("ID\t\tGame Name\t\t\tWhite Username\t\tBlack Username\n" +
+                "1\t\t\tGAME A\t\tnull\t\t\tnull\n" +
+                "2\t\t\tGAME B\t\tnull\t\t\tnull\n" +
+                "3\t\t\tGAME C\t\tnull\t\t\tnull\n", result);
+    }
+
+
 }

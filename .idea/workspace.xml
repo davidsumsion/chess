@@ -50,7 +50,7 @@
   "keyToString": {
     "Application.ChessBoard.executor": "Run",
     "Application.ChessBoardUI.executor": "Run",
-    "Application.Client.executor": "Debug",
+    "Application.Client.executor": "Run",
     "Application.InteractiveCalculatorExample.executor": "Run",
     "Application.InteractiveConsole.executor": "Run",
     "Application.Server.executor": "Run",
@@ -125,7 +125,7 @@
       <recent name="$PROJECT_DIR$/shared/src/main/java" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ServerFacadeTests.createGameNegative">
+  <component name="RunManager" selected="JUnit.ServerFacadeTests.listGamesNegativee">
     <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.Client" />
       <module name="client" />
@@ -168,7 +168,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServerFacadeTests.createGamePositive" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ServerFacadeTests.listGamesNegativee" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="client" />
       <extension name="coverage">
         <pattern>
@@ -178,13 +178,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="clientTests" />
       <option name="MAIN_CLASS_NAME" value="clientTests.ServerFacadeTests" />
-      <option name="METHOD_NAME" value="createGamePositive" />
+      <option name="METHOD_NAME" value="listGamesNegativee" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServerFacadeTests.logoutNegative" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ServerFacadeTests.listGmaesPositive" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="client" />
       <extension name="coverage">
         <pattern>
@@ -194,7 +194,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="clientTests" />
       <option name="MAIN_CLASS_NAME" value="clientTests.ServerFacadeTests" />
-      <option name="METHOD_NAME" value="logoutNegative" />
+      <option name="METHOD_NAME" value="listGmaesPositive" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -202,11 +202,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ServerFacadeTests.createGameNegative" />
-        <item itemvalue="Application.Client" />
-        <item itemvalue="JUnit.ServerFacadeTests.createGamePositive" />
+        <item itemvalue="JUnit.ServerFacadeTests.listGamesNegativee" />
         <item itemvalue="Application.Server" />
-        <item itemvalue="JUnit.ServerFacadeTests.logoutNegative" />
+        <item itemvalue="JUnit.ServerFacadeTests.listGmaesPositive" />
+        <item itemvalue="Application.Client" />
+        <item itemvalue="JUnit.ServerFacadeTests.createGameNegative" />
       </list>
     </recent_temporary>
   </component>
@@ -330,18 +330,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
-          <line>78</line>
+          <line>82</line>
           <option name="timeStamp" value="388" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
-          <line>56</line>
-          <option name="timeStamp" value="391" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
-          <line>54</line>
-          <option name="timeStamp" value="392" />
+          <url>file://$PROJECT_DIR$/client/src/test/java/clientTests/ServerFacadeTests.java</url>
+          <line>103</line>
+          <option name="timeStamp" value="395" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -6,7 +6,8 @@ import java.util.Scanner;
 public class Client {
     private String facadeAuthToken = "";
     public static void main(String[] args) throws Exception {
-        preLoginMenu();
+//        preLoginMenu();
+        postLoginMenu();
     }
 
     public static void preLoginMenu(){
@@ -25,6 +26,9 @@ public class Client {
             System.out.print("Play again soon!");
         } else if (menuLine.equals(Integer.toString(4))) {
             //display menu again
+            preLoginMenu();
+        } else {
+            System.out.println("Enter an Integer, not a word");
             preLoginMenu();
         }
 
@@ -47,6 +51,9 @@ public class Client {
             joinToObserveUI();
 //            System.out.print("JOIN OBSERVER REACHED");
         } else if (menuLine.equals(Integer.toString(6))){
+            postLoginMenu();
+        } else {
+            System.out.println("Enter an Integer, not a word");
             postLoginMenu();
         }
     }
@@ -118,15 +125,11 @@ public class Client {
         Scanner gameIDScanner = new Scanner(System.in);
         String gameID = gameIDScanner.nextLine();
 
-
         ServerFacade serverFacade = new ServerFacade();
         serverFacade.joinGamePlayer(gameID, null);
         System.out.println("Enjoy your game ");
         String[] args = new String[]{"nothing"};
         ChessBoardUI.main(args);
-
-
-        //display board here!
     }
 
     public static void loginUI() {
@@ -174,9 +177,16 @@ public class Client {
     public static void listGamesUI(){
         ServerFacade serverFacade = new ServerFacade();
         String games = serverFacade.listGames();
-        System.out.print(games);
-//        System.out.print("LIST GAMES REACHED");
-        postLoginMenu();
+        if (games.equals("Start the Server")) {
+            System.out.println("Start the Server");
+            preLoginMenu();
+        } else if (games.equals("Unauthorized: AuthToken not in Database")) {
+            System.out.println("Unauthorized");
+            preLoginMenu();
+        } else {
+            System.out.print(games);
+            postLoginMenu();
+        }
     }
 
     private static final String WELCOME_TEXT = "\n\n\n\n" +
