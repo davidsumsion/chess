@@ -44,4 +44,20 @@ public class ServerFacadeTests {
         Assertions.assertEquals("User Already Exists", result);
     }
 
+    @Test void loginPositive() {
+        // create a user and then log in using the username
+        ServerFacade serverFacade = new ServerFacade();
+        serverFacade.register("USERNAME", "PASSWORD", "EMAIL@GMAIL.COM");
+        String result = serverFacade.login("USERNAME", "PASSWORD");
+        Assertions.assertEquals("USERNAME", result);
+    }
+
+    @ Test
+    public void loginNegative() {
+        // log a user in that isn't registered
+        ServerFacade serverFacade = new ServerFacade();
+        String result = serverFacade.login("username", "password");
+        Assertions.assertEquals("Username or Password Incorrect", result);
+    }
+
 }

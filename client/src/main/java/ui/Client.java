@@ -132,9 +132,14 @@ public class Client {
 
         ServerFacade serverFacade = new ServerFacade();
         String dbUsername = serverFacade.login(username, password);
-        System.out.println("Welcome " + dbUsername);
+        if (dbUsername.equals("Username or Password Incorrect")){
+            System.out.println("Username or Password Incorrect");
+            preLoginMenu();
+        } else {
+            System.out.println("Welcome " + dbUsername);
+            postLoginMenu();
+        }
 
-        postLoginMenu();
     }
     public static void createGameUI(){
         System.out.print("Enter a new Game Name\n>>> ");

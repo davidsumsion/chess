@@ -9,7 +9,6 @@
       <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/test/java/clientTests/ServerFacadeTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/test/java/clientTests/ServerFacadeTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/GameServices/JoinGameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/GameServices/JoinGameService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,6 +84,7 @@
     "JUnit.MyDatabaseTests.updateGame.executor": "Run",
     "JUnit.MyUserDatabaseTests.createSessionCorrectly.executor": "Run",
     "JUnit.MyUserDatabaseTests.createSessionWrong.executor": "Run",
+    "JUnit.ServerFacadeTests.loginPositive.executor": "Run",
     "JUnit.ServerFacadeTests.registerPositive.executor": "Run",
     "JUnit.ServerFacadeTests.sampleTest.executor": "Run",
     "JUnit.StandardAPITests.executor": "Run",
@@ -120,20 +120,7 @@
       <recent name="$PROJECT_DIR$/shared/src/main/java" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ServerFacadeTests.registerPositive">
-    <configuration name="ChessBoardUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ui.ChessBoardUI" />
-      <module name="client" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ui.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.ServerFacadeTests.loginNegative">
     <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.Client" />
       <module name="client" />
@@ -160,6 +147,38 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ServerFacadeTests.loginNegative" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="client" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="clientTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="clientTests" />
+      <option name="MAIN_CLASS_NAME" value="clientTests.ServerFacadeTests" />
+      <option name="METHOD_NAME" value="loginNegative" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerFacadeTests.loginPositive" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="client" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="clientTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="clientTests" />
+      <option name="MAIN_CLASS_NAME" value="clientTests.ServerFacadeTests" />
+      <option name="METHOD_NAME" value="loginPositive" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ServerFacadeTests.registerPositive" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="client" />
       <extension name="coverage">
@@ -176,29 +195,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServerFacadeTests.sampleTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="client" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="clientTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="clientTests" />
-      <option name="MAIN_CLASS_NAME" value="clientTests.ServerFacadeTests" />
-      <option name="METHOD_NAME" value="sampleTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ServerFacadeTests.registerPositive" />
-        <item itemvalue="Application.Server" />
-        <item itemvalue="JUnit.ServerFacadeTests.sampleTest" />
+        <item itemvalue="JUnit.ServerFacadeTests.loginNegative" />
+        <item itemvalue="JUnit.ServerFacadeTests.loginPositive" />
         <item itemvalue="Application.Client" />
-        <item itemvalue="Application.ChessBoardUI" />
+        <item itemvalue="Application.Server" />
+        <item itemvalue="JUnit.ServerFacadeTests.registerPositive" />
       </list>
     </recent_temporary>
   </component>
@@ -342,11 +345,6 @@
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/Client.java</url>
           <line>18</line>
           <option name="timeStamp" value="382" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/test/java/clientTests/ServerFacadeTests.java</url>
-          <line>41</line>
-          <option name="timeStamp" value="386" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
