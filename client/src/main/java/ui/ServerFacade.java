@@ -12,18 +12,46 @@ import results.UserResult;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Properties;
+//import spark.*;
 
 public class ServerFacade {
+    private String port = "8080";
     private static String authToken = "";
     public ServerFacade() {
+//        getPort();
+//        port = Spark.run(0);
     }
+
+    public ServerFacade(String port) {
+        this.port = port;
+    }
+
+//    public void getPort(){
+//        try {
+//            try (var propStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("db.properties")) {
+//                if (propStream == null) throw new Exception("Unable to load db.properties");
+//                Properties props = new Properties();
+//                props.load(propStream);
+//
+//                this.port = String.valueOf(Integer.parseInt(props.getProperty("db.port")));
+//            }
+//        } catch (Exception ex) {
+//            throw new RuntimeException("unable to process db.properties. " + ex.getMessage());
+//        }
+//    }
+
+//    public ServerFacade(String port) {
+//        this.port = port;
+//    }
 
     public String register(String username, String password, String email){
         try {
             Gson gson = new Gson();
             String jsonString = gson.toJson(new RegisterRequest(username, password, email));
             ClientCommunicator clientCommunicator = new ClientCommunicator();
-            UserResult res = clientCommunicator.postRegisterCommunicator("http://localhost:8080/user", jsonString);
+            String urlString = "http://localhost:" + port + "/user";
+            UserResult res = clientCommunicator.postRegisterCommunicator(urlString, jsonString);
             this.authToken = res.getAuthToken();
             return res.getUsername();
 
@@ -39,7 +67,8 @@ public class ServerFacade {
             Gson gson = new Gson();
             String jsonString = gson.toJson(new LoginRequest(username, password));
             ClientCommunicator clientCommunicator = new ClientCommunicator();
-            UserResult res = clientCommunicator.postLoginCommunicator("http://localhost:8080/session", jsonString);
+            String urlString = "http://localhost:" + port + "/session";
+            UserResult res = clientCommunicator.postLoginCommunicator(urlString, jsonString);
             this.authToken = res.getAuthToken();
             return res.getUsername();
 
@@ -55,7 +84,8 @@ public class ServerFacade {
             Gson gson = new Gson();
             String jsonString = gson.toJson(new CreateGameRequest(gameName));
             ClientCommunicator clientCommunicator = new ClientCommunicator();
-            CreateGameResult res = clientCommunicator.postGameCommunicator("http://localhost:8080/game", jsonString, this.authToken);
+            String urlString = "http://localhost:" + port + "/game";
+            CreateGameResult res = clientCommunicator.postGameCommunicator(urlString, jsonString, this.authToken);
             if (res == null) { throw new NullPointerException(); }
             return res.getGameID().toString();
         } catch (NullPointerException e) {
@@ -68,7 +98,8 @@ public class ServerFacade {
     public String listGames(){
         try {
             ClientCommunicator clientCommunicator = new ClientCommunicator();
-            ListGamesResult listGamesResult = clientCommunicator.getCommunicator("http://localhost:8080/game", this.authToken);
+            String urlString = "http://localhost:" + port + "/game";
+            ListGamesResult listGamesResult = clientCommunicator.getCommunicator(urlString, this.authToken);
             if (listGamesResult == null) { throw new NullPointerException(); }
             return listGamesResult.toString();
         } catch (NullPointerException | JsonSyntaxException e) {
@@ -81,7 +112,8 @@ public class ServerFacade {
     public String logout(){
         try {
             ClientCommunicator clientCommunicator = new ClientCommunicator();
-            UserResult userResult = clientCommunicator.logoutDelete("http://localhost:8080/session", this.authToken);
+            String urlString = "http://localhost:" + port + "/session";
+            UserResult userResult = clientCommunicator.logoutDelete(urlString, this.authToken);
             if (userResult == null) { return "Unauthorized: AuthToken not in Database"; }
             this.authToken = "";
             return "";
@@ -95,7 +127,8 @@ public class ServerFacade {
             Gson gson = new Gson();
             String jsonString = gson.toJson(new JoinGameRequest(Integer.parseInt(gameID), playerColor));
             ClientCommunicator clientCommunicator = new ClientCommunicator();
-            MessageOnlyResult messageOnlyResult = clientCommunicator.joinPlayer("http://localhost:8080/game", jsonString, this.authToken);
+            String urlString = "http://localhost:" + port + "/game";
+            MessageOnlyResult messageOnlyResult = clientCommunicator.joinPlayer(urlString, jsonString, this.authToken);
             if (messageOnlyResult.getMessage().equals("CORRECT")){
                 return "";
             } else if (messageOnlyResult.getMessage().equals("Error: Color already occupied")) {

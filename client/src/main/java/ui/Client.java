@@ -9,6 +9,8 @@ public class Client {
         preLoginMenu();
     }
 
+
+
     public static void preLoginMenu(){
         System.out.printf(WELCOME_TEXT);
         System.out.print(PRELOGIN_TEXT);
