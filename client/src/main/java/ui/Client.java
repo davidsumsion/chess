@@ -31,7 +31,6 @@ public class Client {
             System.out.println("Enter an Integer, not a word");
             preLoginMenu();
         }
-
     }
 
     public static void postLoginMenu(){

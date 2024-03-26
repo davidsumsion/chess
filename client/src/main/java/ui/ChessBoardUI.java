@@ -9,6 +9,7 @@ import static ui.EscapeSequences.*;
 import chess.*;
 
 public class ChessBoardUI {
+    static Boolean reverse = true;
 
     public static void main(String[] args) {
         var out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
@@ -31,20 +32,25 @@ public class ChessBoardUI {
     private static void printIndex(PrintStream out, int i){
         out.print(SET_BG_COLOR_BLACK);
         out.print(SET_TEXT_COLOR_WHITE);
-        out.print(i + 1);
+        if (reverse == false) {
+            out.print(i + 1);
+        } else {
+            out.print(reverseMap.get(i) + 1);
+        }
+
         out.print(" ");
         setBackGroundBlack(out);
     }
 
     private static void drawRows(PrintStream out, ChessBoard chessBoard) {
         //this is where you choose if you are printing which board
-        Boolean reverse = true;
+
         String color = SET_BG_COLOR_BLACK;
         for (int boardRow = 0; boardRow < 8; ++boardRow) {
             out.print(EMPTY);
             printIndex(out, boardRow);
             color = setTileColor(color, out);
-            for (int boardColumn = 0; boardColumn < 8; ++boardColumn){
+            for (int boardColumn = 7; boardColumn >= 0; --boardColumn){
                 color = setTileColor(color, out);
                 out.print(getPieceName(chessBoard, boardRow, boardColumn, reverse));
             }
@@ -102,6 +108,10 @@ public class ChessBoardUI {
 
     private  static void drawHeaders(PrintStream out) {
         String[] headers = { EMPTY, "A", "B", "C", "D", "E", "F", "G", "H", EMPTY};
+        if (reverse == false) {
+            headers = new String[]{EMPTY, "H", "G", "F", "E", "D", "C", "B", "A", EMPTY};
+        }
+
         out.print(" ");
         for (int boardCol = 0; boardCol < 10; ++boardCol) {
             drawHeader(out, headers[boardCol]);
