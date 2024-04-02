@@ -116,9 +116,14 @@ public class Client {
         Integer colNum = colNumberMap.get(col);
 
         ChessPosition currentPosition = new ChessPosition(Integer.parseInt(row), colNum);
-        ChessPiece chessPiece = chessBoard.getPiece(currentPosition);
-        if (chessPiece.getTeamColor().toString().equals(color)) {
-            Collection<ChessMove> moves = chessPiece.pieceMoves(chessBoard, currentPosition);
+        ChessPiece currentPiece = chessBoard.getPiece(currentPosition);
+        System.out.print(currentPiece);
+        System.out.print(currentPosition);
+        System.out.println();
+        if (currentPiece.getTeamColor().toString().equals(color)) {
+            Collection<ChessMove> moves = currentPiece.pieceMoves(chessBoard, currentPosition);
+            System.out.print(moves);
+            System.out.println();
             Gson gson = new Gson();
             String[] args = new String[]{color, gson.toJson(chessBoard), gson.toJson(moves)};
             ChessBoardUI.main(args);

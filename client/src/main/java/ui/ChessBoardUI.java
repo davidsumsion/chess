@@ -58,8 +58,8 @@ public class ChessBoardUI {
             Integer startCol = startPosition.getColumn();
             Integer endRow = endPosition.getRow();
             Integer endCol = endPosition.getColumn();
-            ChessPosition reversedStartPos = new ChessPosition(reverseMap.get(startRow), reverseMap.get(startCol));
-            ChessPosition reversedEndPos = new ChessPosition(reverseMap.get(endRow), reverseMap.get(endCol));
+            ChessPosition reversedStartPos = new ChessPosition(reverseHighlightMap.get(startRow), reverseHighlightMap.get(startCol));
+            ChessPosition reversedEndPos = new ChessPosition(reverseHighlightMap.get(endRow), reverseHighlightMap.get(endCol));
             reverseMoves.add(new ChessMove(reversedStartPos, reversedEndPos, chessMove.getPromotionPiece()));
         }
         return reverseMoves;
@@ -68,7 +68,7 @@ public class ChessBoardUI {
     private static Boolean highlightBool(Integer row, Integer col, Collection<ChessMove> moves){
         for (ChessMove chessMove: moves) {
             ChessPosition endPosition = chessMove.getEndPosition();
-            if (endPosition.getRow() == row && endPosition.getColumn() == col){
+            if (endPosition.getRow() == row + 1 && endPosition.getColumn() == col + 1){
                 return true;
             }
         }
@@ -76,6 +76,7 @@ public class ChessBoardUI {
     }
     private static void drawRows(PrintStream out, ChessBoard chessBoard, Boolean reverse, Collection<ChessMove> moves) {
         Collection<ChessMove> highlightedMoves = (reverse && moves != null) ? reverseMoves(moves) : moves;
+//        Collection<ChessMove> highlightedMoves = moves;
         String color = SET_BG_COLOR_BLACK;
         for (int boardRow = 0; boardRow < 8; ++boardRow) {
             out.print(EMPTY);
@@ -95,6 +96,16 @@ public class ChessBoardUI {
             out.println();
         }
     }
+
+    final static Map<Integer, Integer> reverseHighlightMap = Map.of(
+            1,8,
+            2,7,
+            3,6,
+            4,5,
+            5,4,
+            6,3,
+            7,2,
+            8,1);
 
     final static Map<Integer, Integer> reverseMap = Map.of(
                 0,7,
@@ -137,7 +148,7 @@ public class ChessBoardUI {
             return SET_BG_COLOR_LIGHT_GREY;
         } else {
             if (highlight) setBackGroundWhite(out);
-            setBackGroundBlue(out);
+            else setBackGroundBlue(out);
             return SET_BG_COLOR_BLUE;
         }
     }

@@ -8,13 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlGameDataDA.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlGameDataDA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/DeleteAllService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/DeleteAllService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/GameServices/CreateGameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/GameServices/CreateGameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/services/GameServices/ListGamesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/services/GameServices/ListGamesService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/java/chess/ChessGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/chess/ChessGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/main/java/models/GameData.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/main/java/models/GameData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -331,23 +324,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/Client.java</url>
-          <line>107</line>
-          <option name="timeStamp" value="429" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/Client.java</url>
           <line>70</line>
           <option name="timeStamp" value="430" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/Client.java</url>
-          <line>101</line>
-          <option name="timeStamp" value="431" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/Client.java</url>
-          <line>117</line>
-          <option name="timeStamp" value="432" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/Client.java</url>
@@ -355,19 +333,29 @@
           <option name="timeStamp" value="433" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/Client.java</url>
+          <line>118</line>
+          <option name="timeStamp" value="437" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java</url>
-          <line>28</line>
-          <option name="timeStamp" value="434" />
+          <line>54</line>
+          <option name="timeStamp" value="443" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java</url>
+          <line>79</line>
+          <option name="timeStamp" value="444" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java</url>
+          <line>69</line>
+          <option name="timeStamp" value="445" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java</url>
           <line>77</line>
-          <option name="timeStamp" value="435" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java</url>
-          <line>80</line>
-          <option name="timeStamp" value="436" />
+          <option name="timeStamp" value="447" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
