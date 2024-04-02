@@ -17,8 +17,7 @@ public class ChessGame implements Cloneable {
     TeamColor teamTurn = TeamColor.WHITE;
     ChessBoard board = new ChessBoard();
 
-    public ChessGame() {
-    }
+    public ChessGame() { }
 
     @Override
     protected Object clone() throws CloneNotSupportedException {

@@ -27,10 +27,11 @@ public class MySqlGameDataDA {
         }
 
         //add game if not in use
-        String addGameSql = "INSERT INTO GameDataTable (gameName)\n" +
-                "VALUES (?);";
+        String addGameSql = "INSERT INTO GameDataTable (gameName, chessGame)\n" +
+                "VALUES (?, ?);";
         try (PreparedStatement statement = connection.prepareStatement(addGameSql)){
             statement.setString(1, gameData.getGameName());
+            statement.setString(2, gameData.getChessGame());
             if (statement.executeUpdate() != 1) {
                 throw new DataAccessException("unsuccessful insert into GameDataTable");
             }
@@ -65,9 +66,10 @@ public class MySqlGameDataDA {
                     String whiteUsername = rs.getString("whiteUsername");
                     String blackUsername = rs.getString("blackUsername");
                     String gameName = rs.getString("gameName");
-                    //add chessGame in when you need it
                     String chessGame = rs.getString("chessGame");
-                    return new GameData(id, whiteUsername,blackUsername, gameName);
+                    GameData gameData = new GameData(id, whiteUsername,blackUsername, gameName);
+                    gameData.setChessGame(chessGame);
+                    return gameData;
                 }
                 return null;
             }
@@ -87,7 +89,9 @@ public class MySqlGameDataDA {
                     String gameName = rs.getString("gameName");
                     //add chessGame in when you need it
                     String chessGame = rs.getString("chessGame");
-                    games.add(new GameData(id, whiteUsername, blackUsername, gameName));
+                    GameData gameData = new GameData(id, whiteUsername, blackUsername, gameName);
+                    gameData.setChessGame(chessGame);
+                    games.add(gameData);
                 }
 
             }
@@ -96,12 +100,13 @@ public class MySqlGameDataDA {
     }
 
     public void updateGame(Connection connection, GameData gameData) throws SQLException{
-        String sql = "UPDATE GameDataTable SET whiteUsername = ?, blackUsername = ?, gameName = ? WHERE gameID = ?";
+        String sql = "UPDATE GameDataTable SET whiteUsername = ?, blackUsername = ?, gameName = ?, chessGame = ? WHERE gameID = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)){
-            statement.setInt(4, gameData.getGameID());
             statement.setString(1, gameData.getWhiteUsername());
             statement.setString(2, gameData.getBlackUsername());
             statement.setString(3, gameData.getGameName());
+            statement.setString(4, gameData.getChessGame());
+            statement.setInt(5, gameData.getGameID());
             statement.executeUpdate();
         }
     }

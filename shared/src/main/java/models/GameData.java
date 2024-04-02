@@ -1,16 +1,12 @@
 package models;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.util.Locale;
-import java.util.UUID;
-
 public class GameData {
     private Integer gameID;
     private String whiteUsername;
     private String blackUsername;
     private String gameName;
+    private String chessGame;
+
     private static int counter = 0;
     public GameData() {}
     public GameData(Integer id, String whiteUsername, String blackUsername, String gameName){
@@ -45,6 +41,10 @@ public class GameData {
     public void setBlackUsername(String blackUsername) {
         this.blackUsername = blackUsername;
     }
+
+    public String getChessGame() { return chessGame; }
+
+    public void setChessGame(String chessGame) { this.chessGame = chessGame; }
 
     public void setGameName(String gameName) {
         this.gameName = gameName;

@@ -1,15 +1,9 @@
 package services;
 
 import dataAccess.*;
-import models.GameData;
-import models.UserData;
-
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Properties;
-import java.sql.*;
 import java.util.Properties;
 
 public class DeleteAllService {

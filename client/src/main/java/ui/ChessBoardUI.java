@@ -1,38 +1,45 @@
 package ui;
 import java.io.PrintStream;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static ui.EscapeSequences.*;
 
 import chess.*;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class ChessBoardUI {
-    static Boolean reverse = true;
 
     public static void main(String[] args) {
         var out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
-
         out.print(EscapeSequences.ERASE_SCREEN);
-
-        drawChessBoard(out);
+        Collection<ChessMove> arg3 = null;
+        Gson gson = new Gson();
+        if (args.length > 2) {
+            Type collectionType = new TypeToken<Collection<ChessMove>>(){}.getType();
+            arg3 = gson.fromJson(args[2], collectionType);
+        }
+        drawChessBoard(out, args[0], gson.fromJson(args[1], ChessBoard.class), arg3);
     }
 
-    private static void drawChessBoard(PrintStream out) {
-        ChessBoard chessBoard = getDummyData();
+    private static void drawChessBoard(PrintStream out, String color, ChessBoard chessBoard, Collection<ChessMove> highlightedMoves) {
+        Boolean reverse = true;
+        if (color.equals("BLACK")) { reverse = false; }
+        setBackGroundBlack(out);
+        drawHeaders(out, reverse);
+        drawRows(out, chessBoard, reverse, highlightedMoves);
+        drawHeaders(out, reverse);
+//        setBackGroundBlack(out);
+        resetBackGround(out);
 
-        setBackGroundBlack(out);
-        drawHeaders(out);
-        drawRows(out, chessBoard);
-        drawHeaders(out);
-        setBackGroundBlack(out);
     }
 
-    private static void printIndex(PrintStream out, int i){
+    private static void printIndex(PrintStream out, int i, Boolean reverse){
         out.print(SET_BG_COLOR_BLACK);
         out.print(SET_TEXT_COLOR_WHITE);
-        if (reverse == false) {
+        if (!reverse) {
             out.print(i + 1);
         } else {
             out.print(reverseMap.get(i) + 1);
@@ -42,21 +49,49 @@ public class ChessBoardUI {
         setBackGroundBlack(out);
     }
 
-    private static void drawRows(PrintStream out, ChessBoard chessBoard) {
-        //this is where you choose if you are printing which board
+    private static Collection<ChessMove> reverseMoves(Collection<ChessMove> highlightMoves){    //, Boolean reverseRows
+        Collection<ChessMove> reverseMoves = new HashSet<>();
+        for (ChessMove chessMove : highlightMoves) {
+            ChessPosition startPosition = chessMove.getStartPosition();
+            ChessPosition endPosition = chessMove.getEndPosition();
+            Integer startRow = startPosition.getRow();
+            Integer startCol = startPosition.getColumn();
+            Integer endRow = endPosition.getRow();
+            Integer endCol = endPosition.getColumn();
+            ChessPosition reversedStartPos = new ChessPosition(reverseMap.get(startRow), reverseMap.get(startCol));
+            ChessPosition reversedEndPos = new ChessPosition(reverseMap.get(endRow), reverseMap.get(endCol));
+            reverseMoves.add(new ChessMove(reversedStartPos, reversedEndPos, chessMove.getPromotionPiece()));
+        }
+        return reverseMoves;
+    }
 
+    private static Boolean highlightBool(Integer row, Integer col, Collection<ChessMove> moves){
+        for (ChessMove chessMove: moves) {
+            ChessPosition endPosition = chessMove.getEndPosition();
+            if (endPosition.getRow() == row && endPosition.getColumn() == col){
+                return true;
+            }
+        }
+        return false;
+    }
+    private static void drawRows(PrintStream out, ChessBoard chessBoard, Boolean reverse, Collection<ChessMove> moves) {
+        Collection<ChessMove> highlightedMoves = (reverse && moves != null) ? reverseMoves(moves) : moves;
         String color = SET_BG_COLOR_BLACK;
         for (int boardRow = 0; boardRow < 8; ++boardRow) {
             out.print(EMPTY);
-            printIndex(out, boardRow);
-            color = setTileColor(color, out);
+            printIndex(out, boardRow, reverse);
+            color = setTileColor(color, out, false);
             for (int boardColumn = 7; boardColumn >= 0; --boardColumn){
-                color = setTileColor(color, out);
+                Boolean highlightIndicator = false;
+                if (moves != null) {
+                    highlightIndicator = highlightBool(boardRow, boardColumn, highlightedMoves);
+                }
+                color = setTileColor(color, out, highlightIndicator);
                 out.print(getPieceName(chessBoard, boardRow, boardColumn, reverse));
             }
             setBackGroundBlack(out);
             out.print(" ");
-            printIndex(out, boardRow);
+            printIndex(out, boardRow, reverse);
             out.println();
         }
     }
@@ -95,20 +130,21 @@ public class ChessBoardUI {
         return EMPTY;
     }
 
-    private static String setTileColor(String color, PrintStream out){
-        if (Objects.equals(color, SET_BG_COLOR_BLUE)) {
-            setBackGroundLightGrey(out);
+    private static String setTileColor(String color, PrintStream out, Boolean highlight){
+        if (Objects.equals(color, SET_BG_COLOR_BLUE) || Objects.equals(color, SET_BG_COLOR_WHITE)) {
+            if (highlight) setBackGroundGreen(out);
+            else setBackGroundLightGrey(out);
             return SET_BG_COLOR_LIGHT_GREY;
         } else {
+            if (highlight) setBackGroundWhite(out);
             setBackGroundBlue(out);
             return SET_BG_COLOR_BLUE;
         }
-
     }
 
-    private  static void drawHeaders(PrintStream out) {
+    private  static void drawHeaders(PrintStream out, Boolean reverse) {
         String[] headers = { EMPTY, "A", "B", "C", "D", "E", "F", "G", "H", EMPTY};
-        if (reverse == false) {
+        if (!reverse) {
             headers = new String[]{EMPTY, "H", "G", "F", "E", "D", "C", "B", "A", EMPTY};
         }
 
@@ -155,9 +191,20 @@ public class ChessBoardUI {
         out.print(EscapeSequences.SET_TEXT_COLOR_BLACK);
     }
 
+    private static void setBackGroundGreen(PrintStream out){
+        out.print(SET_BG_COLOR_GREEN);
+        out.print(EscapeSequences.SET_TEXT_COLOR_BLACK);
+    }
+
     private static void setBackGroundBlue(PrintStream out){
         out.print(SET_BG_COLOR_BLUE);
         out.print(EscapeSequences.SET_TEXT_COLOR_BLACK);
+    }
+
+    private static void resetBackGround(PrintStream out){
+        out.print(RESET_BG_COLOR);
+        out.print(RESET_TEXT_COLOR);
+        out.print(SET_TEXT_COLOR_WHITE);
     }
 
 

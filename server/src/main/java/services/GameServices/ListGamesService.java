@@ -25,10 +25,6 @@ public class ListGamesService extends GameService{
                 MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
                 ArrayList<GameData> myList = mySqlGameDataDA.getListGames(connection);
                 return new ListGamesResult(myList);
-
-
-//                MemoryGameDA game = new MemoryGameDA(new GameData());
-//                return new ListGamesResult(game.getListGames());
             }
         } catch (SQLException | DataAccessException e){
             System.out.println("Unable to connect to the DB");

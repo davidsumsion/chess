@@ -18,32 +18,11 @@ import java.util.Properties;
 public class ServerFacade {
     private String port = "8080";
     private static String authToken = "";
-    public ServerFacade() {
-//        getPort();
-//        port = Spark.run(0);
-    }
+    public ServerFacade() { }
 
     public ServerFacade(String port) {
         this.port = port;
     }
-
-//    public void getPort(){
-//        try {
-//            try (var propStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("db.properties")) {
-//                if (propStream == null) throw new Exception("Unable to load db.properties");
-//                Properties props = new Properties();
-//                props.load(propStream);
-//
-//                this.port = String.valueOf(Integer.parseInt(props.getProperty("db.port")));
-//            }
-//        } catch (Exception ex) {
-//            throw new RuntimeException("unable to process db.properties. " + ex.getMessage());
-//        }
-//    }
-
-//    public ServerFacade(String port) {
-//        this.port = port;
-//    }
 
     public String register(String username, String password, String email){
         try {
@@ -145,12 +124,3 @@ public class ServerFacade {
         }
     }
 }
-
-
-//        Spark.post("/user", (req, res) -> (new RegisterHandler()).handle(req, res));
-//        Spark.post("/session", (req, res) -> (new LoginHandler()).handle(req, res));
-//        Spark.delete("/session", (req, res) ->(new LogoutHandler()).handle(req,res));
-//        Spark.get("/game", (req, res) -> (new ListGamesHandler()).handle(req, res));
-//        Spark.post("/game", (req, res) -> (new CreateGameHandler()).handle(req, res));
-//        Spark.put("/game", (req, res) -> (new JoinGameHandler()).handle(req, res));
-//        Spark.delete("/db", (req, res) -> (new DeleteAllHandler()).handle(req, res));
