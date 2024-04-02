@@ -55,3 +55,37 @@ HTTPS - SSL
 Digital Signitures
 - how to know that server's certificate actually came from a trusted certificate authority?
 - applied to a file - 
+
+
+Threads
+- main, printDocument, callWebAPI
+  - can do all 3 at the same time if you use 3 different threads
+  - need 3 processers, not one
+- CS 324 -- 
+- get their own stack, but not their own heap
+- extend the thread class
+- OS runs processes, processes split into threads
+- Thread Pools
+  - overhead in creawting threads
+  - make a group of threads, use them as needed put them back when needed
+  - Executor Service
+    - task queue adds tasks to threads
+  - newCachedThreadPool()
+  - newFixeThreadPool(int nThreads)
+  - newScheduledThreadPool(int corePoolSize)
+  - newSingleThreadExecutor()
+  - newSingleThreadExecutor()
+  - newWorkStealingPool() -- keep processors busy (good for server, bad for laptop)
+- extend thread, implement runnable, 
+  - runnable and callable are addded to threadPool
+- Problems
+  - adding threads does not necessarily make ur program faster, benefit of threads outweighs overhead
+  - Race Condition
+    - make sure they're not writing to the same file
+    - accessing the same data structure -- can get weird bugs, harder to track down
+- Writing Threadsafe code
+  - database transactions
+  - synchronized methods in java
+    - prevents multiple threads from entering the method on the same object at the same time
+  - synchronized code blocks in java
+    - synchronizes part of the method
