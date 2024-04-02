@@ -1,15 +1,12 @@
 package ui;
-
 import java.util.Scanner;
 
-
 public class Client {
-    private String facadeAuthToken = "";
+    private String currentPlayerColor;
+    private String currentGameID;
     public static void main(String[] args) throws Exception {
         preLoginMenu();
     }
-
-
 
     public static void preLoginMenu(){
         System.out.printf(WELCOME_TEXT);
@@ -57,6 +54,34 @@ public class Client {
         }
     }
 
+    public static void gameplayUI(String color) {
+        String[] args = new String[]{color};
+        ChessBoardUI.main(args);
+        System.out.print(GAMEPLAY_TEXT);
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        if (input.equals(Integer.toString(1))) {
+            // Help
+            ChessBoardUI.main(args);
+            gameplayUI(color);
+        } else if (input.equals(Integer.toString(2))) {
+            // Redraw Chess Board
+            ChessBoardUI.main(args);
+        } else if (input.equals(Integer.toString(3))) {
+            // Leave
+            System.out.print("Thanks for playing!");
+            postLoginMenu();
+        } else if (input.equals(Integer.toString(4))) {
+            // Make Move
+        } else if (input.equals(Integer.toString(5))) {
+            // Resign
+            System.out.print("Are you sure you want to leave resign??\n You will forfeit the game");
+        } else if (input.equals(Integer.toString(6))) {
+            // highlight Legal Moves
+        }
+    }
+
+
     public static void registerUI(){
         System.out.print("Enter a Username\n>>> ");
         Scanner usernameScanner = new Scanner(System.in);
@@ -97,31 +122,29 @@ public class Client {
 
     }
 
-    public static void joinToPlayGameUI(){
+    public void joinToPlayGameUI(){
         System.out.print("Enter a gameID\n>>> ");
         Scanner gameIDScanner = new Scanner(System.in);
-        String gameID = gameIDScanner.nextLine();
+        this.currentGameID = gameIDScanner.nextLine();
 
         System.out.print("Choose a color\n\t1 - BLACK\n\t2 - WHITE\n>>> ");
         Scanner colorScanner = new Scanner(System.in);
         String colorChecker = colorScanner.nextLine();
-        String playerColor = "";
         if ((colorChecker.equals(Integer.toString(1)))) {
-            playerColor = "BLACK";
+            this.currentPlayerColor = "BLACK";
         } else {
-            playerColor = "WHITE";
+            this.currentPlayerColor = "WHITE";
         }
 
         ServerFacade serverFacade = new ServerFacade();
-        String result = serverFacade.joinGamePlayer(gameID, playerColor);
+        String result = serverFacade.joinGamePlayer(this.currentGameID, this.currentPlayerColor);
         if (result.isEmpty()) {
-            System.out.format("Enjoy your game, you are %s\n", playerColor);
-            if (playerColor.equals("WHITE")) {
-                String[] args = new String[]{"WHITE"};
-                ChessBoardUI.main(args);
+            System.out.format("Enjoy your game, you are %s\n", this.currentPlayerColor);
+
+            if (this.currentPlayerColor.equals("WHITE")) {
+                gameplayUI("WHITE");
             } else {
-                String[] args = new String[]{"BLACK"};
-                ChessBoardUI.main(args);
+                gameplayUI("BLACK");
             }
 
         } else if (result.equals("Start the Server")) {
@@ -143,13 +166,8 @@ public class Client {
         System.out.print("Enter a gameID\n>>> ");
         Scanner gameIDScanner = new Scanner(System.in);
         String gameID = gameIDScanner.nextLine();
-
         ServerFacade serverFacade = new ServerFacade();
         String result =  serverFacade.joinGamePlayer(gameID, null);
-//        System.out.println("Enjoy your game ");
-//        String[] args = new String[]{"nothing"};
-//        ChessBoardUI.main(args);
-
         if (result.isEmpty()) {
             System.out.format("Enjoy the show\n");
             String[] args = new String[]{"OBSERVER"};
@@ -236,6 +254,13 @@ public class Client {
             "3 - QUIT\n\tTo Stop Playing\n" +
             "4 - HELP\n\tDisplays this menu\n>>> ";
 
+    private static final String GAMEPLAY_TEXT = "Enter an Integer:\n" +
+            "1 - Help\n\tDisplays This Menu\n" +
+            "2 - Redraw Chess Board\n\tRedraws the board\n" +
+            "3 - Leave\n\tRemove yourself from the game\n" +
+            "4 - Make Move\n\tMove a piece\n" +
+            "5 - Resign\n\tForfeit the game and Game is over\n" +
+            "6 - Highlight Legal Moves\n\tSee All Legal Moves for a piece>>> ";
     private static final String LOGGED_IN_TEXT = "\n" +
             EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_KING+ EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.EMPTY +
             EscapeSequences.EMPTY + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_KING+ EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK +
