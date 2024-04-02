@@ -45,7 +45,6 @@ public class Client {
             joinToPlayGameUI();
         } else if (menuLine.equals(Integer.toString(5))){
             joinToObserveUI();
-//            System.out.print("JOIN OBSERVER REACHED");
         } else if (menuLine.equals(Integer.toString(6))){
             postLoginMenu();
         } else {
@@ -122,26 +121,27 @@ public class Client {
 
     }
 
-    public void joinToPlayGameUI(){
+    public static void joinToPlayGameUI(){
         System.out.print("Enter a gameID\n>>> ");
         Scanner gameIDScanner = new Scanner(System.in);
-        this.currentGameID = gameIDScanner.nextLine();
+        String currentGameID = gameIDScanner.nextLine();
 
         System.out.print("Choose a color\n\t1 - BLACK\n\t2 - WHITE\n>>> ");
         Scanner colorScanner = new Scanner(System.in);
         String colorChecker = colorScanner.nextLine();
+        String currentPlayerColor = "";
         if ((colorChecker.equals(Integer.toString(1)))) {
-            this.currentPlayerColor = "BLACK";
+            currentPlayerColor = "BLACK";
         } else {
-            this.currentPlayerColor = "WHITE";
+            currentPlayerColor = "WHITE";
         }
 
         ServerFacade serverFacade = new ServerFacade();
-        String result = serverFacade.joinGamePlayer(this.currentGameID, this.currentPlayerColor);
+        String result = serverFacade.joinGamePlayer(currentGameID, currentPlayerColor);
         if (result.isEmpty()) {
-            System.out.format("Enjoy your game, you are %s\n", this.currentPlayerColor);
+            System.out.format("Enjoy your game, you are %s\n", currentPlayerColor);
 
-            if (this.currentPlayerColor.equals("WHITE")) {
+            if (currentPlayerColor.equals("WHITE")) {
                 gameplayUI("WHITE");
             } else {
                 gameplayUI("BLACK");
