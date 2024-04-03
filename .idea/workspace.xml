@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/ui/WSClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/server/WSServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,8 +53,10 @@
     "Application.Client.executor": "Debug",
     "Application.InteractiveCalculatorExample.executor": "Run",
     "Application.InteractiveConsole.executor": "Run",
-    "Application.Server.executor": "Run",
+    "Application.Server.executor": "Debug",
     "Application.ServerFacade.executor": "Run",
+    "Application.WSClient.executor": "Debug",
+    "Application.WSServer.executor": "Debug",
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.All in server.executor": "Run",
     "JUnit.All in shared.executor": "Debug",
@@ -103,6 +106,7 @@
     "JUnit.StandardAPITests.executor": "Run",
     "JUnit.StandardAPITests.successLogin.executor": "Debug",
     "JUnit.StandardAPITests.successRegister.executor": "Debug",
+    "JUnit.WebSocketTests.executor": "Run",
     "JUnit.dataAccessTests.executor": "Run",
     "JUnit.myServiceTests.executor": "Run",
     "JUnit.myServiceTests.registerExistingUser.executor": "Debug",
@@ -133,20 +137,7 @@
       <recent name="$PROJECT_DIR$/shared/src/main/java" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Client">
-    <configuration name="ChessBoardUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ui.ChessBoardUI" />
-      <module name="client" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ui.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.WSClient">
     <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.Client" />
       <module name="client" />
@@ -173,44 +164,54 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServerFacadeTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="WSClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ui.WSClient" />
       <module name="client" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="clientTests.*" />
+          <option name="PATTERN" value="ui.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="clientTests" />
-      <option name="MAIN_CLASS_NAME" value="clientTests.ServerFacadeTests" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServerFacadeTests.joinGameObserverNegative2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="client" />
+    <configuration name="WSServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="server.WSServer" />
+      <module name="server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="clientTests.*" />
+          <option name="PATTERN" value="server.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="clientTests" />
-      <option name="MAIN_CLASS_NAME" value="clientTests.ServerFacadeTests" />
-      <option name="METHOD_NAME" value="joinGameObserverNegative2" />
-      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebSocketTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.WebSocketTests" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.WSClient" />
         <item itemvalue="Application.Client" />
         <item itemvalue="Application.Server" />
-        <item itemvalue="Application.ChessBoardUI" />
-        <item itemvalue="JUnit.ServerFacadeTests" />
-        <item itemvalue="JUnit.ServerFacadeTests.joinGameObserverNegative2" />
+        <item itemvalue="Application.WSServer" />
+        <item itemvalue="JUnit.WebSocketTests" />
       </list>
     </recent_temporary>
   </component>
@@ -338,24 +339,14 @@
           <option name="timeStamp" value="437" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java</url>
-          <line>54</line>
-          <option name="timeStamp" value="443" />
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/WSClient.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="448" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java</url>
-          <line>79</line>
-          <option name="timeStamp" value="444" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java</url>
-          <line>69</line>
-          <option name="timeStamp" value="445" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java</url>
-          <line>77</line>
-          <option name="timeStamp" value="447" />
+          <url>file://$PROJECT_DIR$/server/src/main/java/server/Server.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="450" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

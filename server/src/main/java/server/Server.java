@@ -2,6 +2,8 @@ package server;
 
 import dataAccess.DataAccessException;
 import dataAccess.DatabaseManager;
+import org.eclipse.jetty.websocket.api.Session;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import spark.*;
 import handlers.*;
 
@@ -25,6 +27,9 @@ public class Server {
 
         Spark.staticFiles.location("web");
 
+        Spark.webSocket("/connect", WSServer.class);
+        Spark.get("/echo/:msg", (req, res) -> "HTTP response: " + req.params(":msg"));
+
         // Register your endpoints and handle exceptions here.
         Spark.post("/user", (req, res) -> (new RegisterHandler()).handle(req, res));
         Spark.post("/session", (req, res) -> (new LoginHandler()).handle(req, res));
@@ -36,6 +41,11 @@ public class Server {
 
         Spark.awaitInitialization();
         return Spark.port();
+    }
+
+    @OnWebSocketMessage
+    public void onMessage(Session session, String message) throws Exception {
+        session.getRemote().sendString("WebSocket response: " + message);
     }
 
     public void stop() {
