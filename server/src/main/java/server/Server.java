@@ -4,13 +4,14 @@ import dataAccess.DataAccessException;
 import dataAccess.DatabaseManager;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
+import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import spark.*;
 import handlers.*;
 
 import javax.xml.crypto.Data;
 
+@WebSocket
 public class Server {
-
     public static void main(String[] args){
         Server server = new Server();
         server.run(8080);
@@ -27,7 +28,7 @@ public class Server {
 
         Spark.staticFiles.location("web");
 
-        Spark.webSocket("/connect", WSServer.class);
+        Spark.webSocket("/connect", Server.class);
         Spark.get("/echo/:msg", (req, res) -> "HTTP response: " + req.params(":msg"));
 
         // Register your endpoints and handle exceptions here.

@@ -9,11 +9,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
+import javax.websocket.*;
 
 import com.google.gson.Gson;
-import requests.AuthTokenRequest;
-import requests.JoinGameRequest;
-import requests.RegisterRequest;
 import results.CreateGameResult;
 import results.ListGamesResult;
 import results.MessageOnlyResult;
