@@ -8,20 +8,7 @@ import java.net.URI;
 import java.util.Scanner;
 
 public class WSCommunicator extends Endpoint {
-
-//    public static void main(String[] args) throws Exception {
-//        var ws = new WSCommunicator();
-////        Scanner scanner = new Scanner(System.in);
-//
-////        System.out.println("Enter a message you want to echo");
-//        while (true) {
-////            ws.send(scanner.nextLine());
-//            ws.send()
-//        }
-//    }
-
     public Session session;
-
     public WSCommunicator(ServerMessageObserver serverMessageObserver) throws Exception {
         URI uri = new URI("ws://localhost:8080/connect");
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();
@@ -33,12 +20,9 @@ public class WSCommunicator extends Endpoint {
 
                 Gson gson = new Gson();
                 ServerMessage serverMessage = gson.fromJson(message, ServerMessage.class);
-
-                serverMessageObserver.notify(serverMessage);
-
-
                 System.out.println(serverMessage);
 
+                serverMessageObserver.notify(serverMessage);
             }
         });
     }

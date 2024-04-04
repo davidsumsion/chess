@@ -2,8 +2,8 @@ package webSocketMessages.serverMessages;
 
 public class LoadGame extends ServerMessage{
     private String Game;
-    public LoadGame(ServerMessageType type, String game) {
-        super(type);
+    public LoadGame(String game) {
+        super(ServerMessageType.LOAD_GAME);
         Game = game;
     }
     public String getGame() {

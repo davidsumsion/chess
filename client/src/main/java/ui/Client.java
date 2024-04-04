@@ -60,17 +60,16 @@ public class Client {
     }
 
 
-//    private static String getDummyData(){
-//        ChessBoard chessBoard = new ChessBoard();
-//        chessBoard.resetBoard();
-//        Gson gson = new Gson();
-//        return gson.toJson(chessBoard);
-//    }
+    private static String getDummyData(){
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.resetBoard();
+        Gson gson = new Gson();
+        return gson.toJson(chessBoard);
+    }
     public static void gameplayUI(String color, String id) {
         ServerFacade serverFacade = new ServerFacade();
-        String LatestGame = serverFacade.getLatestGame(); // START GAME BOARD instead of game
-        //how do i get the latest board to be here? I shouldn't have to call it, it should just be received
-        String[] args = new String[]{color, LatestGame}; //GAME BOARD
+        //set a global variable for current board
+        String[] args = new String[]{color, getDummyData()}; //GAME BOARD
         ChessBoardUI.main(args);
         System.out.print(GAMEPLAY_TEXT);
         Scanner scanner = new Scanner(System.in);
@@ -100,7 +99,7 @@ public class Client {
         else if (input.equals(Integer.toString(6))) {
             // highlight Legal Moves
             Gson gson = new Gson();
-            highlightMovesUI(color, gson.fromJson(LatestGame, ChessBoard.class));
+//            highlightMovesUI(color, gson.fromJson(LatestGame, ChessBoard.class));
             gameplayUI(color, id);
         }
     }

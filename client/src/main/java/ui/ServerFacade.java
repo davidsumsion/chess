@@ -40,6 +40,7 @@ public class ServerFacade {
             case NOTIFICATION -> System.out.print("NOTIFICATION");
         }
     }
+
     public String register(String username, String password, String email){
         try {
             Gson gson = new Gson();
@@ -125,6 +126,7 @@ public class ServerFacade {
             String urlString = "http://localhost:" + port + "/game";
             MessageOnlyResult messageOnlyResult = clientCommunicator.joinPlayer(urlString, jsonString, this.authToken);
             if (messageOnlyResult.getMessage().equals("CORRECT")){
+                ws.send("MESSAGE");
                 return "";
             } else if (messageOnlyResult.getMessage().equals("Error: Color already occupied")) {
                 return "Error Color";
@@ -137,16 +139,19 @@ public class ServerFacade {
             return "Start the Server";
         } catch (NullPointerException e) {
             return "Unauthorized";
+        } catch (Exception e) {
+            // fix this for later to handle error
+            return "Start the Server";
         }
     }
 
-    public String receiveLatestData(){
-        try {
-//            ws.send("MESSAGE");
-            return "";
-        } catch (Exception e) {
-            System.out.print("an ERROR OCCUREC IN GET LATEST GAME");
-            return "";
-        }
-    }
+//    public String receiveLatestData(){
+////        try {
+////            ws.send("MESSAGE");
+////            return "";
+////        } catch (Exception e) {
+////            System.out.print("an ERROR OCCUREC IN GET LATEST GAME");
+////            return "";
+////        }
+//    }
 }

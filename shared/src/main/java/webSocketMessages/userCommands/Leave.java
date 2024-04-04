@@ -5,6 +5,7 @@ public class Leave extends UserGameCommand{
 
     public Leave(String authToken, Integer gameID) {
         super(authToken);
+        this.commandType = CommandType.MAKE_MOVE;
         this.gameID = gameID;
     }
 
