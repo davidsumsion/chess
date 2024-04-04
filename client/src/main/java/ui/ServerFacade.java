@@ -131,7 +131,7 @@ public class ServerFacade {
             return "";
         } catch (Exception e) {
             System.out.print("an ERROR OCCUREC IN GET LATEST GAME");
+            return "";
         }
-
     }
 }
