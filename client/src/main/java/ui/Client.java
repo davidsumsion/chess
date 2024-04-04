@@ -66,11 +66,17 @@ public class Client {
         Gson gson = new Gson();
         return gson.toJson(chessBoard);
     }
+
+    public static void drawBoard(String chessBoard){
+        String color = "BLACK";
+        String[] args = new String[]{color, chessBoard}; //GAME BOARD
+        ChessBoardUI.main(args);
+    }
     public static void gameplayUI(String color, String id) {
         ServerFacade serverFacade = new ServerFacade();
         //set a global variable for current board
         String[] args = new String[]{color, getDummyData()}; //GAME BOARD
-        ChessBoardUI.main(args);
+//        ChessBoardUI.main(args);
         System.out.print(GAMEPLAY_TEXT);
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();

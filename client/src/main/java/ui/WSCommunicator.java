@@ -16,13 +16,9 @@ public class WSCommunicator extends Endpoint {
 
         this.session.addMessageHandler(new MessageHandler.Whole<String>() {
             public void onMessage(String message) {
-                System.out.println(message);
+//                System.out.println(message);
 
-                Gson gson = new Gson();
-                ServerMessage serverMessage = gson.fromJson(message, ServerMessage.class);
-                System.out.println(serverMessage);
-
-                serverMessageObserver.notify(serverMessage);
+                serverMessageObserver.notify(message);
             }
         });
     }

@@ -9,11 +9,13 @@ import static ui.EscapeSequences.*;
 import chess.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import models.GameData;
 
 public class ChessBoardUI {
 
     public static void main(String[] args) {
         var out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
+        out.println();
         out.print(EscapeSequences.ERASE_SCREEN);
         Collection<ChessMove> arg3 = null;
         Gson gson = new Gson();
@@ -21,15 +23,19 @@ public class ChessBoardUI {
             Type collectionType = new TypeToken<Collection<ChessMove>>(){}.getType();
             arg3 = gson.fromJson(args[2], collectionType);
         }
-        drawChessBoard(out, args[0], gson.fromJson(args[1], ChessBoard.class), arg3);
+        drawChessBoard(out, args[0], gson.fromJson(args[1], GameData.class), arg3);
     }
 
-    private static void drawChessBoard(PrintStream out, String color, ChessBoard chessBoard, Collection<ChessMove> highlightedMoves) {
+    private static void drawChessBoard(PrintStream out, String color, GameData gameData, Collection<ChessMove> highlightedMoves) {
+        Gson gson = new Gson();
+        ChessGame chessGame = gson.fromJson(gameData.getChessGame(), ChessGame.class);
+
+//        ChessBoard
         Boolean reverse = true;
         if (color.equals("BLACK")) { reverse = false; }
         setBackGroundBlack(out);
         drawHeaders(out, reverse);
-        drawRows(out, chessBoard, reverse, highlightedMoves);
+        drawRows(out, chessGame.getBoard(), reverse, highlightedMoves);
         drawHeaders(out, reverse);
 //        setBackGroundBlack(out);
         resetBackGround(out);

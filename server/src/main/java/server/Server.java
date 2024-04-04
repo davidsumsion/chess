@@ -1,5 +1,6 @@
 package server;
 
+import WSLogic.JoinGame;
 import com.google.gson.Gson;
 import dataAccess.DataAccessException;
 import dataAccess.DatabaseManager;
@@ -8,6 +9,7 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import spark.*;
 import handlers.*;
+import webSocketMessages.userCommands.JoinPlayer;
 import webSocketMessages.userCommands.UserGameCommand;
 
 import javax.xml.crypto.Data;
@@ -48,11 +50,17 @@ public class Server {
 
     @OnWebSocketMessage
     public void onMessage(Session session, String message) throws Exception {
-        session.getRemote().sendString("WebSocket response: " + message);
+//        session.getRemote().sendString("WebSocket response: " + message);
         Gson gson = new Gson();
         UserGameCommand userGameCommand = gson.fromJson(message, UserGameCommand.class);
         switch (userGameCommand.getCommandType()){
-            case JOIN_PLAYER -> System.out.print("JOIN PLAYER");
+            case JOIN_PLAYER -> {
+                JoinPlayer joinPlayer = gson.fromJson(message, JoinPlayer.class);
+                System.out.print("JOIN PLAYER");
+                JoinGame joinGame = new JoinGame(joinPlayer.getGameID(), joinPlayer.getPlayerColor());
+                String jsonServerMessage = gson.toJson(joinGame.loadGame());
+                session.getRemote().sendString(jsonServerMessage);
+            }
             case JOIN_OBSERVER -> System.out.print("JOIN OBSERVER");
             case MAKE_MOVE -> System.out.print("MAKE MOVE");
             case LEAVE -> System.out.print("LEAVE");

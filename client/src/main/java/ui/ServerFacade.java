@@ -1,5 +1,6 @@
 package ui;
 
+import chess.ChessGame;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import models.GameData;
@@ -8,12 +9,17 @@ import results.CreateGameResult;
 import results.ListGamesResult;
 import results.MessageOnlyResult;
 import results.UserResult;
+import webSocketMessages.serverMessages.LoadGame;
 import webSocketMessages.serverMessages.ServerMessage;
+import webSocketMessages.userCommands.JoinPlayer;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
+
+import static java.lang.Integer.parseInt;
 //import spark.*;
 
 public class ServerFacade {
@@ -33,9 +39,18 @@ public class ServerFacade {
         this.port = port;
     }
 
-    private void receiveMessage(ServerMessage message) {
-        switch (message.getServerMessageType()){
-            case LOAD_GAME -> System.out.print("LOAD GAME");
+    private void receiveMessage(String message) {
+        Gson gson = new Gson();
+        ServerMessage serverMessage = gson.fromJson(message, ServerMessage.class);
+        System.out.println(serverMessage);
+
+        switch (serverMessage.getServerMessageType()){
+            case LOAD_GAME -> {
+                System.out.print("LOAD GAME\n");
+                LoadGame loadGame = gson.fromJson(message, LoadGame.class);
+                Client.drawBoard(loadGame.getGame());
+
+            }
             case ERROR -> System.out.print("ERROR");
             case NOTIFICATION -> System.out.print("NOTIFICATION");
         }
@@ -121,12 +136,17 @@ public class ServerFacade {
     public String joinGamePlayer(String gameID, String playerColor){
         try {
             Gson gson = new Gson();
-            String jsonString = gson.toJson(new JoinGameRequest(Integer.parseInt(gameID), playerColor));
+            String jsonString = gson.toJson(new JoinGameRequest(parseInt(gameID), playerColor));
             ClientCommunicator clientCommunicator = new ClientCommunicator();
             String urlString = "http://localhost:" + port + "/game";
             MessageOnlyResult messageOnlyResult = clientCommunicator.joinPlayer(urlString, jsonString, this.authToken);
             if (messageOnlyResult.getMessage().equals("CORRECT")){
-                ws.send("MESSAGE");
+                ChessGame.TeamColor teamColor = ChessGame.TeamColor.WHITE;
+                if (!Objects.equals(playerColor, "WHITE")) {
+                    teamColor = ChessGame.TeamColor.BLACK;
+                }
+                JoinPlayer joinPlayer = new JoinPlayer(authToken, parseInt(gameID), teamColor);
+                ws.send(gson.toJson(joinPlayer));
                 return "";
             } else if (messageOnlyResult.getMessage().equals("Error: Color already occupied")) {
                 return "Error Color";
@@ -150,7 +170,7 @@ public class ServerFacade {
 ////            ws.send("MESSAGE");
 ////            return "";
 ////        } catch (Exception e) {
-////            System.out.print("an ERROR OCCUREC IN GET LATEST GAME");
+////            System.out.print("an ERROR OCCURRED IN GET LATEST GAME");
 ////            return "";
 ////        }
 //    }

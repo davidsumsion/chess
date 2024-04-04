@@ -6,7 +6,6 @@ public class GameData {
     private String blackUsername;
     private String gameName;
     private String chessGame;
-
     private static int counter = 0;
     public GameData() {}
     public GameData(Integer id, String whiteUsername, String blackUsername, String gameName){

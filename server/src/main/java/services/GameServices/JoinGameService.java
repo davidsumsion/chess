@@ -19,8 +19,8 @@ public class JoinGameService extends GameService{
     public GameData findGame(Connection connection, Integer gameID) throws DataAccessException, SQLException{
         MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
         return mySqlGameDataDA.getGame(connection, gameID);
-
     }
+
     public MessageOnlyResult joinGame(JoinGameRequest joinGameRequest) throws UnauthorizedException, ForbiddenException, BadRequestException {
         try (Connection connection = DatabaseManager.getConnection()){
             verifyAuthToken(connection, joinGameRequest.getAuthToken());
