@@ -123,4 +123,15 @@ public class ServerFacade {
             return "Unauthorized";
         }
     }
+
+    public String getLatestGame(){
+        try {
+            var ws = new WSCommunicator();
+            ws.send("MESSAGE");
+            return "";
+        } catch (Exception e) {
+            System.out.print("an ERROR OCCUREC IN GET LATEST GAME");
+        }
+
+    }
 }

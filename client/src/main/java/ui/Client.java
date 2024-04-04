@@ -67,9 +67,10 @@ public class Client {
         return gson.toJson(chessBoard);
     }
     public static void gameplayUI(String color, String id) {
-        // call W E B  S O C K E T for latest game board at game id
-        String LatestGame = getDummyData(); // START GAME BOARD
-        String[] args = new String[]{color, LatestGame};
+        ServerFacade serverFacade = new ServerFacade();
+        String LatestGame = serverFacade.getLatestGame(); // START GAME BOARD instead of game
+        //how do i get the latest board to be here? I shouldn't have to call it, it should just be received
+        String[] args = new String[]{color, LatestGame}; //GAME BOARD
         ChessBoardUI.main(args);
         System.out.print(GAMEPLAY_TEXT);
         Scanner scanner = new Scanner(System.in);

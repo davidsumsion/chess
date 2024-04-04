@@ -1,20 +1,24 @@
 package ui;
 
+import com.google.gson.Gson;
+import webSocketMessages.serverMessages.ServerMessage;
+
 import javax.websocket.*;
 import java.net.URI;
 import java.util.Scanner;
 
 public class WSCommunicator extends Endpoint {
 
-    public static void main(String[] args) throws Exception {
-        var ws = new WSCommunicator();
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Enter a message you want to echo");
-        while (true) {
-            ws.send(scanner.nextLine());
-        }
-    }
+//    public static void main(String[] args) throws Exception {
+//        var ws = new WSCommunicator();
+////        Scanner scanner = new Scanner(System.in);
+//
+////        System.out.println("Enter a message you want to echo");
+//        while (true) {
+////            ws.send(scanner.nextLine());
+//            ws.send()
+//        }
+//    }
 
     public Session session;
 
@@ -26,6 +30,12 @@ public class WSCommunicator extends Endpoint {
         this.session.addMessageHandler(new MessageHandler.Whole<String>() {
             public void onMessage(String message) {
                 System.out.println(message);
+
+                Gson gson = new Gson();
+                ServerMessage serverMessages = gson.fromJson(message, ServerMessage.class);
+
+                System.out.println(serverMessages);
+
             }
         });
     }
