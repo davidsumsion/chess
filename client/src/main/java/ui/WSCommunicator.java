@@ -22,7 +22,7 @@ public class WSCommunicator extends Endpoint {
 
     public Session session;
 
-    public WSCommunicator() throws Exception {
+    public WSCommunicator(ServerMessageObserver serverMessageObserver) throws Exception {
         URI uri = new URI("ws://localhost:8080/connect");
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();
         this.session = container.connectToServer(this, uri);
@@ -32,9 +32,12 @@ public class WSCommunicator extends Endpoint {
                 System.out.println(message);
 
                 Gson gson = new Gson();
-                ServerMessage serverMessages = gson.fromJson(message, ServerMessage.class);
+                ServerMessage serverMessage = gson.fromJson(message, ServerMessage.class);
 
-                System.out.println(serverMessages);
+                serverMessageObserver.notify(serverMessage);
+
+
+                System.out.println(serverMessage);
 
             }
         });

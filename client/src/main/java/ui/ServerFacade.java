@@ -8,6 +8,7 @@ import results.CreateGameResult;
 import results.ListGamesResult;
 import results.MessageOnlyResult;
 import results.UserResult;
+import webSocketMessages.serverMessages.ServerMessage;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -18,12 +19,27 @@ import java.util.Properties;
 public class ServerFacade {
     private String port = "8080";
     private static String authToken = "";
-    public ServerFacade() { }
 
+    private WSCommunicator ws;
+    public ServerFacade() {
+        try {
+            this.ws = new WSCommunicator(this::receiveMessage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     public ServerFacade(String port) {
+        this();
         this.port = port;
     }
 
+    private void receiveMessage(ServerMessage message) {
+        switch (message.getServerMessageType()){
+            case LOAD_GAME -> System.out.print("LOAD GAME");
+            case ERROR -> System.out.print("ERROR");
+            case NOTIFICATION -> System.out.print("NOTIFICATION");
+        }
+    }
     public String register(String username, String password, String email){
         try {
             Gson gson = new Gson();
@@ -124,10 +140,9 @@ public class ServerFacade {
         }
     }
 
-    public String getLatestGame(){
+    public String receiveLatestData(){
         try {
-            var ws = new WSCommunicator();
-            ws.send("MESSAGE");
+//            ws.send("MESSAGE");
             return "";
         } catch (Exception e) {
             System.out.print("an ERROR OCCUREC IN GET LATEST GAME");

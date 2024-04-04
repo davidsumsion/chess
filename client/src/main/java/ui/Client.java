@@ -60,12 +60,12 @@ public class Client {
     }
 
 
-    private static String getDummyData(){
-        ChessBoard chessBoard = new ChessBoard();
-        chessBoard.resetBoard();
-        Gson gson = new Gson();
-        return gson.toJson(chessBoard);
-    }
+//    private static String getDummyData(){
+//        ChessBoard chessBoard = new ChessBoard();
+//        chessBoard.resetBoard();
+//        Gson gson = new Gson();
+//        return gson.toJson(chessBoard);
+//    }
     public static void gameplayUI(String color, String id) {
         ServerFacade serverFacade = new ServerFacade();
         String LatestGame = serverFacade.getLatestGame(); // START GAME BOARD instead of game
