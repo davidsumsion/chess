@@ -11,10 +11,7 @@ import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import spark.*;
 import handlers.*;
 import webSocketMessages.serverMessages.Notification;
-import webSocketMessages.userCommands.JoinObserver;
-import webSocketMessages.userCommands.JoinPlayer;
-import webSocketMessages.userCommands.Leave;
-import webSocketMessages.userCommands.UserGameCommand;
+import webSocketMessages.userCommands.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -115,16 +112,18 @@ public class Server {
                         }
                     }
                 }
-//                String notificationMessage = "TEST NOTIFICATION";
-//                Notification notification = new Notification(notificationMessage);
-//                String jsonServerMessage = gson.toJson(notification);
-//                session.getRemote().sendString(jsonServerMessage);
                 //send current board to session
                 JoinGame joinGame = new JoinGame(joinObserver.getGameID(), null);
                 String jsonServerMessage2 = gson.toJson(joinGame.loadGame());
                 session.getRemote().sendString(jsonServerMessage2);
             }
-            case MAKE_MOVE -> System.out.print("MAKE MOVE");
+            case MAKE_MOVE -> {
+                System.out.print("MAKE MOVE");
+                MakeMove makeMove = gson.fromJson(message, MakeMove.class);
+                JoinGame joinGame = new JoinGame(makeMove.getGameID(), null);
+                joinGame.makeMove(makeMove.getMove());
+
+            }
             case LEAVE -> {
                 System.out.print("LEAVE");
                 Leave leave = gson.fromJson(message, Leave.class);
@@ -150,7 +149,31 @@ public class Server {
                     session.getRemote().sendString(jsonServerMessage);
                 }
             }
-            case RESIGN -> System.out.print("RESIGN");
+            case RESIGN -> {
+                System.out.print("RESIGN");
+                Leave leave = gson.fromJson(message, Leave.class);
+                List<Session> playersList = sessionTracker.get(leave.getGameID()).getPlayers();
+                playersList.remove(session);
+                List<Session> observersList = sessionTracker.get(leave.getGameID()).getObservers();
+                observersList.remove(session);
+                PlayerHolder newPlayerHolder = new PlayerHolder();
+                newPlayerHolder.setPlayers(playersList);
+                newPlayerHolder.setObservers(observersList);
+                sessionTracker.put(leave.getGameID(), newPlayerHolder);
+
+                for (Session sesh: playersList){
+                    String notificationMessage = "USER: " + " LEFT THE GAME";
+                    Notification notification = new Notification(notificationMessage);
+                    String jsonServerMessage = gson.toJson(notification);
+                    session.getRemote().sendString(jsonServerMessage);
+                }
+                for (Session sesh: observersList){
+                    String notificationMessage = "USER: " + " LEFT THE GAME";
+                    Notification notification = new Notification(notificationMessage);
+                    String jsonServerMessage = gson.toJson(notification);
+                    session.getRemote().sendString(jsonServerMessage);
+                }
+            }
         }
 
     }

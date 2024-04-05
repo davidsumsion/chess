@@ -1,10 +1,13 @@
 package WSLogic;
 
 import chess.ChessGame;
+import chess.ChessMove;
+import chess.InvalidMoveException;
 import com.google.gson.Gson;
 import dataAccess.DataAccessException;
 import dataAccess.DatabaseManager;
 import models.GameData;
+import server.Server;
 import services.GameServices.JoinGameService;
 import webSocketMessages.serverMessages.Error;
 import webSocketMessages.serverMessages.LoadGame;
@@ -31,6 +34,24 @@ public class JoinGame {
         } catch (DataAccessException | SQLException e) {
             return new Error("Cannot Find Game");
 //            throw new RuntimeException(e);
+        }
+    }
+
+    public void makeMove(ChessMove chessMove) {
+        try {
+            Connection connection = DatabaseManager.getConnection();
+            JoinGameService joinGameService = new JoinGameService();
+            GameData gameData = joinGameService.findGame(connection, this.gameID);
+            String chessGameJson = gameData.getChessGame();
+            Gson gson = new Gson();
+            ChessGame chessGame = gson.fromJson(chessGameJson, ChessGame.class);
+            chessGame.makeMove(chessMove);
+
+        }catch (DataAccessException | SQLException e) {
+//            return new Error("Cannot Find Game");
+            throw new RuntimeException(e);
+        } catch (InvalidMoveException e) {
+            throw new RuntimeException(e);
         }
     }
 
