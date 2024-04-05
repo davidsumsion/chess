@@ -22,6 +22,7 @@ import java.util.Map;
 @WebSocket
 public class Server {
     Map<Integer, PlayerHolder> sessionTracker = new HashMap<>();
+    Map<Integer, ArrayList<Session>> sessionMap = new HashMap<>();
 
     public static void main(String[] args){
         Server server = new Server();
@@ -69,22 +70,37 @@ public class Server {
                 else { playerHolder = new PlayerHolder(); }
                 playerHolder.addPlayer(session);
                 sessionTracker.put(joinPlayer.getGameID(), playerHolder);
+                if (!sessionMap.containsKey(joinPlayer.getGameID())) {
+                    sessionMap.put(joinPlayer.getGameID(), new ArrayList<Session>());
+                }
+                ArrayList<Session> newSessions = sessionMap.get(joinPlayer.getGameID());
+                newSessions.add(session);
+                sessionMap.put(joinPlayer.getGameID(), newSessions);
+
+
+                for (Session sesh: sessionMap.get(joinPlayer.getGameID())){
+                    Notification notificationMessage = new Notification("TEST MESSAGE");
+                    sesh.getRemote().sendString(gson.toJson(notificationMessage));
+                }
+
+
 
                 //notify other players in game
-                for (Session sesh: sessionTracker.get(joinPlayer.getGameID()).getPlayers()){
-                    if (sesh.getRemote() == null) {
-                        System.out.print("NULL");
-                    }
-                    if (!sesh.equals(session)){
-                        String notificationMessage = "User: " + " Joined the game as " + joinPlayer.getPlayerColor();
-                        Notification notification = new Notification(notificationMessage);
-                        try {
-                            sesh.getRemote().sendString(gson.toJson(notification));
-                        } catch (Exception e) {
-                            System.out.print("ERRRRROR");
-                        }
-                    }
-                }
+//                for (Session sesh: sessionTracker.get(joinPlayer.getGameID()).getPlayers()){
+//                    if (sesh.getRemote() == null) {
+//                        System.out.print("NULL");
+//                    }
+//                    if (!sesh.equals(session)){
+//                        String notificationMessage = "User: " + " Joined the game as " + joinPlayer.getPlayerColor();
+//                        Notification notification = new Notification(notificationMessage);
+//                        try {
+//                            sesh.getRemote().sendString(gson.toJson(notification));
+//                        } catch (Exception e) {
+//                            System.out.print("ERRRRROR");
+//                        }
+//                    }
+//                }
+
                 //send current board to session
                 JoinGame joinGame = new JoinGame(joinPlayer.getGameID(), joinPlayer.getPlayerColor());
                 String jsonServerMessage = gson.toJson(joinGame.loadGame());
