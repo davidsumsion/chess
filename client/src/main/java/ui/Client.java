@@ -1,20 +1,60 @@
 package ui;
-import chess.ChessBoard;
-import chess.ChessMove;
-import chess.ChessPiece;
-import chess.ChessPosition;
+import chess.*;
 import com.google.gson.Gson;
+import models.GameData;
+import webSocketMessages.serverMessages.Error;
+import webSocketMessages.serverMessages.LoadGame;
+import webSocketMessages.serverMessages.Notification;
+import webSocketMessages.serverMessages.ServerMessage;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Client {
+
+    private ChessGame.TeamColor myColor = null;
+    private ChessGame.TeamColor teamTurn = null;
+    private ChessBoard chessBoard = null;
+
+    private Boolean observer = false;
+    ServerFacade serverFacade = new ServerFacade(this::receiveMessage);
+
     public static void main(String[] args) throws Exception {
-        preLoginMenu();
+        Client client = new Client();
+        client.preLoginMenu();
     }
 
-    public static void preLoginMenu(){
+    private void receiveMessage(String message) {
+        Gson gson = new Gson();
+        ServerMessage serverMessage = gson.fromJson(message, ServerMessage.class);
+        System.out.println(serverMessage);
+
+        switch (serverMessage.getServerMessageType()){
+            case LOAD_GAME -> {
+//                System.out.print("LOAD GAME\n");
+                LoadGame loadGame = gson.fromJson(message, LoadGame.class);
+                GameData gameData = gson.fromJson(loadGame.getGame(), GameData.class);
+                ChessGame chessGame = gson.fromJson(gameData.getChessGame(), ChessGame.class);
+                teamTurn = chessGame.getTeamTurn();
+                chessBoard = chessGame.getBoard();
+                drawBoard(loadGame.getGame());
+                if (!observer) gameplayUI();
+            }
+            case ERROR -> {
+//                System.out.print("ERROR");
+                Error error = gson.fromJson(message, Error.class);
+                System.out.print(error.getErrorMessage());
+            }
+            case NOTIFICATION -> {
+//                System.out.print("NOTIFICATION");
+                Notification notification = gson.fromJson(message, Notification.class);
+                System.out.print(notification.getMessage());
+            }
+        }
+    }
+
+    public void preLoginMenu(){
         System.out.printf(WELCOME_TEXT);
         System.out.print(PRELOGIN_TEXT);
         Scanner menuScanner = new Scanner(System.in);
@@ -36,7 +76,7 @@ public class Client {
         }
     }
 
-    public static void postLoginMenu(){
+    public void postLoginMenu(){
         System.out.print(LOGGED_IN_TEXT);
         System.out.print(POSTLOGIN_TEXT);
         Scanner menuScanner = new Scanner(System.in);
@@ -60,35 +100,42 @@ public class Client {
     }
 
 
-    private static String getDummyData(){
+    private String getDummyData(){
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.resetBoard();
         Gson gson = new Gson();
         return gson.toJson(chessBoard);
     }
 
-    public static void drawBoard(String chessBoard){
+    public void drawBoard(String chessBoard){
         String color = "BLACK";
+        if (myColor.equals(ChessGame.TeamColor.WHITE)){
+            color = "WHITE";
+        }
         String[] args = new String[]{color, chessBoard}; //GAME BOARD
         ChessBoardUI.main(args);
     }
-    public static void gameplayUI(String color, String id) {
-        ServerFacade serverFacade = new ServerFacade();
+    public void gameplayUI() {
+//        chessBoard = this.chessBoard;
+//        myColor = this.myColor;
         //set a global variable for current board
-        String[] args = new String[]{color, getDummyData()}; //GAME BOARD
+//        Gson gson = new Gson();
+//        String[] args = new String[]{myColor.toString(), chessBoard};
+//        String[] args = new String[]{color, getDummyData()}; //GAME BOARD
 //        ChessBoardUI.main(args);
+//        drawBoard();
         System.out.print(GAMEPLAY_TEXT);
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         if (input.equals(Integer.toString(1))) {
             // Help
-            ChessBoardUI.main(args);
-            gameplayUI(color, id);
+//            ChessBoardUI.main(args);
+            gameplayUI();
         }
         else if (input.equals(Integer.toString(2))) {
             // Redraw Chess Board
             // get LatestGame
-            ChessBoardUI.main(args);
+//            ChessBoardUI.main(args);
         }
         else if (input.equals(Integer.toString(3))) {
             // Leave
@@ -105,12 +152,12 @@ public class Client {
         else if (input.equals(Integer.toString(6))) {
             // highlight Legal Moves
             Gson gson = new Gson();
-//            highlightMovesUI(color, gson.fromJson(LatestGame, ChessBoard.class));
-            gameplayUI(color, id);
+//            highlightMovesUI(myColor, chessBoard);
+            gameplayUI();
         }
     }
 
-    public static void highlightMovesUI(String color, ChessBoard chessBoard) {
+    public void highlightMovesUI(String color, ChessBoard chessBoard) {
         System.out.print("Enter the position of the piece you want to see the potential moves for\n");
         System.out.print("Enter a Row Number\n>>> ");
         Scanner rowScanner = new Scanner(System.in);
@@ -137,7 +184,7 @@ public class Client {
 
     }
 
-    public static void registerUI(){
+    public void registerUI(){
         System.out.print("Enter a Username\n>>> ");
         Scanner usernameScanner = new Scanner(System.in);
         String username = usernameScanner.nextLine();
@@ -150,7 +197,6 @@ public class Client {
         Scanner emailScanner = new Scanner(System.in);
         String email = emailScanner.nextLine();
 
-        ServerFacade serverFacade = new ServerFacade();
         String dbUsername = serverFacade.register(username, password, email);
         if (dbUsername.equals("User Already Exists")){
             System.out.println("User Already Exists");
@@ -161,8 +207,7 @@ public class Client {
         }
     }
 
-    public static void logoutUI(){
-        ServerFacade serverFacade = new ServerFacade();
+    public void logoutUI(){
         String result = serverFacade.logout();
         if (result.equals("")){
             System.out.println("Goodbye, play again soon ");
@@ -177,7 +222,7 @@ public class Client {
 
     }
 
-    public static void joinToPlayGameUI(){
+    public void joinToPlayGameUI(){
         System.out.print("Enter a gameID\n>>> ");
         Scanner gameIDScanner = new Scanner(System.in);
         String currentGameID = gameIDScanner.nextLine();
@@ -192,14 +237,15 @@ public class Client {
             currentPlayerColor = "WHITE";
         }
 
-        ServerFacade serverFacade = new ServerFacade();
         String result = serverFacade.joinGamePlayer(currentGameID, currentPlayerColor);
         if (result.isEmpty()) {
             System.out.format("Enjoy your game, you are %s\n", currentPlayerColor);
             if (currentPlayerColor.equals("WHITE")) {
-                gameplayUI(currentPlayerColor, currentGameID);
+                myColor = ChessGame.TeamColor.WHITE;
+                gameplayUI();
             } else {
-                gameplayUI(currentPlayerColor, currentGameID);
+                myColor = ChessGame.TeamColor.BLACK;
+                gameplayUI();
             }
         } else if (result.equals("Start the Server")) {
             System.out.println("Start the Server");
@@ -216,11 +262,11 @@ public class Client {
         }
     }
 
-    public static void joinToObserveUI(){
+    public void joinToObserveUI(){
         System.out.print("Enter a gameID\n>>> ");
         Scanner gameIDScanner = new Scanner(System.in);
         String gameID = gameIDScanner.nextLine();
-        ServerFacade serverFacade = new ServerFacade();
+
         String result =  serverFacade.joinGamePlayer(gameID, null);
         if (result.isEmpty()) {
             System.out.format("Enjoy the show\n");
@@ -239,7 +285,7 @@ public class Client {
         }
     }
 
-    public static void loginUI() {
+    public void loginUI() {
         System.out.print("Enter a Username\n>>> ");
         Scanner usernameScanner = new Scanner(System.in);
         String username = usernameScanner.nextLine();
@@ -248,7 +294,6 @@ public class Client {
         Scanner passwordScanner = new Scanner(System.in);
         String password = passwordScanner.nextLine();
 
-        ServerFacade serverFacade = new ServerFacade();
         String dbUsername = serverFacade.login(username, password);
         if (dbUsername.equals("Username or Password Incorrect")) {
             System.out.println("Username or Password Incorrect");
@@ -262,12 +307,11 @@ public class Client {
         }
     }
 
-    public static void createGameUI(){
+    public void createGameUI(){
         System.out.print("Enter a new Game Name\n>>> ");
         Scanner nameScanner = new Scanner(System.in);
         String gameName = nameScanner.nextLine();
 
-        ServerFacade serverFacade = new ServerFacade();
         String dbGameID = serverFacade.createGame(gameName);
         if (dbGameID.equals("Game Already Exists or Unauthorized")) {
             System.out.println("Game Already Exists with this name or Unauthorized (need to login)");
@@ -281,8 +325,7 @@ public class Client {
         }
     }
 
-    public static void listGamesUI(){
-        ServerFacade serverFacade = new ServerFacade();
+    public void listGamesUI(){
         String games = serverFacade.listGames();
         if (games.equals("Start the Server")) {
             System.out.println("Start the Server");
@@ -296,7 +339,7 @@ public class Client {
         }
     }
 
-    final static Map<String, Integer> colNumberMap = Map.of(
+    final Map<String, Integer> colNumberMap = Map.of(
             "A", 1,
             "B", 2,
             "C", 3,

@@ -1,5 +1,6 @@
 package ui;
 
+import chess.ChessBoard;
 import chess.ChessGame;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -27,34 +28,21 @@ public class ServerFacade {
     private static String authToken = "";
 
     private WSCommunicator ws;
-    public ServerFacade() {
+    public ServerFacade(ServerMessageObserver receiveMessage) {
+        // take in port if needed, this(port)
         try {
-            this.ws = new WSCommunicator(this::receiveMessage);
+            this.ws = new WSCommunicator(receiveMessage);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
     public ServerFacade(String port) {
-        this();
+        //only for phase 5 tests, no websocket tests
+        //
         this.port = port;
     }
 
-    private void receiveMessage(String message) {
-        Gson gson = new Gson();
-        ServerMessage serverMessage = gson.fromJson(message, ServerMessage.class);
-        System.out.println(serverMessage);
 
-        switch (serverMessage.getServerMessageType()){
-            case LOAD_GAME -> {
-                System.out.print("LOAD GAME\n");
-                LoadGame loadGame = gson.fromJson(message, LoadGame.class);
-                Client.drawBoard(loadGame.getGame());
-
-            }
-            case ERROR -> System.out.print("ERROR");
-            case NOTIFICATION -> System.out.print("NOTIFICATION");
-        }
-    }
 
     public String register(String username, String password, String email){
         try {
@@ -146,6 +134,7 @@ public class ServerFacade {
                     teamColor = ChessGame.TeamColor.BLACK;
                 }
                 JoinPlayer joinPlayer = new JoinPlayer(authToken, parseInt(gameID), teamColor);
+//                myColor = teamColor;
                 ws.send(gson.toJson(joinPlayer));
                 return "";
             } else if (messageOnlyResult.getMessage().equals("Error: Color already occupied")) {
