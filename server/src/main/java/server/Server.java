@@ -11,6 +11,7 @@ import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import spark.*;
 import handlers.*;
 import webSocketMessages.serverMessages.Notification;
+import webSocketMessages.userCommands.JoinObserver;
 import webSocketMessages.userCommands.JoinPlayer;
 import webSocketMessages.userCommands.UserGameCommand;
 
@@ -90,7 +91,37 @@ public class Server {
                 String jsonServerMessage = gson.toJson(joinGame.loadGame());
                 session.getRemote().sendString(jsonServerMessage);
             }
-            case JOIN_OBSERVER -> System.out.print("JOIN OBSERVER");
+            case JOIN_OBSERVER -> {
+                System.out.print("JOIN OBSERVER");
+                JoinObserver joinObserver = gson.fromJson(message, JoinObserver.class);
+                //add observer to session
+                PlayerHolder playerHolder = null;
+                if (sessionTracker.containsKey(joinObserver.getGameID())) { playerHolder = sessionTracker.get(joinObserver.getGameID()); }
+                else { playerHolder = new PlayerHolder(); }
+                playerHolder.addObserver(session);
+                sessionTracker.put(joinObserver.getGameID(), playerHolder);
+
+                //notify other players in game
+                for (Session sesh: sessionTracker.get(joinObserver.getGameID()).getPlayers()){
+                    if (!sesh.equals(session)){
+                        String notificationMessage = "User: " + " Joined the game to watch";
+                        Notification notification = new Notification(notificationMessage);
+                        try {
+                            sesh.getRemote().sendString(gson.toJson(notification));
+                        } catch (Exception e) {
+                            System.out.print("ERRRRROR");
+                        }
+                    }
+                }
+//                String notificationMessage = "TEST NOTIFICATION";
+//                Notification notification = new Notification(notificationMessage);
+//                String jsonServerMessage = gson.toJson(notification);
+//                session.getRemote().sendString(jsonServerMessage);
+                //send current board to session
+                JoinGame joinGame = new JoinGame(joinObserver.getGameID(), null);
+                String jsonServerMessage2 = gson.toJson(joinGame.loadGame());
+                session.getRemote().sendString(jsonServerMessage2);
+            }
             case MAKE_MOVE -> System.out.print("MAKE MOVE");
             case LEAVE -> System.out.print("LEAVE");
             case RESIGN -> System.out.print("RESIGN");

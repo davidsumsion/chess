@@ -28,8 +28,6 @@ public class Client {
     private void receiveMessage(String message) {
         Gson gson = new Gson();
         ServerMessage serverMessage = gson.fromJson(message, ServerMessage.class);
-//        System.out.println(serverMessage);
-
         System.out.print("RECEVIED MESSAGE");
 
         switch (serverMessage.getServerMessageType()){
@@ -112,7 +110,7 @@ public class Client {
     public void drawBoard(String chessBoard){
 
         String color = "BLACK";
-        if (myColor.equals(ChessGame.TeamColor.WHITE)){
+        if (myColor == null || myColor.equals(ChessGame.TeamColor.WHITE)){
             color = "WHITE";
         }
         String[] args = new String[]{color, chessBoard}; //GAME BOARD
@@ -273,9 +271,6 @@ public class Client {
         String result =  serverFacade.joinGamePlayer(gameID, null);
         if (result.isEmpty()) {
             System.out.format("Enjoy the show\n");
-            String[] args = new String[]{"OBSERVER"};
-            // ADD ARGS for game
-            ChessBoardUI.main(args);
         } else if (result.equals("Start the Server")) {
             System.out.println("Start the Server");
             preLoginMenu();

@@ -12,6 +12,7 @@ import results.MessageOnlyResult;
 import results.UserResult;
 import webSocketMessages.serverMessages.LoadGame;
 import webSocketMessages.serverMessages.ServerMessage;
+import webSocketMessages.userCommands.JoinObserver;
 import webSocketMessages.userCommands.JoinPlayer;
 
 import java.io.IOException;
@@ -129,13 +130,17 @@ public class ServerFacade {
             String urlString = "http://localhost:" + port + "/game";
             MessageOnlyResult messageOnlyResult = clientCommunicator.joinPlayer(urlString, jsonString, this.authToken);
             if (messageOnlyResult.getMessage().equals("CORRECT")){
-                ChessGame.TeamColor teamColor = ChessGame.TeamColor.WHITE;
-                if (!Objects.equals(playerColor, "WHITE")) {
-                    teamColor = ChessGame.TeamColor.BLACK;
+                if (playerColor == null){
+                    JoinObserver joinObserver = new JoinObserver(authToken, parseInt(gameID));
+                    ws.send(gson.toJson(joinObserver));
+                } else {
+                    ChessGame.TeamColor teamColor = ChessGame.TeamColor.WHITE;
+                    if (!Objects.equals(playerColor, "WHITE")) {
+                        teamColor = ChessGame.TeamColor.BLACK;
+                    }
+                    JoinPlayer joinPlayer = new JoinPlayer(authToken, parseInt(gameID), teamColor);
+                    ws.send(gson.toJson(joinPlayer));
                 }
-                JoinPlayer joinPlayer = new JoinPlayer(authToken, parseInt(gameID), teamColor);
-//                myColor = teamColor;
-                ws.send(gson.toJson(joinPlayer));
                 return "";
             } else if (messageOnlyResult.getMessage().equals("Error: Color already occupied")) {
                 return "Error Color";
