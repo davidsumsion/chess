@@ -13,11 +13,13 @@ import handlers.*;
 import webSocketMessages.serverMessages.Notification;
 import webSocketMessages.userCommands.JoinObserver;
 import webSocketMessages.userCommands.JoinPlayer;
+import webSocketMessages.userCommands.Leave;
 import webSocketMessages.userCommands.UserGameCommand;
 
-import javax.xml.crypto.Data;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @WebSocket
@@ -123,7 +125,31 @@ public class Server {
                 session.getRemote().sendString(jsonServerMessage2);
             }
             case MAKE_MOVE -> System.out.print("MAKE MOVE");
-            case LEAVE -> System.out.print("LEAVE");
+            case LEAVE -> {
+                System.out.print("LEAVE");
+                Leave leave = gson.fromJson(message, Leave.class);
+                List<Session> playersList = sessionTracker.get(leave.getGameID()).getPlayers();
+                playersList.remove(session);
+                List<Session> observersList = sessionTracker.get(leave.getGameID()).getObservers();
+                observersList.remove(session);
+                PlayerHolder newPlayerHolder = new PlayerHolder();
+                newPlayerHolder.setPlayers(playersList);
+                newPlayerHolder.setObservers(observersList);
+                sessionTracker.put(leave.getGameID(), newPlayerHolder);
+
+                for (Session sesh: playersList){
+                    String notificationMessage = "USER: " + " LEFT THE GAME";
+                    Notification notification = new Notification(notificationMessage);
+                    String jsonServerMessage = gson.toJson(notification);
+                    session.getRemote().sendString(jsonServerMessage);
+                }
+                for (Session sesh: observersList){
+                    String notificationMessage = "USER: " + " LEFT THE GAME";
+                    Notification notification = new Notification(notificationMessage);
+                    String jsonServerMessage = gson.toJson(notification);
+                    session.getRemote().sendString(jsonServerMessage);
+                }
+            }
             case RESIGN -> System.out.print("RESIGN");
         }
 

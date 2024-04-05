@@ -11,11 +11,15 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Scanner;
 
+import static java.lang.Integer.parseInt;
+
 public class Client {
 
     private ChessGame.TeamColor myColor = null;
     private ChessGame.TeamColor teamTurn = null;
     private ChessBoard chessBoard = null;
+
+    private Integer gameID = null;
 
     private Boolean observer = false;
     ServerFacade serverFacade = new ServerFacade(this::receiveMessage);
@@ -107,39 +111,43 @@ public class Client {
         return gson.toJson(chessBoard);
     }
 
-    public void drawBoard(String chessBoard){
+    public void drawBoard(String gameDataJson){
 
         String color = "BLACK";
         if (myColor == null || myColor.equals(ChessGame.TeamColor.WHITE)){
             color = "WHITE";
         }
-        String[] args = new String[]{color, chessBoard}; //GAME BOARD
+        String[] args = new String[]{color, gameDataJson}; //GAME BOARD
         ChessBoardUI.main(args);
     }
     public void gameplayUI() {
-//        chessBoard = this.chessBoard;
-//        myColor = this.myColor;
-        //set a global variable for current board
-//        Gson gson = new Gson();
-//        String[] args = new String[]{myColor.toString(), chessBoard};
-//        String[] args = new String[]{color, getDummyData()}; //GAME BOARD
-//        ChessBoardUI.main(args);
-//        drawBoard();
+//        private static final String GAMEPLAY_TEXT = "Enter an Integer:\n" +
+//                "1 - Help\n\tDisplays This Menu\n" +
+//                "2 - Redraw Chess Board\n\tRedraws the board\n" +
+//                "3 - Leave\n\tRemove yourself from the game\n" +
+//                "4 - Make Move\n\tMove a piece\n" +
+//                "5 - Resign\n\tForfeit the game and Game is over\n" +
+//                "6 - Highlight Legal Moves\n\tSee All Legal Moves for a piece\n>>> ";
+
         System.out.print(GAMEPLAY_TEXT);
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         if (input.equals(Integer.toString(1))) {
-            // Help
-//            ChessBoardUI.main(args);
             gameplayUI();
         }
         else if (input.equals(Integer.toString(2))) {
-            // Redraw Chess Board
-            // get LatestGame
-//            ChessBoardUI.main(args);
+            GameData printableGameData = new GameData(null, null, null, null);
+            chess.ChessGame printableChessGame = new ChessGame();
+            printableChessGame.setBoard(chessBoard);
+            Gson gson = new Gson();
+            printableGameData.setChessGame(gson.toJson(printableChessGame));
+            String stringChessBoard = gson.toJson(printableGameData);
+            drawBoard(stringChessBoard);
+            gameplayUI();
         }
         else if (input.equals(Integer.toString(3))) {
             // Leave
+            serverFacade.leave(gameID);
             System.out.print("Thanks for playing!");
             postLoginMenu();
         }
@@ -169,7 +177,7 @@ public class Client {
         String col = colScanner.nextLine();
         Integer colNum = colNumberMap.get(col);
 
-        ChessPosition currentPosition = new ChessPosition(Integer.parseInt(row), colNum);
+        ChessPosition currentPosition = new ChessPosition(parseInt(row), colNum);
         ChessPiece currentPiece = chessBoard.getPiece(currentPosition);
         System.out.print(currentPiece);
         System.out.print(currentPosition);
@@ -238,9 +246,10 @@ public class Client {
             currentPlayerColor = "WHITE";
         }
 
-        String result = serverFacade.joinGamePlayer(currentGameID, currentPlayerColor);
+        String result = serverFacade.joinPlayer(currentGameID, currentPlayerColor);
         if (result.isEmpty()) {
             System.out.format("Enjoy your game, you are %s\n", currentPlayerColor);
+            gameID = parseInt(currentGameID);
             if (currentPlayerColor.equals("WHITE")) {
                 myColor = ChessGame.TeamColor.WHITE;
                 gameplayUI();
@@ -268,7 +277,7 @@ public class Client {
         Scanner gameIDScanner = new Scanner(System.in);
         String gameID = gameIDScanner.nextLine();
 
-        String result =  serverFacade.joinGamePlayer(gameID, null);
+        String result =  serverFacade.joinPlayer(gameID, null);
         if (result.isEmpty()) {
             System.out.format("Enjoy the show\n");
         } else if (result.equals("Start the Server")) {

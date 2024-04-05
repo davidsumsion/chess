@@ -1,25 +1,20 @@
 package ui;
 
-import chess.ChessBoard;
 import chess.ChessGame;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import models.GameData;
 import requests.*;
 import results.CreateGameResult;
 import results.ListGamesResult;
 import results.MessageOnlyResult;
 import results.UserResult;
-import webSocketMessages.serverMessages.LoadGame;
-import webSocketMessages.serverMessages.ServerMessage;
 import webSocketMessages.userCommands.JoinObserver;
 import webSocketMessages.userCommands.JoinPlayer;
+import webSocketMessages.userCommands.Leave;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Objects;
-import java.util.Properties;
 
 import static java.lang.Integer.parseInt;
 //import spark.*;
@@ -44,6 +39,16 @@ public class ServerFacade {
     }
 
 
+    public void leave(Integer gameID){
+        Gson gson = new Gson();
+        Leave leave = new Leave(authToken, gameID);
+        try {
+            ws.send(gson.toJson(leave));
+        } catch (Exception e) {
+            System.out.print("ERROR LEAVING");
+        }
+
+    }
 
     public String register(String username, String password, String email){
         try {
@@ -122,7 +127,7 @@ public class ServerFacade {
         }
     }
 
-    public String joinGamePlayer(String gameID, String playerColor){
+    public String joinPlayer(String gameID, String playerColor){
         try {
             Gson gson = new Gson();
             String jsonString = gson.toJson(new JoinGameRequest(parseInt(gameID), playerColor));

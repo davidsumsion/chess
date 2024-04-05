@@ -1,15 +1,10 @@
 package clientTests;
 
-import chess.ChessGame;
-import com.google.gson.Gson;
 import dataAccess.DataAccessException;
 import dataAccess.DatabaseManager;
-import models.GameData;
 import org.junit.jupiter.api.*;
 import server.Server;
 import ui.ServerFacade;
-import webSocketMessages.serverMessages.LoadGame;
-import webSocketMessages.serverMessages.ServerMessage;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -168,7 +163,7 @@ public class ServerFacadeTests {
     @Test void joinGamePositive() {
         serverFacade.register("user","pass", "email");
         serverFacade.createGame("GAME A");
-        String result = serverFacade.joinGamePlayer("1", "BLACK");
+        String result = serverFacade.joinPlayer("1", "BLACK");
         Assertions.assertEquals("", result);
     }
 
@@ -176,7 +171,7 @@ public class ServerFacadeTests {
     public void  joinGameNegative() {
         serverFacade.register("user","pass", "email");
         serverFacade.createGame("GAME A");
-        String result = serverFacade.joinGamePlayer("2", "BLACK");
+        String result = serverFacade.joinPlayer("2", "BLACK");
         Assertions.assertEquals("Error Game", result);
     }
 
@@ -184,14 +179,14 @@ public class ServerFacadeTests {
     public void  joinGameNegative2() {
         serverFacade.register("user","pass", "email");
         serverFacade.createGame("GAME A");
-        serverFacade.joinGamePlayer("1", "BLACK");
-        String result = serverFacade.joinGamePlayer("1", "BLACK");
+        serverFacade.joinPlayer("1", "BLACK");
+        String result = serverFacade.joinPlayer("1", "BLACK");
         Assertions.assertEquals("Error Color", result);
     }
 
     @Test
     public void  joinGameNegative3() {
-        String result = serverFacade.joinGamePlayer("1", "BLACK");
+        String result = serverFacade.joinPlayer("1", "BLACK");
         Assertions.assertEquals("Unauthorized", result);
     }
 
@@ -199,7 +194,7 @@ public class ServerFacadeTests {
     public void  joinGameObserverPositive() {
         serverFacade.register("user","pass", "email");
         serverFacade.createGame("GAME A");
-        String result = serverFacade.joinGamePlayer("1", null);
+        String result = serverFacade.joinPlayer("1", null);
         Assertions.assertEquals("", result);
     }
 
@@ -207,13 +202,13 @@ public class ServerFacadeTests {
     public void joinGameObserverNegative() {
         serverFacade.register("user","pass", "email");
         serverFacade.createGame("GAME A");
-        String result = serverFacade.joinGamePlayer("2", "BLACK");
+        String result = serverFacade.joinPlayer("2", "BLACK");
         Assertions.assertEquals("Error Game", result);
     }
 
     @Test
     public void joinGameObserverNegative2() {
-        String result = serverFacade.joinGamePlayer("1", "BLACK");
+        String result = serverFacade.joinPlayer("1", "BLACK");
         Assertions.assertEquals("Unauthorized", result);
     }
 }
