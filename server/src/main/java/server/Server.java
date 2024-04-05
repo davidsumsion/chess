@@ -1,6 +1,7 @@
 package server;
 
 import WSLogic.JoinGame;
+import WSLogic.PlayerHolder;
 import com.google.gson.Gson;
 import dataAccess.DataAccessException;
 import dataAccess.DatabaseManager;
@@ -9,13 +10,19 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import spark.*;
 import handlers.*;
+import webSocketMessages.serverMessages.Notification;
 import webSocketMessages.userCommands.JoinPlayer;
 import webSocketMessages.userCommands.UserGameCommand;
 
 import javax.xml.crypto.Data;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebSocket
 public class Server {
+    Map<Integer, PlayerHolder> sessionTracker = new HashMap<>();
+
     public static void main(String[] args){
         Server server = new Server();
         server.run(8080);
@@ -56,7 +63,29 @@ public class Server {
         switch (userGameCommand.getCommandType()){
             case JOIN_PLAYER -> {
                 JoinPlayer joinPlayer = gson.fromJson(message, JoinPlayer.class);
-                System.out.print("JOIN PLAYER");
+                //add player to session
+                PlayerHolder playerHolder = null;
+                if (sessionTracker.containsKey(joinPlayer.getGameID())) { playerHolder = sessionTracker.get(joinPlayer.getGameID()); }
+                else { playerHolder = new PlayerHolder(); }
+                playerHolder.addPlayer(session);
+                sessionTracker.put(joinPlayer.getGameID(), playerHolder);
+
+                //notify other players in game
+                for (Session sesh: sessionTracker.get(joinPlayer.getGameID()).getPlayers()){
+                    if (sesh.getRemote() == null) {
+                        System.out.print("NULL");
+                    }
+                    if (!sesh.equals(session)){
+                        String notificationMessage = "User: " + " Joined the game as " + joinPlayer.getPlayerColor();
+                        Notification notification = new Notification(notificationMessage);
+                        try {
+                            sesh.getRemote().sendString(gson.toJson(notification));
+                        } catch (Exception e) {
+                            System.out.print("ERRRRROR");
+                        }
+                    }
+                }
+                //send current board to session
                 JoinGame joinGame = new JoinGame(joinPlayer.getGameID(), joinPlayer.getPlayerColor());
                 String jsonServerMessage = gson.toJson(joinGame.loadGame());
                 session.getRemote().sendString(jsonServerMessage);

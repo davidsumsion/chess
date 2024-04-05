@@ -28,11 +28,13 @@ public class Client {
     private void receiveMessage(String message) {
         Gson gson = new Gson();
         ServerMessage serverMessage = gson.fromJson(message, ServerMessage.class);
-        System.out.println(serverMessage);
+//        System.out.println(serverMessage);
+
+        System.out.print("RECEVIED MESSAGE");
 
         switch (serverMessage.getServerMessageType()){
             case LOAD_GAME -> {
-//                System.out.print("LOAD GAME\n");
+                System.out.print("LOAD GAME\n");
                 LoadGame loadGame = gson.fromJson(message, LoadGame.class);
                 GameData gameData = gson.fromJson(loadGame.getGame(), GameData.class);
                 ChessGame chessGame = gson.fromJson(gameData.getChessGame(), ChessGame.class);
@@ -47,7 +49,7 @@ public class Client {
                 System.out.print(error.getErrorMessage());
             }
             case NOTIFICATION -> {
-//                System.out.print("NOTIFICATION");
+                System.out.print("NOTIFICATION");
                 Notification notification = gson.fromJson(message, Notification.class);
                 System.out.print(notification.getMessage());
             }
@@ -108,6 +110,7 @@ public class Client {
     }
 
     public void drawBoard(String chessBoard){
+
         String color = "BLACK";
         if (myColor.equals(ChessGame.TeamColor.WHITE)){
             color = "WHITE";
