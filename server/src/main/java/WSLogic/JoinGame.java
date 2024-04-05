@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import dataAccess.DataAccessException;
 import dataAccess.DatabaseManager;
 import models.GameData;
-import server.Server;
 import services.GameServices.JoinGameService;
 import webSocketMessages.serverMessages.Error;
 import webSocketMessages.serverMessages.LoadGame;

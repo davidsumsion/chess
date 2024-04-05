@@ -1,6 +1,7 @@
 package ui;
 
 import chess.ChessGame;
+import chess.ChessMove;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import requests.*;
@@ -11,6 +12,7 @@ import results.UserResult;
 import webSocketMessages.userCommands.JoinObserver;
 import webSocketMessages.userCommands.JoinPlayer;
 import webSocketMessages.userCommands.Leave;
+import webSocketMessages.userCommands.MakeMove;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -47,7 +49,11 @@ public class ServerFacade {
         } catch (Exception e) {
             System.out.print("ERROR LEAVING");
         }
+    }
 
+    public void makeMove(Integer gameID, ChessMove move){
+        Gson gson = new Gson();
+        MakeMove makeMove = new MakeMove(authToken, gameID, move);
     }
 
     public String register(String username, String password, String email){

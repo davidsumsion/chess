@@ -46,12 +46,12 @@ public class Client {
                 if (!observer) gameplayUI();
             }
             case ERROR -> {
-//                System.out.print("ERROR");
+                System.out.print("ERROR\n");
                 Error error = gson.fromJson(message, Error.class);
                 System.out.print(error.getErrorMessage());
             }
             case NOTIFICATION -> {
-                System.out.print("NOTIFICATION");
+                System.out.print("NOTIFICATION\n");
                 Notification notification = gson.fromJson(message, Notification.class);
                 System.out.print(notification.getMessage());
             }
@@ -152,7 +152,8 @@ public class Client {
             postLoginMenu();
         }
         else if (input.equals(Integer.toString(4))) {
-            // Make Move
+            ChessMove move = makeMoveUI();
+            serverFacade.makeMove(gameID, move);
         }
         else if (input.equals(Integer.toString(5))) {
             // Resign
@@ -164,6 +165,47 @@ public class Client {
 //            highlightMovesUI(myColor, chessBoard);
             gameplayUI();
         }
+    }
+
+    public ChessMove makeMoveUI() {
+        System.out.print("Enter the position of the piece you want to move");
+        System.out.print("Enter a Row Number\n>>> ");
+        Scanner rowScanner = new Scanner(System.in);
+        String row = rowScanner.nextLine();
+        //verify 1-8
+        System.out.print("Enter a Column Letter\n>>> ");
+        Scanner colScanner = new Scanner(System.in);
+        String col = colScanner.nextLine();
+        Integer colNum = colNumberMap.get(col);
+        ChessPosition startPosition = new ChessPosition(parseInt(row), colNum);
+
+        System.out.print("Enter the position of the location you want to move to");
+        System.out.print("Enter a Row Number\n>>> ");
+        Scanner rowScanner1 = new Scanner(System.in);
+        String row1 = rowScanner1.nextLine();
+        //verify 1-8
+        System.out.print("Enter a Column Letter\n>>> ");
+        Scanner colScanner1 = new Scanner(System.in);
+        String col1 = colScanner1.nextLine();
+        Integer colNum1 = colNumberMap.get(col);
+        ChessPosition endPosition = new ChessPosition(parseInt(row1), colNum1);
+
+        //change for pawn for promotion Piece
+        ChessMove chessMove =  new ChessMove(startPosition, endPosition, null);
+        ChessGame chessGame = new ChessGame();
+        chessGame.setBoard(chessBoard);
+        Collection<ChessMove> validMoves = chessGame.validMoves(startPosition);
+        if (validMoves.contains(endPosition)) {
+            return chessMove;
+        } else{
+            System.out.print("You didn't select a valid move");
+            return makeMoveUI();
+        }
+
+
+
+
+
     }
 
     public void highlightMovesUI(String color, ChessBoard chessBoard) {
