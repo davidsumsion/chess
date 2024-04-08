@@ -80,7 +80,10 @@ public class Server {
 
                 for (Session sesh: sessionMap.get(joinPlayer.getGameID())){
                     Notification notificationMessage = new Notification("TEST MESSAGE");
-                    sesh.getRemote().sendString(gson.toJson(notificationMessage));
+                    String test = gson.toJson(notificationMessage);
+                    if (sesh.isOpen()) {
+                        sesh.getRemote().sendString(gson.toJson(notificationMessage));
+                    }
                 }
 
 
@@ -94,7 +97,9 @@ public class Server {
 //                        String notificationMessage = "User: " + " Joined the game as " + joinPlayer.getPlayerColor();
 //                        Notification notification = new Notification(notificationMessage);
 //                        try {
-//                            sesh.getRemote().sendString(gson.toJson(notification));
+//                            if (sesh.isOpen()) {
+//                                sesh.getRemote().sendString(gson.toJson(notification));
+//                            }
 //                        } catch (Exception e) {
 //                            System.out.print("ERRRRROR");
 //                        }
@@ -104,7 +109,9 @@ public class Server {
                 //send current board to session
                 JoinGame joinGame = new JoinGame(joinPlayer.getGameID(), joinPlayer.getPlayerColor());
                 String jsonServerMessage = gson.toJson(joinGame.loadGame());
-                session.getRemote().sendString(jsonServerMessage);
+                if (session.isOpen()) {
+                    session.getRemote().sendString(jsonServerMessage);
+                }
             }
             case JOIN_OBSERVER -> {
                 System.out.print("JOIN OBSERVER");
@@ -122,7 +129,9 @@ public class Server {
                         String notificationMessage = "User: " + " Joined the game to watch";
                         Notification notification = new Notification(notificationMessage);
                         try {
-                            sesh.getRemote().sendString(gson.toJson(notification));
+                            if (sesh.isOpen()) {
+                                sesh.getRemote().sendString(gson.toJson(notification));
+                            }
                         } catch (Exception e) {
                             System.out.print("ERRRRROR");
                         }
@@ -131,7 +140,9 @@ public class Server {
                 //send current board to session
                 JoinGame joinGame = new JoinGame(joinObserver.getGameID(), null);
                 String jsonServerMessage2 = gson.toJson(joinGame.loadGame());
-                session.getRemote().sendString(jsonServerMessage2);
+                if (session.isOpen()) {
+                    session.getRemote().sendString(jsonServerMessage2);
+                }
             }
             case MAKE_MOVE -> {
                 System.out.print("MAKE MOVE");
@@ -156,13 +167,17 @@ public class Server {
                     String notificationMessage = "USER: " + " LEFT THE GAME";
                     Notification notification = new Notification(notificationMessage);
                     String jsonServerMessage = gson.toJson(notification);
-                    session.getRemote().sendString(jsonServerMessage);
+                    if (session.isOpen()) {
+                        session.getRemote().sendString(jsonServerMessage);
+                    }
                 }
                 for (Session sesh: observersList){
                     String notificationMessage = "USER: " + " LEFT THE GAME";
                     Notification notification = new Notification(notificationMessage);
                     String jsonServerMessage = gson.toJson(notification);
-                    session.getRemote().sendString(jsonServerMessage);
+                    if (session.isOpen()) {
+                        session.getRemote().sendString(jsonServerMessage);
+                    }
                 }
             }
             case RESIGN -> {
@@ -181,13 +196,17 @@ public class Server {
                     String notificationMessage = "USER: " + " LEFT THE GAME";
                     Notification notification = new Notification(notificationMessage);
                     String jsonServerMessage = gson.toJson(notification);
-                    session.getRemote().sendString(jsonServerMessage);
+                    if (session.isOpen()) {
+                        session.getRemote().sendString(jsonServerMessage);
+                    }
                 }
                 for (Session sesh: observersList){
                     String notificationMessage = "USER: " + " LEFT THE GAME";
                     Notification notification = new Notification(notificationMessage);
                     String jsonServerMessage = gson.toJson(notification);
-                    session.getRemote().sendString(jsonServerMessage);
+                    if (session.isOpen()) {
+                        session.getRemote().sendString(jsonServerMessage);
+                    }
                 }
             }
         }
