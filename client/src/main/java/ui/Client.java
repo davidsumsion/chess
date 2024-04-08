@@ -36,7 +36,7 @@ public class Client {
 
         switch (serverMessage.getServerMessageType()){
             case LOAD_GAME -> {
-//                System.out.print("LOAD GAME\n");
+                System.out.println("LOAD GAME: ");
                 LoadGame loadGame = gson.fromJson(message, LoadGame.class);
                 GameData gameData = gson.fromJson(loadGame.getGame(), GameData.class);
                 ChessGame chessGame = gson.fromJson(gameData.getChessGame(), ChessGame.class);
@@ -46,12 +46,12 @@ public class Client {
 //                if (!observer) gameplayUI();
             }
             case ERROR -> {
-//                System.out.print("ERROR\n");
+//                System.out.println("ERROR\n");
                 Error error = gson.fromJson(message, Error.class);
                 System.out.print(error.getErrorMessage());
             }
             case NOTIFICATION -> {
-//                System.out.print("NOTIFICATION\n");
+                System.out.println("NOTIFICATION:\n");
                 Notification notification = gson.fromJson(message, Notification.class);
                 System.out.print(notification.getMessage());
             }

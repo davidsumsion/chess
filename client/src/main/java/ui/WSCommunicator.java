@@ -17,7 +17,7 @@ public class WSCommunicator extends Endpoint {
         this.session.addMessageHandler(new MessageHandler.Whole<String>() {
             @Override
             public void onMessage(String message) {
-                System.out.print("\n" + message + "\n");
+//                System.out.print("\n" + message + "\n");
                 try {
                     serverMessageObserver.notify(message);
                 } catch (Exception e) {
