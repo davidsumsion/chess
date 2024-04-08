@@ -6,13 +6,14 @@ import com.google.gson.Gson;
 import dataAccess.DataAccessException;
 import dataAccess.DatabaseManager;
 import org.eclipse.jetty.websocket.api.Session;
-import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
-import org.eclipse.jetty.websocket.api.annotations.WebSocket;
+import org.eclipse.jetty.websocket.api.annotations.*;
 import spark.*;
 import handlers.*;
 import webSocketMessages.serverMessages.Notification;
 import webSocketMessages.userCommands.*;
 
+import javax.websocket.EndpointConfig;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,52 +66,15 @@ public class Server {
             case JOIN_PLAYER -> {
                 JoinPlayer joinPlayer = gson.fromJson(message, JoinPlayer.class);
                 //add player to session
-                PlayerHolder playerHolder = null;
-                if (sessionTracker.containsKey(joinPlayer.getGameID())) { playerHolder = sessionTracker.get(joinPlayer.getGameID()); }
-                else { playerHolder = new PlayerHolder(); }
-                playerHolder.addPlayer(session);
-                sessionTracker.put(joinPlayer.getGameID(), playerHolder);
-                if (!sessionMap.containsKey(joinPlayer.getGameID())) {
-                    sessionMap.put(joinPlayer.getGameID(), new ArrayList<Session>());
-                }
-                ArrayList<Session> newSessions = sessionMap.get(joinPlayer.getGameID());
-                newSessions.add(session);
-                sessionMap.put(joinPlayer.getGameID(), newSessions);
-
-
-                for (Session sesh: sessionMap.get(joinPlayer.getGameID())){
-                    Notification notificationMessage = new Notification("TEST MESSAGE");
-                    String test = gson.toJson(notificationMessage);
-                    if (sesh.isOpen()) {
-                        sesh.getRemote().sendString(gson.toJson(notificationMessage));
-                    }
-                }
-
-
-
-                //notify other players in game
-//                for (Session sesh: sessionTracker.get(joinPlayer.getGameID()).getPlayers()){
-//                    if (sesh.getRemote() == null) {
-//                        System.out.print("NULL");
-//                    }
-//                    if (!sesh.equals(session)){
-//                        String notificationMessage = "User: " + " Joined the game as " + joinPlayer.getPlayerColor();
-//                        Notification notification = new Notification(notificationMessage);
-//                        try {
-//                            if (sesh.isOpen()) {
-//                                sesh.getRemote().sendString(gson.toJson(notification));
-//                            }
-//                        } catch (Exception e) {
-//                            System.out.print("ERRRRROR");
-//                        }
-//                    }
-//                }
-
-                //send current board to session
-                JoinGame joinGame = new JoinGame(joinPlayer.getGameID(), joinPlayer.getPlayerColor());
-                String jsonServerMessage = gson.toJson(joinGame.loadGame());
-                if (session.isOpen()) {
-                    session.getRemote().sendString(jsonServerMessage);
+//                PlayerHolder playerHolder = null;
+//                if (sessionTracker.containsKey(joinPlayer.getGameID())) { playerHolder = sessionTracker.get(joinPlayer.getGameID()); }
+//                else { playerHolder = new PlayerHolder(); }
+//                playerHolder.addPlayer(session);
+//                sessionTracker.put(joinPlayer.getGameID(), playerHolder);
+                try {
+                    joinPlayerLogic(session, joinPlayer);
+                } catch (Exception e) {
+                    System.out.print("ERROROROROROOROROROROROO: " + e.getMessage());
                 }
             }
             case JOIN_OBSERVER -> {
@@ -210,8 +174,60 @@ public class Server {
                 }
             }
         }
+    }
+
+    public synchronized void joinPlayerLogic(Session session, JoinPlayer joinPlayer) throws IOException {
+        Gson gson = new Gson();
+        if (!sessionMap.containsKey(joinPlayer.getGameID())) {
+            sessionMap.put(joinPlayer.getGameID(), new ArrayList<Session>());
+        }
+        ArrayList<Session> newSessions = sessionMap.get(joinPlayer.getGameID());
+        newSessions.add(session);
+        sessionMap.put(joinPlayer.getGameID(), newSessions);
+
+
+        for (Session sesh: sessionMap.get(joinPlayer.getGameID())){
+            System.out.println("MADE IT TO FOR LOOP");
+            try {
+                Notification notificationMessage = new Notification("JOINED GAME");
+                String test = gson.toJson(notificationMessage);
+                sesh.getRemote().sendString(test);
+                if (session == sesh)  {
+                    sendData(session, joinPlayer);
+                }
+//                sesh.getRemote().sendString("TEST MESSAGE");
+            } catch (Exception e){
+                System.out.print("Error with notification" + e.getMessage());
+            }
+
+        }
 
     }
+
+    public synchronized void sendData(Session session, JoinPlayer joinPlayer) throws IOException {
+        Gson gson = new Gson();
+        //send current board to session
+        JoinGame joinGame = new JoinGame(joinPlayer.getGameID(), joinPlayer.getPlayerColor());
+        String jsonServerMessage = gson.toJson(joinGame.loadGame());
+        session.getRemote().sendString(jsonServerMessage);
+    }
+    @OnWebSocketError
+    public void onError(Throwable throwable) {
+        System.out.println("Websocket error!");
+        System.out.println(throwable.toString());
+    }
+
+    @OnWebSocketClose
+    public void onClose(Session session, int var2, String var3) {
+        System.out.print("WEBSOCKET CLOSED");
+    }
+
+    @OnWebSocketConnect
+    public void onOpen(Session session) {
+        System.out.println("Websocket opened.");
+    }
+
+
 
     public void stop() {
         Spark.stop();

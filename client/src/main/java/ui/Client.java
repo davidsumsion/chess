@@ -32,26 +32,26 @@ public class Client {
     private void receiveMessage(String message) {
         Gson gson = new Gson();
         ServerMessage serverMessage = gson.fromJson(message, ServerMessage.class);
-        System.out.print("RECEVIED MESSAGE");
+//        System.out.print("RECEVIED MESSAGE\n");
 
         switch (serverMessage.getServerMessageType()){
             case LOAD_GAME -> {
-                System.out.print("LOAD GAME\n");
+//                System.out.print("LOAD GAME\n");
                 LoadGame loadGame = gson.fromJson(message, LoadGame.class);
                 GameData gameData = gson.fromJson(loadGame.getGame(), GameData.class);
                 ChessGame chessGame = gson.fromJson(gameData.getChessGame(), ChessGame.class);
                 teamTurn = chessGame.getTeamTurn();
                 chessBoard = chessGame.getBoard();
                 drawBoard(loadGame.getGame());
-                if (!observer) gameplayUI();
+//                if (!observer) gameplayUI();
             }
             case ERROR -> {
-                System.out.print("ERROR\n");
+//                System.out.print("ERROR\n");
                 Error error = gson.fromJson(message, Error.class);
                 System.out.print(error.getErrorMessage());
             }
             case NOTIFICATION -> {
-                System.out.print("NOTIFICATION\n");
+//                System.out.print("NOTIFICATION\n");
                 Notification notification = gson.fromJson(message, Notification.class);
                 System.out.print(notification.getMessage());
             }
@@ -121,50 +121,44 @@ public class Client {
         ChessBoardUI.main(args);
     }
     public void gameplayUI() {
-//        private static final String GAMEPLAY_TEXT = "Enter an Integer:\n" +
-//                "1 - Help\n\tDisplays This Menu\n" +
-//                "2 - Redraw Chess Board\n\tRedraws the board\n" +
-//                "3 - Leave\n\tRemove yourself from the game\n" +
-//                "4 - Make Move\n\tMove a piece\n" +
-//                "5 - Resign\n\tForfeit the game and Game is over\n" +
-//                "6 - Highlight Legal Moves\n\tSee All Legal Moves for a piece\n>>> ";
-
-        System.out.print(GAMEPLAY_TEXT);
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        if (input.equals(Integer.toString(1))) {
-            gameplayUI();
-        }
-        else if (input.equals(Integer.toString(2))) {
-            GameData printableGameData = new GameData(null, null, null, null);
-            chess.ChessGame printableChessGame = new ChessGame();
-            printableChessGame.setBoard(chessBoard);
-            Gson gson = new Gson();
-            printableGameData.setChessGame(gson.toJson(printableChessGame));
-            String stringChessBoard = gson.toJson(printableGameData);
-            drawBoard(stringChessBoard);
-            gameplayUI();
-        }
-        else if (input.equals(Integer.toString(3))) {
-            // Leave
-            serverFacade.leave(gameID);
-            System.out.print("Thanks for playing!");
-            postLoginMenu();
-        }
-        else if (input.equals(Integer.toString(4))) {
-            ChessMove move = makeMoveUI();
-            serverFacade.makeMove(gameID, move);
-        }
-        else if (input.equals(Integer.toString(5))) {
-            // Resign
-            System.out.print("Are you sure you want to leave resign??\n You will forfeit the game");
-        }
-        else if (input.equals(Integer.toString(6))) {
-            // highlight Legal Moves
-            Gson gson = new Gson();
-//            highlightMovesUI(myColor, chessBoard);
-            gameplayUI();
-        }
+        while (true){
+            System.out.print(GAMEPLAY_TEXT);
+            Scanner scanner = new Scanner(System.in);
+            String input = scanner.nextLine();
+            if (input.equals(Integer.toString(1))) {
+                gameplayUI();
+            }
+            else if (input.equals(Integer.toString(2))) {
+                GameData printableGameData = new GameData(null, null, null, null);
+                chess.ChessGame printableChessGame = new ChessGame();
+                printableChessGame.setBoard(chessBoard);
+                Gson gson = new Gson();
+                printableGameData.setChessGame(gson.toJson(printableChessGame));
+                String stringChessBoard = gson.toJson(printableGameData);
+                drawBoard(stringChessBoard);
+                gameplayUI();
+            }
+            else if (input.equals(Integer.toString(3))) {
+                // Leave
+                serverFacade.leave(gameID);
+                System.out.print("Thanks for playing!");
+                postLoginMenu();
+            }
+            else if (input.equals(Integer.toString(4))) {
+                ChessMove move = makeMoveUI();
+                serverFacade.makeMove(gameID, move);
+            }
+            else if (input.equals(Integer.toString(5))) {
+                // Resign
+                System.out.print("Are you sure you want to leave resign??\n You will forfeit the game");
+            }
+            else if (input.equals(Integer.toString(6))) {
+                // highlight Legal Moves
+                Gson gson = new Gson();
+    //            highlightMovesUI(myColor, chessBoard);
+                gameplayUI();
+            }
+            }
     }
 
     public ChessMove makeMoveUI() {

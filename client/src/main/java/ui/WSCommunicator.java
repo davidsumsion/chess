@@ -18,15 +18,25 @@ public class WSCommunicator extends Endpoint {
             @Override
             public void onMessage(String message) {
                 System.out.print("\n" + message + "\n");
-                serverMessageObserver.notify(message);
+                try {
+                    serverMessageObserver.notify(message);
+                } catch (Exception e) {
+                    throw new RuntimeException("Message improperly received");
+                }
             }
         });
     }
+
+    @Override
+    public void onOpen(Session session, EndpointConfig endpointConfig){
+        System.out.print("WebSocket Opened");
+    }
+
 
     public void send(String msg) throws Exception {
         this.session.getBasicRemote().sendText(msg);
     }
 
-    public void onOpen(Session session, EndpointConfig endpointConfig) {
-    }
+//    public void onOpen(Session session, EndpointConfig endpointConfig) {
+//    }
 }
