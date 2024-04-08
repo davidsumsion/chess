@@ -25,6 +25,8 @@ public class ServerFacade {
     private String port = "8080";
     private static String authToken = "";
 
+    private String username;
+
     private WSCommunicator ws;
     public ServerFacade(ServerMessageObserver receiveMessage) {
         // take in port if needed, this(port)
@@ -64,8 +66,8 @@ public class ServerFacade {
             String urlString = "http://localhost:" + port + "/user";
             UserResult res = clientCommunicator.postRegisterCommunicator(urlString, jsonString);
             this.authToken = res.getAuthToken();
-            return res.getUsername();
-
+            this.username = res.getUsername();
+            return this.username;
         } catch (NullPointerException e) {
             return "User Already Exists";
         } catch (IOException | URISyntaxException e) {
@@ -81,8 +83,8 @@ public class ServerFacade {
             String urlString = "http://localhost:" + port + "/session";
             UserResult res = clientCommunicator.postLoginCommunicator(urlString, jsonString);
             this.authToken = res.getAuthToken();
-            return res.getUsername();
-
+            this.username = res.getUsername();
+            return this.username;
         } catch (IOException | URISyntaxException e) {
             return "Start the Server";
         } catch (NullPointerException e) {
@@ -149,7 +151,7 @@ public class ServerFacade {
                     if (!Objects.equals(playerColor, "WHITE")) {
                         teamColor = ChessGame.TeamColor.BLACK;
                     }
-                    JoinPlayer joinPlayer = new JoinPlayer(authToken, parseInt(gameID), teamColor);
+                    JoinPlayer joinPlayer = new JoinPlayer(authToken, parseInt(gameID), teamColor, this.username);
                     ws.send(gson.toJson(joinPlayer));
                 }
                 return "";

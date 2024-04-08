@@ -68,7 +68,7 @@ public class Server {
                 try {
                     addPlayerToMap(session, joinPlayer.getGameID(), gson);
                     notifyAllObservers(joinPlayer.getGameID(), gson);
-                    notifyPlayersJoinPlayer(joinPlayer.getGameID(), joinPlayer.getPlayerColor(), gson, session);
+                    notifyPlayersJoinPlayer(joinPlayer.getGameID(), joinPlayer.getPlayerColor(), gson, session, joinPlayer.getUsername());
                 } catch (Exception e) {
                     System.out.print("Error: " + e.getMessage());
                 }
@@ -206,12 +206,12 @@ public class Server {
         session.getRemote().sendString(gson.toJson(notificationMessage));
     }
 
-    public synchronized void notifyPlayersJoinPlayer(Integer gameID, ChessGame.TeamColor playerColor, Gson gson, Session session) throws IOException {
+    public synchronized void notifyPlayersJoinPlayer(Integer gameID, ChessGame.TeamColor playerColor, Gson gson, Session session, String username) throws IOException {
         for (Session sesh: sessionPlayerMap.get(gameID)){
             if (session == sesh)  {
                 sendGame(gameID, playerColor, gson, session);
             } else {
-                notifyObserver("User X Joined Game", gson, sesh);
+                notifyObserver("User: " + username +  " Joined the Game", gson, sesh);
             }
         }
     }
