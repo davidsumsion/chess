@@ -88,11 +88,17 @@ public class Server {
             case JOIN_OBSERVER -> {
                 JoinObserver joinObserver = gson.fromJson(message, JoinObserver.class);
                 try {
+                    joinObserverErrors(joinObserver.getGameID(), joinObserver.getAuthString(), gson, joinObserver.getUsername());
+
                     addObserverToMap(session, joinObserver.getGameID(), gson);
                     String messageObserverJoined = "User: " + joinObserver.getUsername() + " Joined the Game as an Observer!";
                     notifyAllObserversNotCurrent(joinObserver.getGameID(), gson, messageObserverJoined, session);
                     notifyAllPlayers(joinObserver.getGameID(), gson, messageObserverJoined);
-                } catch (Exception e) {
+                } catch (WSException e){
+                    System.out.println("Made it");
+                    Error error = new Error(e.getMessage());
+                    session.getRemote().sendString(gson.toJson(error));
+                }catch (Exception e) {
                     System.out.println("Error in Join Observer: " + e.getMessage());
                 }
                 //send current board to session
@@ -175,6 +181,51 @@ public class Server {
         }
     }
 
+    public void joinObserverErrors(Integer gameID, String authToken, Gson gson, String username) throws WSException{
+        JoinGameService joinGameService = new JoinGameService();
+        try (Connection connection = DatabaseManager.getConnection()){
+            GameData gameDataDB = joinGameService.findGame(connection, gameID);
+            String useUsername = username;
+            if (username == null) {
+                JoinGame joinGame = new JoinGame();
+                useUsername = joinGame.findUsername(authToken);
+            }
+            if (gameDataDB == null) {
+                throw new WSException("Game DNE");
+            }
+            // if game is empty
+//            if (gameDataDB.getChessGame() == null) {
+//                throw new WSException("Game is Empty");
+//            }
+//            //if player joins occupied color
+//            if (playerColor == ChessGame.TeamColor.BLACK){
+//                if (gameDataDB.getBlackUsername() == null){
+//                    //add username to black username in DB
+//                    throw new WSException("USERNAME IS NULL");
+//                } else if (!Objects.equals(gameDataDB.getBlackUsername(), useUsername)){
+//                    System.out.println("WHITE:");
+//                    System.out.println(gameDataDB.getBlackUsername() != useUsername);
+//                    throw new WSException("Black Already Occupied");
+//                }
+//            } else if (playerColor == ChessGame.TeamColor.WHITE){
+//                if (gameDataDB.getWhiteUsername() == null){
+//                    // add username to white username in DB
+//                    throw new WSException("USERNAME IS NULL");
+//                }
+//                if (!Objects.equals(gameDataDB.getWhiteUsername(), useUsername)) {
+//                    System.out.println("WHITE:");
+//                    System.out.println("DBUSER: " + gameDataDB.getWhiteUsername() + "\nWSUSER: " + useUsername);
+//                    System.out.println(gameDataDB.getWhiteUsername() != useUsername);
+//                    throw new WSException("White Already Occupied");
+//                }
+//            }
+        } catch (SQLException | DataAccessException e) {
+            System.out.println("Error accessing data");
+        }
+        // if player tries to join a game with a bad authtoken
+        //get the game, bad authtoken result
+        //
+    }
     public void joinPlayerErrors(Integer gameID, ChessGame.TeamColor playerColor, String authToken, Gson gson, String username) throws WSException{
         JoinGameService joinGameService = new JoinGameService();
         try (Connection connection = DatabaseManager.getConnection()){
@@ -318,6 +369,24 @@ public class Server {
     @OnWebSocketClose
     public void onClose(Session session, int var2, String var3) {
         System.out.println("WEBSOCKET CLOSED");
+        for (Integer gameID : sessionPlayerMap.keySet()){
+            ArrayList<Session> array = sessionPlayerMap.get(gameID);
+            for (Session sesh: array){
+                if (sesh == session){
+                    array.remove(sesh);
+                    sessionPlayerMap.put(gameID, array);
+                }
+            }
+        }
+        for (Integer gameID : sessionObserverMap.keySet()){
+            ArrayList<Session> array = sessionObserverMap.get(gameID);
+            for (Session sesh: array){
+                if (sesh == session){
+                    array.remove(sesh);
+                    sessionObserverMap.put(gameID, array);
+                }
+            }
+        }
     }
 
     @OnWebSocketConnect

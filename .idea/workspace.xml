@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/WSLogic/WSException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/WSLogic/JoinGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/WSLogic/JoinGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/test/java/passoffTests/TestFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/test/java/passoffTests/TestFactory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +53,7 @@
     "Application.ClientCommunicator.executor": "Debug",
     "Application.InteractiveCalculatorExample.executor": "Run",
     "Application.InteractiveConsole.executor": "Run",
-    "Application.Server.executor": "Run",
+    "Application.Server.executor": "Debug",
     "Application.ServerFacade.executor": "Run",
     "Application.WSClient.executor": "Run",
     "Application.WSCommunicator.executor": "Run",
@@ -111,6 +108,7 @@
     "JUnit.StandardAPITests.successLogin.executor": "Debug",
     "JUnit.StandardAPITests.successRegister.executor": "Debug",
     "JUnit.WebSocketTests.executor": "Run",
+    "JUnit.WebSocketTests.joinObserverBadGameID.executor": "Run",
     "JUnit.WebSocketTests.joinObserverGood.executor": "Run",
     "JUnit.WebSocketTests.joinPlayerBadAuthToken.executor": "Run",
     "JUnit.WebSocketTests.joinPlayerBadGameID.executor": "Run",
@@ -149,12 +147,59 @@
       <recent name="$PROJECT_DIR$/shared/src/main/java" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.WebSocketTests.joinPlayerBadAuthToken">
+  <component name="RunManager" selected="JUnit.WebSocketTests">
     <configuration name="Server" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="19" />
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-21" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="server.Server" />
       <module name="server" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebSocketTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.WebSocketTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebSocketTests.joinObserverBadGameID" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.WebSocketTests" />
+      <option name="METHOD_NAME" value="joinObserverBadGameID" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebSocketTests.joinObserverGood" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.WebSocketTests" />
+      <option name="METHOD_NAME" value="joinObserverGood" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -191,69 +236,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WebSocketTests.joinPlayerEmpty" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="passoffTests.serverTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
-      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.WebSocketTests" />
-      <option name="METHOD_NAME" value="joinPlayerEmpty" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="WebSocketTests.joinPlayerGood" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="passoffTests.serverTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
-      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.WebSocketTests" />
-      <option name="METHOD_NAME" value="joinPlayerGood" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="WebSocketTests.joinPlayerSteal" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="passoffTests.serverTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
-      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.WebSocketTests" />
-      <option name="METHOD_NAME" value="joinPlayerSteal" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Application.Server" />
+      <item itemvalue="JUnit.WebSocketTests" />
+      <item itemvalue="JUnit.WebSocketTests.joinObserverBadGameID" />
+      <item itemvalue="JUnit.WebSocketTests.joinObserverGood" />
       <item itemvalue="JUnit.WebSocketTests.joinPlayerBadAuthToken" />
       <item itemvalue="JUnit.WebSocketTests.joinPlayerBadGameID" />
-      <item itemvalue="JUnit.WebSocketTests.joinPlayerEmpty" />
-      <item itemvalue="JUnit.WebSocketTests.joinPlayerGood" />
-      <item itemvalue="JUnit.WebSocketTests.joinPlayerSteal" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.WebSocketTests" />
+        <item itemvalue="JUnit.WebSocketTests.joinObserverGood" />
+        <item itemvalue="JUnit.WebSocketTests.joinObserverBadGameID" />
         <item itemvalue="JUnit.WebSocketTests.joinPlayerBadAuthToken" />
         <item itemvalue="JUnit.WebSocketTests.joinPlayerBadGameID" />
-        <item itemvalue="JUnit.WebSocketTests.joinPlayerEmpty" />
-        <item itemvalue="JUnit.WebSocketTests.joinPlayerSteal" />
-        <item itemvalue="JUnit.WebSocketTests.joinPlayerGood" />
       </list>
     </recent_temporary>
   </component>
@@ -379,34 +376,49 @@
           <option name="timeStamp" value="528" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/server/Server.java</url>
-          <line>74</line>
-          <option name="timeStamp" value="547" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/WSCommunicator.java</url>
           <line>17</line>
           <option name="timeStamp" value="548" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/services/GameServices/JoinGameService.java</url>
-          <line>19</line>
-          <option name="timeStamp" value="556" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/dataAccess/MySqlGameDataDA.java</url>
-          <line>59</line>
-          <option name="timeStamp" value="557" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/server/Server.java</url>
-          <line>180</line>
+          <line>231</line>
           <option name="timeStamp" value="560" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/Client.java</url>
           <line>31</line>
           <option name="timeStamp" value="561" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/server/Server.java</url>
+          <line>88</line>
+          <option name="timeStamp" value="564" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
+          <line>150</line>
+          <option name="timeStamp" value="565" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
+          <line>146</line>
+          <option name="timeStamp" value="566" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
+          <line>147</line>
+          <option name="timeStamp" value="567" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
+          <line>153</line>
+          <option name="timeStamp" value="569" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/WebSocketTests.java</url>
+          <line>191</line>
+          <option name="timeStamp" value="570" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/WebSocketTests.java</url>
