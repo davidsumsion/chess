@@ -6,6 +6,7 @@ import chess.InvalidMoveException;
 import com.google.gson.Gson;
 import dataAccess.DataAccessException;
 import dataAccess.DatabaseManager;
+import dataAccess.MySqlGameDataDA;
 import models.GameData;
 import services.GameServices.JoinGameService;
 import webSocketMessages.serverMessages.Error;
@@ -45,7 +46,10 @@ public class JoinGame {
             Gson gson = new Gson();
             ChessGame chessGame = gson.fromJson(chessGameJson, ChessGame.class);
             chessGame.makeMove(chessMove);
-
+            GameData updatedGameData = new GameData(gameData.getGameID(), gameData.getWhiteUsername(), gameData.getBlackUsername(), gameData.getGameName());
+            updatedGameData.setChessGame(gson.toJson(chessGame));
+            MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
+            mySqlGameDataDA.updateGame(connection, updatedGameData);
         }catch (DataAccessException | SQLException e) {
 //            return new Error("Cannot Find Game");
             throw new RuntimeException(e);

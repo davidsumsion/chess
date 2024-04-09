@@ -7,9 +7,8 @@ import webSocketMessages.serverMessages.LoadGame;
 import webSocketMessages.serverMessages.Notification;
 import webSocketMessages.serverMessages.ServerMessage;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Scanner;
+import java.lang.reflect.Array;
+import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
@@ -36,14 +35,13 @@ public class Client {
 
         switch (serverMessage.getServerMessageType()){
             case LOAD_GAME -> {
-                System.out.println("LOAD GAME: ");
+//                System.out.println("LOAD GAME: ");
                 LoadGame loadGame = gson.fromJson(message, LoadGame.class);
                 GameData gameData = gson.fromJson(loadGame.getGame(), GameData.class);
                 ChessGame chessGame = gson.fromJson(gameData.getChessGame(), ChessGame.class);
                 teamTurn = chessGame.getTeamTurn();
                 chessBoard = chessGame.getBoard();
                 drawBoard(loadGame.getGame());
-//                if (!observer) gameplayUI();
             }
             case ERROR -> {
 //                System.out.println("ERROR\n");
@@ -51,9 +49,9 @@ public class Client {
                 System.out.print(error.getErrorMessage());
             }
             case NOTIFICATION -> {
-                System.out.println("NOTIFICATION:\n");
+//                System.out.println("NOTIFICATION:\n");
                 Notification notification = gson.fromJson(message, Notification.class);
-                System.out.print(notification.getMessage());
+                System.out.println(notification.getMessage());
             }
         }
     }
@@ -103,13 +101,6 @@ public class Client {
         }
     }
 
-//    private String getDummyData(){
-//        ChessBoard chessBoard = new ChessBoard();
-//        chessBoard.resetBoard();
-//        Gson gson = new Gson();
-//        return gson.toJson(chessBoard);
-//    }
-
     public void drawBoard(String gameDataJson){
 
         String color = "BLACK";
@@ -154,78 +145,93 @@ public class Client {
             else if (input.equals(Integer.toString(6))) {
                 // highlight Legal Moves
                 Gson gson = new Gson();
-    //            highlightMovesUI(myColor, chessBoard);
+                String color = "WHITE";
+                if (myColor == ChessGame.TeamColor.BLACK) {
+                    color = "BLACK";
+                }
+                highlightMovesUI(color, chessBoard);
                 gameplayUI();
             }
             }
     }
 
     public ChessMove makeMoveUI() {
-        System.out.print("Enter the position of the piece you want to move");
-        System.out.print("Enter a Row Number\n>>> ");
-        Scanner rowScanner = new Scanner(System.in);
-        String row = rowScanner.nextLine();
-        //verify 1-8
-        System.out.print("Enter a Column Letter\n>>> ");
-        Scanner colScanner = new Scanner(System.in);
-        String col = colScanner.nextLine();
-        Integer colNum = colNumberMap.get(col);
-        ChessPosition startPosition = new ChessPosition(parseInt(row), colNum);
-
+        //Start Position
+        System.out.println("Enter the position of the piece you want to move");
+        String startRow = getRowInput();
+        if (startRow.isEmpty()) makeMoveUI();
+        String startColumn = getColInput();
+        if (startColumn.isEmpty()) makeMoveUI();
+        Integer startColInt = colNumberMap.get(startColumn);
+        ChessPosition startPosition = new ChessPosition(parseInt(startRow), startColInt);
+        //End Position
         System.out.print("Enter the position of the location you want to move to");
-        System.out.print("Enter a Row Number\n>>> ");
-        Scanner rowScanner1 = new Scanner(System.in);
-        String row1 = rowScanner1.nextLine();
-        //verify 1-8
-        System.out.print("Enter a Column Letter\n>>> ");
-        Scanner colScanner1 = new Scanner(System.in);
-        String col1 = colScanner1.nextLine();
-        Integer colNum1 = colNumberMap.get(col);
-        ChessPosition endPosition = new ChessPosition(parseInt(row1), colNum1);
+        String endRow = getRowInput();
+        if (startRow.isEmpty()) makeMoveUI();
+        String endCol = getColInput();
+        if (endCol.isEmpty()) makeMoveUI();
+        Integer endColInt = colNumberMap.get(endCol);
+        ChessPosition endPosition = new ChessPosition(parseInt(endRow), endColInt);
 
         //change for pawn for promotion Piece
         ChessMove chessMove =  new ChessMove(startPosition, endPosition, null);
         ChessGame chessGame = new ChessGame();
         chessGame.setBoard(chessBoard);
         Collection<ChessMove> validMoves = chessGame.validMoves(startPosition);
-        if (validMoves.contains(endPosition)) {
+        if (validMoves.contains(chessMove)) {
             return chessMove;
         } else{
             System.out.print("You didn't select a valid move");
             return makeMoveUI();
         }
+    }
 
+    public String getRowInput(){
+        System.out.print("Enter a Row Number\n>>> ");
+        Scanner rowScanner = new Scanner(System.in);
+        String row = rowScanner.nextLine();
+        if (!validRow.contains(row)){
+            System.out.println("Invalid Row Selection!\nPlease select a different row!");
+            return "";
+        }
+        return row;
+    }
 
-
-
-
+    public String getColInput(){
+        System.out.print("Enter a Column Letter\n>>> ");
+        Scanner colScanner = new Scanner(System.in);
+        String col = colScanner.nextLine();
+        if (!validColumn.contains(col)){
+            System.out.println("Invalid Column Selection!\nPlease select a different column!");
+            return "";
+        }
+        return col;
     }
 
     public void highlightMovesUI(String color, ChessBoard chessBoard) {
         System.out.print("Enter the position of the piece you want to see the potential moves for\n");
-        System.out.print("Enter a Row Number\n>>> ");
-        Scanner rowScanner = new Scanner(System.in);
-        String row = rowScanner.nextLine();
-        //verify 1-8
-        System.out.print("Enter a Column Letter\n>>> ");
-        Scanner colScanner = new Scanner(System.in);
-        String col = colScanner.nextLine();
-        Integer colNum = colNumberMap.get(col);
-
-        ChessPosition currentPosition = new ChessPosition(parseInt(row), colNum);
+        String startRow = getRowInput();
+        if (!validRow.contains(startRow)){
+            System.out.println("Invalid Row Selection!\nPlease select a different row!");
+            highlightMovesUI(color, chessBoard);
+        }
+        String startColumn = getColInput();
+        if (!validColumn.contains(startColumn)){
+            System.out.println("Invalid Column Selection!\nPlease select a different column!");
+            highlightMovesUI(color, chessBoard);
+        }
+        Integer colNum = colNumberMap.get(startColumn);
+        ChessPosition currentPosition = new ChessPosition(parseInt(startRow), colNum);
         ChessPiece currentPiece = chessBoard.getPiece(currentPosition);
-        System.out.print(currentPiece);
-        System.out.print(currentPosition);
-        System.out.println();
         if (currentPiece.getTeamColor().toString().equals(color)) {
             Collection<ChessMove> moves = currentPiece.pieceMoves(chessBoard, currentPosition);
-            System.out.print(moves);
-            System.out.println();
             Gson gson = new Gson();
             String[] args = new String[]{color, gson.toJson(chessBoard), gson.toJson(moves)};
             ChessBoardUI.main(args);
-        }
+        } else {
+            System.out.println("It's not your turn!");
 
+        }
     }
 
     public void registerUI(){
@@ -403,6 +409,9 @@ public class Client {
             postLoginMenu();
         }
     }
+
+    final ArrayList<String> validRow = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8"));
+    final ArrayList<String> validColumn = new ArrayList<>(Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "a", "b", "c", "d", "e", "f", "g", "h"));
 
     final Map<String, Integer> colNumberMap = Map.of(
             "A", 1,

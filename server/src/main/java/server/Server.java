@@ -93,7 +93,14 @@ public class Server {
                 MakeMove makeMove = gson.fromJson(message, MakeMove.class);
                 JoinGame joinGame = new JoinGame(makeMove.getGameID(), null);
                 joinGame.makeMove(makeMove.getMove());
-
+                for (Session sesh: sessionPlayerMap.get(makeMove.getGameID())){
+                    String jsonServerMessage2 = gson.toJson(joinGame.loadGame());
+                    sesh.getRemote().sendString(jsonServerMessage2);
+                }
+                for (Session sesh: sessionObserverMap.get(makeMove.getGameID())){
+                    String jsonServerMessage3 = gson.toJson((joinGame.loadGame()));
+                    sesh.getRemote().sendString(jsonServerMessage3);
+                }
             }
             case LEAVE -> {
                 System.out.print("LEAVE");

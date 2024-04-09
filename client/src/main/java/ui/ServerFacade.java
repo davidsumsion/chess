@@ -19,7 +19,6 @@ import java.net.URISyntaxException;
 import java.util.Objects;
 
 import static java.lang.Integer.parseInt;
-//import spark.*;
 
 public class ServerFacade {
     private String port = "8080";
@@ -56,6 +55,11 @@ public class ServerFacade {
     public void makeMove(Integer gameID, ChessMove move){
         Gson gson = new Gson();
         MakeMove makeMove = new MakeMove(authToken, gameID, move);
+        try {
+            ws.send(gson.toJson(makeMove));
+        } catch (Exception e) {
+            System.out.println("Error sending makeMove message");
+        }
     }
 
     public String register(String username, String password, String email){
