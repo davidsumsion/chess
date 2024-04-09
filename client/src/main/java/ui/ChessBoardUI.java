@@ -32,14 +32,18 @@ public class ChessBoardUI {
 
 //        ChessBoard
         Boolean reverse = true;
-        if (color.equals("BLACK")) { reverse = false; }
+        if (color.equals("BLACK")) {reverse = false;}
+        if (chessGame.getTeamTurn() == ChessGame.TeamColor.BLACK){
+            System.out.println("It's Black's Turn");
+        } else {
+            System.out.println("It's White's Turn");
+        }
         setBackGroundBlack(out);
         drawHeaders(out, reverse);
         drawRows(out, chessGame.getBoard(), reverse, highlightedMoves);
         drawHeaders(out, reverse);
 //        setBackGroundBlack(out);
         resetBackGround(out);
-
     }
 
     private static void printIndex(PrintStream out, int i, Boolean reverse){

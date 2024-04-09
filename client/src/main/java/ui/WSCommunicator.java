@@ -22,13 +22,10 @@ public class WSCommunicator extends Endpoint {
             }
         });
     }
-
     @Override
     public void onOpen(Session session, EndpointConfig endpointConfig){
-        System.out.print("WebSocket Opened");
+        System.out.println("");
     }
-
-
     public void send(String msg) throws Exception {
         this.session.getBasicRemote().sendText(msg);
     }

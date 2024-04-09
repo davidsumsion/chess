@@ -70,7 +70,7 @@ public class Server {
                     notifyAllObservers(joinPlayer.getGameID(), gson, messageToObserver);
                     notifyPlayersJoinPlayer(joinPlayer.getGameID(), joinPlayer.getPlayerColor(), gson, session, joinPlayer.getUsername());
                 } catch (Exception e) {
-                    System.out.print("Error: " + e.getMessage());
+                    System.out.println("Error: " + e.getMessage());
                 }
             }
             case JOIN_OBSERVER -> {
@@ -78,7 +78,7 @@ public class Server {
                 try {
                     addObserverToMap(session, joinObserver.getGameID(), gson);
                     String messageObserverJoined = "User: " + joinObserver.getUsername() + " Joined the Game as an Observer!";
-                    notifyAllObservers(joinObserver.getGameID(), gson, messageObserverJoined);
+                    notifyAllObserversNotCurrent(joinObserver.getGameID(), gson, messageObserverJoined, session);
                     notifyAllPlayers(joinObserver.getGameID(), gson, messageObserverJoined);
                 } catch (Exception e) {
                     System.out.println("Error in Join Observer: " + e.getMessage());
@@ -89,7 +89,7 @@ public class Server {
                 session.getRemote().sendString(jsonServerMessage2);
             }
             case MAKE_MOVE -> {
-                System.out.print("MAKE MOVE");
+                System.out.println("MAKE MOVE");
                 MakeMove makeMove = gson.fromJson(message, MakeMove.class);
                 JoinGame joinGame = new JoinGame(makeMove.getGameID(), null);
                 joinGame.makeMove(makeMove.getMove());
@@ -103,7 +103,7 @@ public class Server {
                 }
             }
             case LEAVE -> {
-                System.out.print("LEAVE");
+                System.out.println("LEAVE");
                 Leave leave = gson.fromJson(message, Leave.class);
                 List<Session> playersList = sessionTracker.get(leave.getGameID()).getPlayers();
                 playersList.remove(session);
@@ -177,6 +177,22 @@ public class Server {
         }
     }
 
+    public synchronized void notifyAllObserversNotCurrent(Integer gameID, Gson gson, String message, Session session) {
+        if (!sessionObserverMap.containsKey(gameID)) {
+            sessionObserverMap.put(gameID, new ArrayList<Session>());
+        }
+        for (Session sesh: sessionObserverMap.get(gameID)){
+            try {
+                if (!sesh.equals(session)){
+                    Notification notificationMessage = new Notification(message);
+                    sesh.getRemote().sendString(gson.toJson(notificationMessage));
+                }
+            } catch (Exception e) {
+                System.out.println("Error with All Observer Notification");
+            }
+        }
+    }
+
     public  synchronized void notifyAllPlayers(Integer gameID, Gson gson, String message){
         if (!sessionPlayerMap.containsKey(gameID)) {
             sessionPlayerMap.put(gameID, new ArrayList<Session>());
@@ -239,7 +255,7 @@ public class Server {
 
     @OnWebSocketClose
     public void onClose(Session session, int var2, String var3) {
-        System.out.print("WEBSOCKET CLOSED");
+        System.out.println("WEBSOCKET CLOSED");
     }
 
     @OnWebSocketConnect

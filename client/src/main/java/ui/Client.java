@@ -46,7 +46,7 @@ public class Client {
             case ERROR -> {
 //                System.out.println("ERROR\n");
                 Error error = gson.fromJson(message, Error.class);
-                System.out.print(error.getErrorMessage());
+                System.out.println(error.getErrorMessage());
             }
             case NOTIFICATION -> {
 //                System.out.println("NOTIFICATION:\n");
@@ -110,81 +110,51 @@ public class Client {
         ChessBoardUI.main(args);
     }
     public void gameplayUI() {
+        System.out.print(GAMEPLAY_TEXT);
         while (true){
-            System.out.print(GAMEPLAY_TEXT);
             Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
-            switch (parseInt(input)){
-                // help
-                case 1 ->  gameplayUI();
-                // redraw board
-                case 2 -> {
-                    GameData printableGameData = new GameData(null, null, null, null);
-                    chess.ChessGame printableChessGame = new ChessGame();
-                    printableChessGame.setBoard(chessBoard);
-                    Gson gson = new Gson();
-                    printableGameData.setChessGame(gson.toJson(printableChessGame));
-                    String stringChessBoard = gson.toJson(printableGameData);
-                    drawBoard(stringChessBoard);
-                }
-                // Leave
-                case 3 -> {
-                    serverFacade.leave(gameID);
-                    System.out.print("Thanks for playing!");
-                    postLoginMenu();
-                }
-                case 4 -> {
-                    ChessMove move = makeMoveUI();
-                    serverFacade.makeMove(gameID, move);
-                }
-                //resign
-                case 5 -> {
-                    System.out.print("Are you sure you want to leave resign??\n You will forfeit the game");
-                }
-                // highlight moves
-                case 6 -> {
-                    String color = "WHITE";
-                    if (myColor == ChessGame.TeamColor.BLACK) {
-                        color = "BLACK";
+            ArrayList<String> validInput = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6"));
+            if (!validInput.contains(input)){
+                System.out.println("Enter a valid input");
+            } else {
+                switch (parseInt(input)){
+                    // help
+                    case 1 ->  gameplayUI();
+                    // redraw board
+                    case 2 -> {
+                        GameData printableGameData = new GameData(null, null, null, null);
+                        chess.ChessGame printableChessGame = new ChessGame();
+                        printableChessGame.setBoard(chessBoard);
+                        Gson gson = new Gson();
+                        printableGameData.setChessGame(gson.toJson(printableChessGame));
+                        String stringChessBoard = gson.toJson(printableGameData);
+                        drawBoard(stringChessBoard);
                     }
-                    highlightMovesUI(color, chessBoard);
-                }
+                    // Leave
+                    case 3 -> {
+                        serverFacade.leave(gameID);
+                        System.out.println("Thanks for playing!");
+                        postLoginMenu();
+                    }
+                    case 4 -> {
+                        ChessMove move = makeMoveUI();
+                        serverFacade.makeMove(gameID, move);
+                    }
+                    //resign
+                    case 5 -> {
+                        System.out.println("Are you sure you want to leave resign??\n You will forfeit the game");
+                    }
+                    // highlight moves
+                    case 6 -> {
+                        String color = "WHITE";
+                        if (myColor == ChessGame.TeamColor.BLACK) {
+                            color = "BLACK";
+                        }
+                        highlightMovesUI(color, chessBoard);
+                    }
             }
-//            if (input.equals(Integer.toString(1))) {
-//                gameplayUI();
-//            }
-//            else if (input.equals(Integer.toString(2))) {
-//                GameData printableGameData = new GameData(null, null, null, null);
-//                chess.ChessGame printableChessGame = new ChessGame();
-//                printableChessGame.setBoard(chessBoard);
-//                Gson gson = new Gson();
-//                printableGameData.setChessGame(gson.toJson(printableChessGame));
-//                String stringChessBoard = gson.toJson(printableGameData);
-//                drawBoard(stringChessBoard);
-//            }
-//            else if (input.equals(Integer.toString(3))) {
-//                // Leave
-//                serverFacade.leave(gameID);
-//                System.out.print("Thanks for playing!");
-//                postLoginMenu();
-//            }
-//            else if (input.equals(Integer.toString(4))) {
-//                ChessMove move = makeMoveUI();
-//                serverFacade.makeMove(gameID, move);
-//            }
-//            else if (input.equals(Integer.toString(5))) {
-//                // Resign
-//                System.out.print("Are you sure you want to leave resign??\n You will forfeit the game");
-//            }
-//            else if (input.equals(Integer.toString(6))) {
-//                // highlight Legal Moves
-//                Gson gson = new Gson();
-//                String color = "WHITE";
-//                if (myColor == ChessGame.TeamColor.BLACK) {
-//                    color = "BLACK";
-//                }
-//                highlightMovesUI(color, chessBoard);
-//            }
+            }
             }
     }
 
@@ -198,7 +168,7 @@ public class Client {
         Integer startColInt = colNumberMap.get(startColumn);
         ChessPosition startPosition = new ChessPosition(parseInt(startRow), startColInt);
         //End Position
-        System.out.print("Enter the position of the location you want to move to");
+        System.out.println("Enter the position of the location you want to move to");
         String endRow = getRowInput();
         if (startRow.isEmpty()) makeMoveUI();
         String endCol = getColInput();
@@ -214,13 +184,13 @@ public class Client {
         if (validMoves.contains(chessMove)) {
             return chessMove;
         } else{
-            System.out.print("You didn't select a valid move");
+            System.out.println("You didn't select a valid move");
             return makeMoveUI();
         }
     }
 
     public String getRowInput(){
-        System.out.print("Enter a Row Number\n>>> ");
+        System.out.println("Enter a Row Number");
         Scanner rowScanner = new Scanner(System.in);
         String row = rowScanner.nextLine();
         if (!validRow.contains(row)){
@@ -231,19 +201,19 @@ public class Client {
     }
 
     public String getColInput(){
-        System.out.print("Enter a Column Letter\n>>> ");
+        System.out.println("Enter a Column Letter");
         Scanner colScanner = new Scanner(System.in);
         String col = colScanner.nextLine();
         if (!validColumn.contains(col)){
             System.out.println("Invalid Column Selection!\nPlease select a different column!");
             return "";
         }
-        return col;
+        return col.toUpperCase();
     }
 
     public void highlightMovesUI(String color, ChessBoard chessBoard) {
         Gson gson = new Gson();
-        System.out.print("Enter the position of the piece you want to see the potential moves for\n");
+        System.out.println("Enter the position of the piece you want to see the potential moves for");
         String startRow = getRowInput();
         if (startRow.isEmpty()) highlightMovesUI(color, chessBoard);
         String startColumn = getColInput();
@@ -267,15 +237,15 @@ public class Client {
     }
 
     public void registerUI(){
-        System.out.print("Enter a Username\n>>> ");
+        System.out.println("Enter a Username");
         Scanner usernameScanner = new Scanner(System.in);
         String username = usernameScanner.nextLine();
 
-        System.out.print("Enter a Password\n>>> ");
+        System.out.println("Enter a Password");
         Scanner passwordScanner = new Scanner(System.in);
         String password = passwordScanner.nextLine();
 
-        System.out.print("Enter an Email\n>>> ");
+        System.out.println("Enter an Email");
         Scanner emailScanner = new Scanner(System.in);
         String email = emailScanner.nextLine();
 
@@ -305,11 +275,11 @@ public class Client {
     }
 
     public void joinToPlayGameUI(){
-        System.out.print("Enter a gameID\n>>> ");
+        System.out.println("Enter a gameID");
         Scanner gameIDScanner = new Scanner(System.in);
         String currentGameID = gameIDScanner.nextLine();
 
-        System.out.print("Choose a color\n\t1 - BLACK\n\t2 - WHITE\n>>> ");
+        System.out.println("Choose a color\n\t1 - BLACK\n\t2 - WHITE");
         Scanner colorScanner = new Scanner(System.in);
         String colorChecker = colorScanner.nextLine();
         String currentPlayerColor = "";
@@ -321,6 +291,7 @@ public class Client {
 
         String result = serverFacade.joinPlayer(currentGameID, currentPlayerColor);
         if (result.isEmpty()) {
+            System.out.println(GAMEPLAY_INTRO);
             System.out.format("Enjoy your game, you are %s\n", currentPlayerColor);
             gameID = parseInt(currentGameID);
             if (currentPlayerColor.equals("WHITE")) {
@@ -366,6 +337,7 @@ public class Client {
     }
 
     public void ObserverUI() {
+        System.out.println(OBSERVE_INTRO);
         System.out.println(OBSERVE_TEXT);
         while (true){
             Scanner gameIDScanner = new Scanner(System.in);
@@ -377,6 +349,13 @@ public class Client {
                 }
                 case "2" -> {
                     //redraw
+                    GameData printableGameData = new GameData(null, null, null, null);
+                    chess.ChessGame printableChessGame = new ChessGame();
+                    printableChessGame.setBoard(chessBoard);
+                    Gson gson = new Gson();
+                    printableGameData.setChessGame(gson.toJson(printableChessGame));
+                    String stringChessBoard = gson.toJson(printableGameData);
+                    drawBoard(stringChessBoard);
                 }
                 case "3" -> {
                     //leave
@@ -423,7 +402,7 @@ public class Client {
             System.out.println("Start the Server");
             postLoginMenu();
         } else {
-            System.out.print("You created " + gameName + " with ID: "+ dbGameID);
+            System.out.println("You created " + gameName + " with ID: "+ dbGameID);
             postLoginMenu();
         }
     }
@@ -457,34 +436,50 @@ public class Client {
     private static final String WELCOME_TEXT = "\n\n\n\n" +
             EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_KING+ EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.EMPTY +
             EscapeSequences.EMPTY + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_KING+ EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK +
-            String.format("\n%s%s%s Welcome to Chess %s%s%s\n\n", EscapeSequences.DARK_KNIGHT, EscapeSequences.BLACK_BISHOP, EscapeSequences.BLACK_QUEEN, EscapeSequences.WHITE_QUEEN, EscapeSequences.WHITE_BISHOP, EscapeSequences.WHITE_KNIGHT) +
-            "Press 4 for help\n\n";
-    private static final String PRELOGIN_TEXT = "Enter an Integer:\n" +
-            "1 - REGISTER\n\tCreates an Account\n\tusername, password, email required\n" +
-            "2 - LOGIN\n\tTo Play Chess\n\tusername, password required\n" +
-            "3 - QUIT\n\tTo Stop Playing\n" +
-            "4 - HELP\n\tDisplays this menu\n>>> ";
-    private static final String GAMEPLAY_TEXT = "Enter an Integer:\n" +
+            String.format("\n%s%s%s Welcome to Chess %s%s%s\n", EscapeSequences.DARK_KNIGHT, EscapeSequences.BLACK_BISHOP, EscapeSequences.BLACK_QUEEN, EscapeSequences.WHITE_QUEEN, EscapeSequences.WHITE_BISHOP, EscapeSequences.WHITE_KNIGHT) +
+            EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_KING+ EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.EMPTY +
+            EscapeSequences.EMPTY + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_KING+ EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK + '\n';
+    private static final String PRELOGIN_TEXT = "Menu:\n(Enter a number to select an option)\n" +
+            "1 - Register\n\tCreates an Account\n\tusername, password, email required\n" +
+            "2 - Login\n\tTo Play Chess\n\tusername, password required\n" +
+            "3 - Quit\n\tTo Stop Playing\n" +
+            "4 - Help\n\tDisplays this menu\n\n";
+    private static final String GAMEPLAY_TEXT = "\n" +
             "1 - Help\n\tDisplays This Menu\n" +
             "2 - Redraw Chess Board\n\tRedraws the board\n" +
             "3 - Leave\n\tRemove yourself from the game\n" +
             "4 - Make Move\n\tMove a piece\n" +
             "5 - Resign\n\tForfeit the game and Game is over\n" +
-            "6 - Highlight Legal Moves\n\tSee All Legal Moves for a piece\n>>> ";
+            "6 - Highlight Legal Moves\n\tSee All Legal Moves for a piece\n\n";
 
-    private static final String OBSERVE_TEXT = "Enter an Integer:\n" +
+    private static final String OBSERVE_TEXT = "\n" +
             "1 - Help\n\tDisplays This Menu\n" +
             "2 - Redraw Chess Board\n\tRedraws the board\n" +
-            "3 - Leave\n\tRemove yourself from the game\n";
+            "3 - Leave\n\tRemove yourself from the game\n\n";
     private static final String LOGGED_IN_TEXT = "\n" +
             EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_KING+ EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.EMPTY +
             EscapeSequences.EMPTY + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_KING+ EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK +
-            String.format("\n%s%s%s   Welcome User   %s%s%s\n\n", EscapeSequences.DARK_KNIGHT, EscapeSequences.BLACK_BISHOP, EscapeSequences.BLACK_QUEEN, EscapeSequences.WHITE_QUEEN, EscapeSequences.WHITE_BISHOP, EscapeSequences.WHITE_KNIGHT);
-    private static final String POSTLOGIN_TEXT = "Enter an Integer:\n" +
+            String.format("\n%s%s%s     C H E S S    %s%s%s\n", EscapeSequences.DARK_KNIGHT, EscapeSequences.BLACK_BISHOP, EscapeSequences.BLACK_QUEEN, EscapeSequences.WHITE_QUEEN, EscapeSequences.WHITE_BISHOP, EscapeSequences.WHITE_KNIGHT) +
+            EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_KING+ EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.EMPTY +
+            EscapeSequences.EMPTY + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_KING+ EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK;
+    private static final String GAMEPLAY_INTRO = "\n" +
+            EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_KING+ EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.EMPTY +
+            EscapeSequences.EMPTY + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_KING+ EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK +
+            String.format("\n%s%s%s     GAMEPLAY     %s%s%s\n", EscapeSequences.DARK_KNIGHT, EscapeSequences.BLACK_BISHOP, EscapeSequences.BLACK_QUEEN, EscapeSequences.WHITE_QUEEN, EscapeSequences.WHITE_BISHOP, EscapeSequences.WHITE_KNIGHT) +
+            EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_KING+ EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.EMPTY +
+            EscapeSequences.EMPTY + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_KING+ EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK;
+    private static final String POSTLOGIN_TEXT = "\n" +
             "1 - LOGOUT\n\tLogs you out\n" +
             "2 - CREATE GAME\n\tName a new Game\n" +
             "3 - LIST GAMES\n\tList all Games\n" +
             "4 - JOIN GAME\n\tSpecify Game to Join\n" +
             "5 - JOIN OBSERVER\n\tSpecify Game to Spectate\n" +
-            "6 - HELP\n\tDisplays this menu\n>>> ";
+            "6 - HELP\n\tDisplays this menu\n\n";
+
+    private static final String OBSERVE_INTRO = "\n" +
+            EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_KING+ EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.EMPTY +
+            EscapeSequences.EMPTY + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_KING+ EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK +
+            String.format("\n%s%s%s     GAMEPLAY     %s%s%s\n", EscapeSequences.DARK_KNIGHT, EscapeSequences.BLACK_BISHOP, EscapeSequences.BLACK_QUEEN, EscapeSequences.WHITE_QUEEN, EscapeSequences.WHITE_BISHOP, EscapeSequences.WHITE_KNIGHT) +
+            EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_KING+ EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.EMPTY +
+            EscapeSequences.EMPTY + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_KING+ EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK;
 }
