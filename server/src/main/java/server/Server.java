@@ -8,8 +8,10 @@ import dataAccess.DataAccessException;
 import dataAccess.DatabaseManager;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.*;
+import requests.JoinGameRequest;
 import spark.*;
 import handlers.*;
+import webSocketMessages.serverMessages.Error;
 import webSocketMessages.serverMessages.Notification;
 import webSocketMessages.userCommands.*;
 
@@ -65,6 +67,8 @@ public class Server {
             case JOIN_PLAYER -> {
                 JoinPlayer joinPlayer = gson.fromJson(message, JoinPlayer.class);
                 try {
+//                    JoinGameRequest joinGameRequest = new JoinGameRequest(joinPlayer.getGameID(), joinPlayer.getGameID().toString());
+
                     addPlayerToMap(session, joinPlayer.getGameID(), gson);
                     String messageToObserver = "User: " + joinPlayer.getUsername() + " Joined the Game!";
                     notifyAllObservers(joinPlayer.getGameID(), gson, messageToObserver);
@@ -176,6 +180,10 @@ public class Server {
             }
         }
     }
+
+//    public void sendErrorMessage(Error error, Integer gameID){
+//
+//    }
 
     public synchronized void notifyAllObserversNotCurrent(Integer gameID, Gson gson, String message, Session session) {
         if (!sessionObserverMap.containsKey(gameID)) {

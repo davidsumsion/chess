@@ -41,7 +41,7 @@ public class Client {
                 ChessGame chessGame = gson.fromJson(gameData.getChessGame(), ChessGame.class);
                 teamTurn = chessGame.getTeamTurn();
                 chessBoard = chessGame.getBoard();
-                drawBoard(loadGame.getGame());
+                drawBoard(loadGame.getGame(), null);
             }
             case ERROR -> {
 //                System.out.println("ERROR\n");
@@ -101,12 +101,19 @@ public class Client {
         }
     }
 
-    public void drawBoard(String gameDataJson){
+    public void drawBoard(String gameDataJson, Collection<ChessMove> validMoves){
+        Gson gson = new Gson();
         String color = "BLACK";
         if (myColor == null || myColor.equals(ChessGame.TeamColor.WHITE)){
             color = "WHITE";
         }
-        String[] args = new String[]{color, gameDataJson}; //GAME BOARD
+        String[] args = null;
+        if (validMoves == null){
+            args = new String[]{color, gameDataJson}; //GAME BOARD
+        } else {
+            String jsonMoves = gson.toJson(validMoves);
+            args = new String[]{color, gameDataJson, jsonMoves};
+        }
         ChessBoardUI.main(args);
     }
     public void gameplayUI() {
@@ -129,7 +136,7 @@ public class Client {
                         Gson gson = new Gson();
                         printableGameData.setChessGame(gson.toJson(printableChessGame));
                         String stringChessBoard = gson.toJson(printableGameData);
-                        drawBoard(stringChessBoard);
+                        drawBoard(stringChessBoard, null);
                     }
                     // Leave
                     case 3 -> {
@@ -221,19 +228,13 @@ public class Client {
         Integer colNum = colNumberMap.get(startColumn);
         ChessPosition currentPosition = new ChessPosition(parseInt(startRow), colNum);
         ChessPiece currentPiece = chessBoard.getPiece(currentPosition);
-        Collection<ChessMove> moves = currentPiece.pieceMoves(chessBoard, currentPosition);
-//        ChessGame chessGame = new ChessGame();
-//        chessGame.setBoard(chessBoard);
-//        LoadGame loadGame = new LoadGame(gson.toJson(chessGame));
-//        drawBoard(gson.toJson(loadGame));
-
+        Collection<ChessMove> validMoves = currentPiece.pieceMoves(chessBoard, currentPosition);
         GameData printableGameData = new GameData(null, null, null, null);
         chess.ChessGame printableChessGame = new ChessGame();
         printableChessGame.setBoard(chessBoard);
-//        Gson gson = new Gson();
         printableGameData.setChessGame(gson.toJson(printableChessGame));
         String stringChessBoard = gson.toJson(printableGameData);
-        drawBoard(stringChessBoard);
+        drawBoard(stringChessBoard, validMoves);
     }
 
     public void registerUI(){
@@ -355,7 +356,7 @@ public class Client {
                     Gson gson = new Gson();
                     printableGameData.setChessGame(gson.toJson(printableChessGame));
                     String stringChessBoard = gson.toJson(printableGameData);
-                    drawBoard(stringChessBoard);
+                    drawBoard(stringChessBoard, null);
                 }
                 case "3" -> {
                     //leave

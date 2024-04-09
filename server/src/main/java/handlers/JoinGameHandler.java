@@ -9,6 +9,7 @@ import services.Exceptions.UnauthorizedException;
 import spark.Request;
 import spark.Response;
 import services.GameServices.JoinGameService;
+import webSocketMessages.serverMessages.Error;
 
 public class JoinGameHandler {
 

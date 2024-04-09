@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/WSCommunicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/WSCommunicator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/handlers/JoinGameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/handlers/JoinGameHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -110,6 +109,11 @@
     "JUnit.StandardAPITests.successLogin.executor": "Debug",
     "JUnit.StandardAPITests.successRegister.executor": "Debug",
     "JUnit.WebSocketTests.executor": "Run",
+    "JUnit.WebSocketTests.joinObserverGood.executor": "Run",
+    "JUnit.WebSocketTests.joinPlayerGood.executor": "Run",
+    "JUnit.WebSocketTests.joinPlayerSteal.executor": "Run",
+    "JUnit.WebSocketTests.multipleLobbies.executor": "Run",
+    "JUnit.WebSocketTests.validMove.executor": "Run",
     "JUnit.dataAccessTests.executor": "Run",
     "JUnit.myServiceTests.executor": "Run",
     "JUnit.myServiceTests.registerExistingUser.executor": "Debug",
@@ -140,86 +144,101 @@
       <recent name="$PROJECT_DIR$/shared/src/main/java" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Client">
-    <configuration name="Client" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ui.Client" />
-      <module name="client" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ui.WSCommunicator" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ClientCommunicator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ui.ClientCommunicator" />
-      <module name="client" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ui.WSCommunicator" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="server.Server" />
+  <component name="RunManager" selected="JUnit.WebSocketTests.multipleLobbies">
+    <configuration name="WebSocketTests.joinObserverGood" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="server.*" />
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.WebSocketTests" />
+      <option name="METHOD_NAME" value="joinObserverGood" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WSCommunicator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ui.WSCommunicator" />
-      <module name="client" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ui.WSCommunicator" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="WSServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="server.WSServer" />
+    <configuration name="WebSocketTests.joinPlayerGood" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="server.*" />
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.WebSocketTests" />
+      <option name="METHOD_NAME" value="joinPlayerGood" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebSocketTests.joinPlayerSteal" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.WebSocketTests" />
+      <option name="METHOD_NAME" value="joinPlayerSteal" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebSocketTests.multipleLobbies" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.WebSocketTests" />
+      <option name="METHOD_NAME" value="multipleLobbies" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebSocketTests.validMove" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.WebSocketTests" />
+      <option name="METHOD_NAME" value="validMove" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Client" />
-      <item itemvalue="Application.ClientCommunicator" />
-      <item itemvalue="Application.Server" />
-      <item itemvalue="Application.WSCommunicator" />
-      <item itemvalue="Application.WSServer" />
+      <item itemvalue="JUnit.WebSocketTests.joinObserverGood" />
+      <item itemvalue="JUnit.WebSocketTests.joinPlayerGood" />
+      <item itemvalue="JUnit.WebSocketTests.joinPlayerSteal" />
+      <item itemvalue="JUnit.WebSocketTests.multipleLobbies" />
+      <item itemvalue="JUnit.WebSocketTests.validMove" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Client" />
-        <item itemvalue="Application.Server" />
-        <item itemvalue="Application.WSCommunicator" />
-        <item itemvalue="Application.ClientCommunicator" />
-        <item itemvalue="Application.WSServer" />
+        <item itemvalue="JUnit.WebSocketTests.multipleLobbies" />
+        <item itemvalue="JUnit.WebSocketTests.validMove" />
+        <item itemvalue="JUnit.WebSocketTests.joinObserverGood" />
+        <item itemvalue="JUnit.WebSocketTests.joinPlayerSteal" />
+        <item itemvalue="JUnit.WebSocketTests.joinPlayerGood" />
       </list>
     </recent_temporary>
   </component>
@@ -340,21 +359,6 @@
           <option name="timeStamp" value="507" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/server/Server.java</url>
-          <line>166</line>
-          <option name="timeStamp" value="508" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/server/Server.java</url>
-          <line>172</line>
-          <option name="timeStamp" value="513" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/server/Server.java</url>
-          <line>239</line>
-          <option name="timeStamp" value="518" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/WSLogic/JoinGame.java</url>
           <line>28</line>
           <option name="timeStamp" value="519" />
@@ -366,7 +370,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/server/Server.java</url>
-          <line>91</line>
+          <line>95</line>
           <option name="timeStamp" value="525" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -385,19 +389,14 @@
           <option name="timeStamp" value="528" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="529" />
+          <url>file://$PROJECT_DIR$/client/src/main/java/ui/Client.java</url>
+          <line>104</line>
+          <option name="timeStamp" value="535" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java</url>
-          <line>17</line>
-          <option name="timeStamp" value="530" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/ChessBoardUI.java</url>
-          <line>30</line>
-          <option name="timeStamp" value="532" />
+          <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/WebSocketTests.java</url>
+          <line>108</line>
+          <option name="timeStamp" value="538" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
