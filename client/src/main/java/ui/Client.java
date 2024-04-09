@@ -7,7 +7,6 @@ import webSocketMessages.serverMessages.LoadGame;
 import webSocketMessages.serverMessages.Notification;
 import webSocketMessages.serverMessages.ServerMessage;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 import static java.lang.Integer.parseInt;
@@ -15,12 +14,12 @@ import static java.lang.Integer.parseInt;
 public class Client {
 
     private ChessGame.TeamColor myColor = null;
-    private ChessGame.TeamColor teamTurn = null;
+//    private ChessGame.TeamColor teamTurn = null;
     private ChessBoard chessBoard = null;
 
     private Integer gameID = null;
 
-    private Boolean observer = false;
+//    private Boolean observer = false;
     ServerFacade serverFacade = new ServerFacade(this::receiveMessage);
 
     public static void main(String[] args) throws Exception {
@@ -39,14 +38,14 @@ public class Client {
                 LoadGame loadGame = gson.fromJson(message, LoadGame.class);
                 GameData gameData = gson.fromJson(loadGame.getGame(), GameData.class);
                 ChessGame chessGame = gson.fromJson(gameData.getChessGame(), ChessGame.class);
-                teamTurn = chessGame.getTeamTurn();
+//                teamTurn = chessGame.getTeamTurn();
                 chessBoard = chessGame.getBoard();
                 drawBoard(loadGame.getGame(), null);
             }
             case ERROR -> {
 //                System.out.println("ERROR\n");
                 Error error = gson.fromJson(message, Error.class);
-                System.out.println(error.getErrorMessage());
+                System.out.println("ERROR: " + error.getErrorMessage() + "!");
             }
             case NOTIFICATION -> {
 //                System.out.println("NOTIFICATION:\n");
@@ -160,9 +159,9 @@ public class Client {
                         }
                         highlightMovesUI(color, chessBoard);
                     }
+                }
             }
-            }
-            }
+        }
     }
 
     public ChessMove makeMoveUI() {

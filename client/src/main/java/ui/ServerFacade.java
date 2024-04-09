@@ -146,19 +146,19 @@ public class ServerFacade {
             ClientCommunicator clientCommunicator = new ClientCommunicator();
             String urlString = "http://localhost:" + port + "/game";
             MessageOnlyResult messageOnlyResult = clientCommunicator.joinPlayer(urlString, jsonString, this.authToken);
-            if (messageOnlyResult.getMessage().equals("CORRECT")){
-                if (playerColor == null){
-//                    JoinPlayer joinPlayer = new JoinPlayer(authToken, parseInt(gameID), null, username);
-                    JoinObserver joinObserver = new JoinObserver(authToken, parseInt(gameID), username);
-                    ws.send(gson.toJson(joinObserver));
-                } else {
-                    ChessGame.TeamColor teamColor = ChessGame.TeamColor.WHITE;
-                    if (!Objects.equals(playerColor, "WHITE")) {
-                        teamColor = ChessGame.TeamColor.BLACK;
-                    }
-                    JoinPlayer joinPlayer = new JoinPlayer(authToken, parseInt(gameID), teamColor, this.username);
-                    ws.send(gson.toJson(joinPlayer));
+
+            if (playerColor == null) {
+                JoinObserver joinObserver = new JoinObserver(authToken, parseInt(gameID), username);
+                ws.send(gson.toJson(joinObserver));
+            } else {
+                ChessGame.TeamColor teamColor = ChessGame.TeamColor.WHITE;
+                if (!Objects.equals(playerColor, "WHITE")) {
+                    teamColor = ChessGame.TeamColor.BLACK;
                 }
+                JoinPlayer joinPlayer = new JoinPlayer(authToken, parseInt(gameID), teamColor, this.username);
+                ws.send(gson.toJson(joinPlayer));
+            }
+            if (messageOnlyResult.getMessage().equals("CORRECT")){
                 return "";
             } else if (messageOnlyResult.getMessage().equals("Error: Color already occupied")) {
                 return "Error Color";
@@ -176,14 +176,4 @@ public class ServerFacade {
             return "Start the Server";
         }
     }
-
-//    public String receiveLatestData(){
-////        try {
-////            ws.send("MESSAGE");
-////            return "";
-////        } catch (Exception e) {
-////            System.out.print("an ERROR OCCURRED IN GET LATEST GAME");
-////            return "";
-////        }
-//    }
 }

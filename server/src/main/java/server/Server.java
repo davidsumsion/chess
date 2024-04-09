@@ -2,24 +2,28 @@ package server;
 
 import WSLogic.JoinGame;
 import WSLogic.PlayerHolder;
+import WSLogic.WSException;
 import chess.ChessGame;
 import com.google.gson.Gson;
 import dataAccess.DataAccessException;
 import dataAccess.DatabaseManager;
+import dataAccess.MySqlGameDataDA;
+import models.GameData;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.*;
 import requests.JoinGameRequest;
+import services.GameServices.JoinGameService;
 import spark.*;
 import handlers.*;
 import webSocketMessages.serverMessages.Error;
 import webSocketMessages.serverMessages.Notification;
 import webSocketMessages.userCommands.*;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.*;
 
 @WebSocket
 public class Server {
@@ -67,12 +71,16 @@ public class Server {
             case JOIN_PLAYER -> {
                 JoinPlayer joinPlayer = gson.fromJson(message, JoinPlayer.class);
                 try {
-//                    JoinGameRequest joinGameRequest = new JoinGameRequest(joinPlayer.getGameID(), joinPlayer.getGameID().toString());
-
+                    System.out.println("JOIN PLAYER");
+                    joinPlayerErrors(joinPlayer.getGameID(), joinPlayer.getPlayerColor(), joinPlayer.getAuthString(), gson, joinPlayer.getUsername());
                     addPlayerToMap(session, joinPlayer.getGameID(), gson);
                     String messageToObserver = "User: " + joinPlayer.getUsername() + " Joined the Game!";
                     notifyAllObservers(joinPlayer.getGameID(), gson, messageToObserver);
                     notifyPlayersJoinPlayer(joinPlayer.getGameID(), joinPlayer.getPlayerColor(), gson, session, joinPlayer.getUsername());
+                } catch (WSException e){
+                    System.out.println("Made it");
+                    Error error = new Error(e.getMessage());
+                    session.getRemote().sendString(gson.toJson(error));
                 } catch (Exception e) {
                     System.out.println("Error: " + e.getMessage());
                 }
@@ -165,6 +173,52 @@ public class Server {
                 }
             }
         }
+    }
+
+    public void joinPlayerErrors(Integer gameID, ChessGame.TeamColor playerColor, String authToken, Gson gson, String username) throws WSException{
+        JoinGameService joinGameService = new JoinGameService();
+        try (Connection connection = DatabaseManager.getConnection()){
+            GameData gameDataDB = joinGameService.findGame(connection, gameID);
+            String useUsername = username;
+            if (username == null) {
+                JoinGame joinGame = new JoinGame();
+                useUsername = joinGame.findUsername(authToken);
+            }
+            if (gameDataDB == null) {
+                throw new WSException("Game DNE");
+            }
+            // if game is empty
+            if (gameDataDB.getChessGame() == null) {
+                throw new WSException("Game is Empty");
+            }
+//            //if player joins occupied color
+            if (playerColor == ChessGame.TeamColor.BLACK){
+                if (gameDataDB.getBlackUsername() == null){
+                    //add username to black username in DB
+                    throw new WSException("USERNAME IS NULL");
+                } else if (!Objects.equals(gameDataDB.getBlackUsername(), useUsername)){
+                    System.out.println("WHITE:");
+                    System.out.println(gameDataDB.getBlackUsername() != useUsername);
+                    throw new WSException("Black Already Occupied");
+                }
+            } else if (playerColor == ChessGame.TeamColor.WHITE){
+                if (gameDataDB.getWhiteUsername() == null){
+                    // add username to white username in DB
+                    throw new WSException("USERNAME IS NULL");
+                }
+                if (!Objects.equals(gameDataDB.getWhiteUsername(), useUsername)) {
+                    System.out.println("WHITE:");
+                    System.out.println("DBUSER: " + gameDataDB.getWhiteUsername() + "\nWSUSER: " + useUsername);
+                    System.out.println(gameDataDB.getWhiteUsername() != useUsername);
+                    throw new WSException("White Already Occupied");
+                }
+            }
+        } catch (SQLException | DataAccessException e) {
+            System.out.println("Error accessing data");
+        }
+        // if player tries to join a game with a bad authtoken
+            //get the game, bad authtoken result
+        //
     }
 
     public synchronized void notifyAllObservers(Integer gameID, Gson gson, String message) {

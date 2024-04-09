@@ -6,6 +6,7 @@ import chess.InvalidMoveException;
 import com.google.gson.Gson;
 import dataAccess.DataAccessException;
 import dataAccess.DatabaseManager;
+import dataAccess.MySqlAuthTokenDA;
 import dataAccess.MySqlGameDataDA;
 import models.GameData;
 import services.GameServices.JoinGameService;
@@ -19,12 +20,14 @@ import java.sql.SQLException;
 public class JoinGame {
     Integer gameID;
     ChessGame.TeamColor playerColor;
+
     public JoinGame(Integer gameID, ChessGame.TeamColor playerColor) {
         this.gameID = gameID;
         this.playerColor = playerColor;
     }
+    public JoinGame() {}
 
-    public ServerMessage loadGame(){
+    public ServerMessage loadGame() {
         try {
             Connection connection = DatabaseManager.getConnection();
             JoinGameService joinGameService = new JoinGameService();
@@ -50,7 +53,7 @@ public class JoinGame {
             updatedGameData.setChessGame(gson.toJson(chessGame));
             MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
             mySqlGameDataDA.updateGame(connection, updatedGameData);
-        }catch (DataAccessException | SQLException e) {
+        } catch (DataAccessException | SQLException e) {
 //            return new Error("Cannot Find Game");
             throw new RuntimeException(e);
         } catch (InvalidMoveException e) {
@@ -58,4 +61,24 @@ public class JoinGame {
         }
     }
 
+    public void updateDBGame(GameData updatedGameData) {
+        try {
+            Connection connection = DatabaseManager.getConnection();
+            MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
+            mySqlGameDataDA.updateGame(connection, updatedGameData);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public String findUsername(String authToken) {
+        try {
+            Connection connection = DatabaseManager.getConnection();
+            MySqlAuthTokenDA mySqlAuthTokenDA = new MySqlAuthTokenDA();
+            return mySqlAuthTokenDA.getUser(connection, authToken);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
