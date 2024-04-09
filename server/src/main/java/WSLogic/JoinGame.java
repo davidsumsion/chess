@@ -40,6 +40,19 @@ public class JoinGame {
         }
     }
 
+    public GameData getGame() {
+        try {
+            Connection connection = DatabaseManager.getConnection();
+            JoinGameService joinGameService = new JoinGameService();
+            return joinGameService.findGame(connection, this.gameID);
+
+        } catch (DataAccessException | SQLException e) {
+            return null;
+//            return new Error("Cannot Find Game");
+//            throw new RuntimeException(e);
+        }
+    }
+
     public void makeMove(ChessMove chessMove) throws WSException {
         try {
             Connection connection = DatabaseManager.getConnection();

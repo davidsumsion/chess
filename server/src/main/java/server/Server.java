@@ -16,7 +16,9 @@ import services.GameServices.JoinGameService;
 import spark.*;
 import handlers.*;
 import webSocketMessages.serverMessages.Error;
+import webSocketMessages.serverMessages.LoadGame;
 import webSocketMessages.serverMessages.Notification;
+import webSocketMessages.serverMessages.ServerMessage;
 import webSocketMessages.userCommands.*;
 
 import javax.xml.crypto.Data;
@@ -111,8 +113,19 @@ public class Server {
 //                    System.out.println("MAKE MOVE");
                     //if is not turn throw error
                     MakeMove makeMove = gson.fromJson(message, MakeMove.class);
-//                    makeMove.
                     JoinGame joinGame = new JoinGame(makeMove.getGameID(), null);
+                    GameData gameData = joinGame.getGame();
+                    String usernameFromAuth = joinGame.findUsername(makeMove.getAuthString());
+                    String chessGameJson = gameData.getChessGame();
+                    ChessGame chessGame = gson.fromJson(chessGameJson, ChessGame.class);
+                    ChessGame.TeamColor teamColor = chessGame.getTeamTurn();
+                    if (teamColor == ChessGame.TeamColor.BLACK && !gameData.getBlackUsername().equals(usernameFromAuth)){
+                        throw new WSException("NOT YOUR TURN");
+                    }
+                    if (teamColor == ChessGame.TeamColor.WHITE && !gameData.getWhiteUsername().equals(usernameFromAuth)){
+                        throw new WSException("NOT YOUR TURN");
+                    }
+
                     joinGame.makeMove(makeMove.getMove());
                     for (Session sesh: sessionPlayerMap.get(makeMove.getGameID())){
                         String jsonServerMessage2 = gson.toJson(joinGame.loadGame());
