@@ -29,9 +29,10 @@ import java.util.*;
 
 @WebSocket
 public class Server {
-    Map<Integer, PlayerHolder> sessionTracker = new HashMap<>();
+//    Map<Integer, PlayerHolder> sessionTracker = new HashMap<>();
     Map<Integer, ArrayList<Session>> sessionPlayerMap = new HashMap<>();
     Map<Integer, ArrayList<Session>> sessionObserverMap = new HashMap<>();
+    ArrayList<Integer> resignedGames = new ArrayList<>();
 
     public static void main(String[] args){
         Server server = new Server();
@@ -113,6 +114,9 @@ public class Server {
 //                    System.out.println("MAKE MOVE");
                     //if is not turn throw error
                     MakeMove makeMove = gson.fromJson(message, MakeMove.class);
+                    if (resignedGames.contains(makeMove.getGameID())){
+                        throw new WSException("The other player has resigned");
+                    }
                     JoinGame joinGame = new JoinGame(makeMove.getGameID(), null);
                     GameData gameData = joinGame.getGame();
                     String usernameFromAuth = joinGame.findUsername(makeMove.getAuthString());
@@ -146,60 +150,55 @@ public class Server {
             case LEAVE -> {
                 System.out.println("LEAVE");
                 Leave leave = gson.fromJson(message, Leave.class);
-                List<Session> playersList = sessionTracker.get(leave.getGameID()).getPlayers();
-                playersList.remove(session);
-                List<Session> observersList = sessionTracker.get(leave.getGameID()).getObservers();
-                observersList.remove(session);
-                PlayerHolder newPlayerHolder = new PlayerHolder();
-                newPlayerHolder.setPlayers(playersList);
-                newPlayerHolder.setObservers(observersList);
-                sessionTracker.put(leave.getGameID(), newPlayerHolder);
-
-                for (Session sesh: playersList){
-                    String notificationMessage = "USER: " + " LEFT THE GAME";
-                    Notification notification = new Notification(notificationMessage);
-                    String jsonServerMessage = gson.toJson(notification);
-                    if (session.isOpen()) {
-                        session.getRemote().sendString(jsonServerMessage);
-                    }
-                }
-                for (Session sesh: observersList){
-                    String notificationMessage = "USER: " + " LEFT THE GAME";
-                    Notification notification = new Notification(notificationMessage);
-                    String jsonServerMessage = gson.toJson(notification);
-                    if (session.isOpen()) {
-                        session.getRemote().sendString(jsonServerMessage);
-                    }
-                }
+//                List<Session> playersList = sessionTracker.get(leave.getGameID()).getPlayers();
+//                playersList.remove(session);
+//                List<Session> observersList = sessionTracker.get(leave.getGameID()).getObservers();
+////                observersList.remove(session);
+////                PlayerHolder newPlayerHolder = new PlayerHolder();
+////                newPlayerHolder.setPlayers(playersList);
+////                newPlayerHolder.setObservers(observersList);
+////                sessionTracker.put(leave.getGameID(), newPlayerHolder);
+//
+//                for (Session sesh: playersList){
+//                    String notificationMessage = "USER: " + " LEFT THE GAME";
+//                    Notification notification = new Notification(notificationMessage);
+//                    String jsonServerMessage = gson.toJson(notification);
+//                    if (session.isOpen()) {
+//                        session.getRemote().sendString(jsonServerMessage);
+//                    }
+//                }
+//                for (Session sesh: observersList){
+//                    String notificationMessage = "USER: " + " LEFT THE GAME";
+//                    Notification notification = new Notification(notificationMessage);
+//                    String jsonServerMessage = gson.toJson(notification);
+//                    if (session.isOpen()) {
+//                        session.getRemote().sendString(jsonServerMessage);
+//                    }
+//                }
             }
             case RESIGN -> {
                 System.out.print("RESIGN");
-                Leave leave = gson.fromJson(message, Leave.class);
-                List<Session> playersList = sessionTracker.get(leave.getGameID()).getPlayers();
-                playersList.remove(session);
-                List<Session> observersList = sessionTracker.get(leave.getGameID()).getObservers();
-                observersList.remove(session);
-                PlayerHolder newPlayerHolder = new PlayerHolder();
-                newPlayerHolder.setPlayers(playersList);
-                newPlayerHolder.setObservers(observersList);
-                sessionTracker.put(leave.getGameID(), newPlayerHolder);
+                Resign resign = gson.fromJson(message, Resign.class);
 
-                for (Session sesh: playersList){
+                resignedGames.add(resign.getGameID());
+
+                for (Session sesh: sessionPlayerMap.get(resign.getGameID())) {
                     String notificationMessage = "USER: " + " LEFT THE GAME";
                     Notification notification = new Notification(notificationMessage);
-                    String jsonServerMessage = gson.toJson(notification);
-                    if (session.isOpen()) {
-                        session.getRemote().sendString(jsonServerMessage);
-                    }
+                    sesh.getRemote().sendString(gson.toJson(notification));
                 }
-                for (Session sesh: observersList){
+                for (Session sesh: sessionObserverMap.get(resign.getGameID())){
                     String notificationMessage = "USER: " + " LEFT THE GAME";
                     Notification notification = new Notification(notificationMessage);
-                    String jsonServerMessage = gson.toJson(notification);
-                    if (session.isOpen()) {
-                        session.getRemote().sendString(jsonServerMessage);
-                    }
+                    sesh.getRemote().sendString(gson.toJson(notification));
                 }
+
+                List<Session> playersList = sessionPlayerMap.get(resign.getGameID());
+                playersList.remove(session);
+                List<Session> observersList = sessionObserverMap.get(resign.getGameID());
+                observersList.remove(session);
+
+
             }
         }
     }
