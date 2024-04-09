@@ -25,7 +25,6 @@ public class Server {
     Map<Integer, ArrayList<Session>> sessionPlayerMap = new HashMap<>();
     Map<Integer, ArrayList<Session>> sessionObserverMap = new HashMap<>();
 
-
     public static void main(String[] args){
         Server server = new Server();
         server.run(8080);
@@ -67,42 +66,29 @@ public class Server {
                 JoinPlayer joinPlayer = gson.fromJson(message, JoinPlayer.class);
                 try {
                     addPlayerToMap(session, joinPlayer.getGameID(), gson);
-                    notifyAllObservers(joinPlayer.getGameID(), gson);
+                    String messageToObserver = "User: " + joinPlayer.getUsername() + " Joined the Game!";
+                    notifyAllObservers(joinPlayer.getGameID(), gson, messageToObserver);
                     notifyPlayersJoinPlayer(joinPlayer.getGameID(), joinPlayer.getPlayerColor(), gson, session, joinPlayer.getUsername());
                 } catch (Exception e) {
                     System.out.print("Error: " + e.getMessage());
                 }
             }
             case JOIN_OBSERVER -> {
-                System.out.print("JOIN OBSERVER");
-                JoinObserver joinObserver = gson.fromJson(message, JoinObserver.class);
-                //add observer to session
-                PlayerHolder playerHolder = null;
-                if (sessionTracker.containsKey(joinObserver.getGameID())) { playerHolder = sessionTracker.get(joinObserver.getGameID()); }
-                else { playerHolder = new PlayerHolder(); }
-                playerHolder.addObserver(session);
-                sessionTracker.put(joinObserver.getGameID(), playerHolder);
-
-                //notify other players in game
-                for (Session sesh: sessionTracker.get(joinObserver.getGameID()).getPlayers()){
-                    if (!sesh.equals(session)){
-                        String notificationMessage = "User: " + " Joined the game to watch";
-                        Notification notification = new Notification(notificationMessage);
-                        try {
-                            if (sesh.isOpen()) {
-                                sesh.getRemote().sendString(gson.toJson(notification));
-                            }
-                        } catch (Exception e) {
-                            System.out.print("ERRRRROR");
-                        }
-                    }
+                JoinPlayer joinPlayer = gson.fromJson(message, JoinPlayer.class);
+                try {
+                    addObserverToMap(session, joinPlayer.getGameID(), gson);
+                    String messageObserverJoined = "User: " + joinPlayer.getUsername() + " Joined the Game as an Observer!";
+//                    notifyAllObservers(joinPlayer.getGameID(), gson, messageObserverJoined);
+                    notifyAllPlayers(joinPlayer.getGameID(), gson, messageObserverJoined);
+                } catch (Exception e) {
+                    System.out.println("Error in Join Observer: " + e.getMessage());
                 }
                 //send current board to session
-                JoinGame joinGame = new JoinGame(joinObserver.getGameID(), null);
-                String jsonServerMessage2 = gson.toJson(joinGame.loadGame());
-                if (session.isOpen()) {
-                    session.getRemote().sendString(jsonServerMessage2);
-                }
+//                JoinGame joinGame = new JoinGame(joinPlayer.getGameID(), null);
+//                String jsonServerMessage2 = gson.toJson(joinGame.loadGame());
+//                if (session.isOpen()) {
+//                    session.getRemote().sendString(jsonServerMessage2);
+//                }
             }
             case MAKE_MOVE -> {
                 System.out.print("MAKE MOVE");
@@ -172,13 +158,13 @@ public class Server {
         }
     }
 
-    public synchronized void notifyAllObservers(Integer gameID, Gson gson) {
+    public synchronized void notifyAllObservers(Integer gameID, Gson gson, String message) {
         if (!sessionObserverMap.containsKey(gameID)) {
             sessionObserverMap.put(gameID, new ArrayList<Session>());
         }
         for (Session sesh: sessionObserverMap.get(gameID)){
             try {
-                Notification notificationMessage = new Notification("User X Joined the Game!");
+                Notification notificationMessage = new Notification(message);
                 sesh.getRemote().sendString(gson.toJson(notificationMessage));
             } catch (Exception e) {
                 System.out.println("Error with All Observer Notification");
@@ -186,13 +172,36 @@ public class Server {
         }
     }
 
-    public synchronized void addPlayerToMap(Session session, Integer gameID, Gson gson){
+    public  synchronized void notifyAllPlayers(Integer gameID, Gson gson, String message){
+        if (!sessionPlayerMap.containsKey(gameID)) {
+            sessionPlayerMap.put(gameID, new ArrayList<Session>());
+        }
+        for (Session sesh: sessionPlayerMap.get(gameID)){
+            try {
+                Notification notificationMessage = new Notification(message);
+                sesh.getRemote().sendString(gson.toJson(notificationMessage));
+            } catch (Exception e) {
+                System.out.println("Error with All Observer Notification");
+            }
+        }
+    }
+
+    public void addPlayerToMap(Session session, Integer gameID, Gson gson){
         if (!sessionPlayerMap.containsKey(gameID)) {
             sessionPlayerMap.put(gameID, new ArrayList<Session>());
         }
         ArrayList<Session> newSessions = sessionPlayerMap.get(gameID);
         newSessions.add(session);
-        sessionPlayerMap.put(gameID, newSessions);
+//        sessionPlayerMap.put(gameID, newSessions);
+    }
+
+    public void addObserverToMap(Session session, Integer gameID, Gson gson){
+        if (!sessionObserverMap.containsKey(gameID)) {
+            sessionObserverMap.put(gameID, new ArrayList<Session>());
+        }
+        ArrayList<Session> newSessions = sessionObserverMap.get(gameID);
+        newSessions.add(session);
+//        sessionObserverMap.put(gameID, newSessions);
     }
 
     public synchronized void sendGame(Integer gameID, ChessGame.TeamColor playerColor, Gson gson, Session session) throws IOException {

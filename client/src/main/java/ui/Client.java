@@ -103,13 +103,12 @@ public class Client {
         }
     }
 
-
-    private String getDummyData(){
-        ChessBoard chessBoard = new ChessBoard();
-        chessBoard.resetBoard();
-        Gson gson = new Gson();
-        return gson.toJson(chessBoard);
-    }
+//    private String getDummyData(){
+//        ChessBoard chessBoard = new ChessBoard();
+//        chessBoard.resetBoard();
+//        Gson gson = new Gson();
+//        return gson.toJson(chessBoard);
+//    }
 
     public void drawBoard(String gameDataJson){
 
@@ -312,10 +311,10 @@ public class Client {
         System.out.print("Enter a gameID\n>>> ");
         Scanner gameIDScanner = new Scanner(System.in);
         String gameID = gameIDScanner.nextLine();
-
         String result =  serverFacade.joinPlayer(gameID, null);
         if (result.isEmpty()) {
             System.out.format("Enjoy the show\n");
+            ObserveUI();
         } else if (result.equals("Start the Server")) {
             System.out.println("Start the Server");
             preLoginMenu();
@@ -326,6 +325,29 @@ public class Client {
             System.out.println("Game Does not exist");
             postLoginMenu();
         }
+    }
+
+    public void ObserverUI() {
+        System.out.println(OBSERVE_TEXT);
+        while (true){
+            Scanner gameIDScanner = new Scanner(System.in);
+            String input = gameIDScanner.nextLine();
+            switch (input){
+                case "1" -> {
+                    //help
+                    System.out.println(OBSERVE_TEXT);
+                }
+                case "2" -> {
+                    //redraw
+                }
+                case "3" -> {
+                    //leave
+                    break;
+                }
+            }
+        }
+
+
     }
 
     public void loginUI() {
@@ -408,6 +430,11 @@ public class Client {
             "4 - Make Move\n\tMove a piece\n" +
             "5 - Resign\n\tForfeit the game and Game is over\n" +
             "6 - Highlight Legal Moves\n\tSee All Legal Moves for a piece\n>>> ";
+
+    private static final String OBSERVE_TEXT = "Enter an Integer:\n" +
+            "1 - Help\n\tDisplays This Menu\n" +
+            "2 - Redraw Chess Board\n\tRedraws the board\n" +
+            "3 - Leave\n\tRemove yourself from the game\n"
     private static final String LOGGED_IN_TEXT = "\n" +
             EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_KING+ EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.EMPTY +
             EscapeSequences.EMPTY + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_KING+ EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK +

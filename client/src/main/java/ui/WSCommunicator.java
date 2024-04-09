@@ -1,11 +1,7 @@
 package ui;
 
-import com.google.gson.Gson;
-import webSocketMessages.serverMessages.ServerMessage;
-
 import javax.websocket.*;
 import java.net.URI;
-import java.util.Scanner;
 
 public class WSCommunicator extends Endpoint {
     public Session session;
