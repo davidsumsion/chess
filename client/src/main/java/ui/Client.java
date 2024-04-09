@@ -102,7 +102,6 @@ public class Client {
     }
 
     public void drawBoard(String gameDataJson){
-
         String color = "BLACK";
         if (myColor == null || myColor.equals(ChessGame.TeamColor.WHITE)){
             color = "WHITE";
@@ -115,43 +114,77 @@ public class Client {
             System.out.print(GAMEPLAY_TEXT);
             Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
-            if (input.equals(Integer.toString(1))) {
-                gameplayUI();
-            }
-            else if (input.equals(Integer.toString(2))) {
-                GameData printableGameData = new GameData(null, null, null, null);
-                chess.ChessGame printableChessGame = new ChessGame();
-                printableChessGame.setBoard(chessBoard);
-                Gson gson = new Gson();
-                printableGameData.setChessGame(gson.toJson(printableChessGame));
-                String stringChessBoard = gson.toJson(printableGameData);
-                drawBoard(stringChessBoard);
-                gameplayUI();
-            }
-            else if (input.equals(Integer.toString(3))) {
-                // Leave
-                serverFacade.leave(gameID);
-                System.out.print("Thanks for playing!");
-                postLoginMenu();
-            }
-            else if (input.equals(Integer.toString(4))) {
-                ChessMove move = makeMoveUI();
-                serverFacade.makeMove(gameID, move);
-            }
-            else if (input.equals(Integer.toString(5))) {
-                // Resign
-                System.out.print("Are you sure you want to leave resign??\n You will forfeit the game");
-            }
-            else if (input.equals(Integer.toString(6))) {
-                // highlight Legal Moves
-                Gson gson = new Gson();
-                String color = "WHITE";
-                if (myColor == ChessGame.TeamColor.BLACK) {
-                    color = "BLACK";
+            switch (parseInt(input)){
+                // help
+                case 1 ->  gameplayUI();
+                // redraw board
+                case 2 -> {
+                    GameData printableGameData = new GameData(null, null, null, null);
+                    chess.ChessGame printableChessGame = new ChessGame();
+                    printableChessGame.setBoard(chessBoard);
+                    Gson gson = new Gson();
+                    printableGameData.setChessGame(gson.toJson(printableChessGame));
+                    String stringChessBoard = gson.toJson(printableGameData);
+                    drawBoard(stringChessBoard);
                 }
-                highlightMovesUI(color, chessBoard);
-                gameplayUI();
+                // Leave
+                case 3 -> {
+                    serverFacade.leave(gameID);
+                    System.out.print("Thanks for playing!");
+                    postLoginMenu();
+                }
+                case 4 -> {
+                    ChessMove move = makeMoveUI();
+                    serverFacade.makeMove(gameID, move);
+                }
+                //resign
+                case 5 -> {
+                    System.out.print("Are you sure you want to leave resign??\n You will forfeit the game");
+                }
+                // highlight moves
+                case 6 -> {
+                    String color = "WHITE";
+                    if (myColor == ChessGame.TeamColor.BLACK) {
+                        color = "BLACK";
+                    }
+                    highlightMovesUI(color, chessBoard);
+                }
             }
+//            if (input.equals(Integer.toString(1))) {
+//                gameplayUI();
+//            }
+//            else if (input.equals(Integer.toString(2))) {
+//                GameData printableGameData = new GameData(null, null, null, null);
+//                chess.ChessGame printableChessGame = new ChessGame();
+//                printableChessGame.setBoard(chessBoard);
+//                Gson gson = new Gson();
+//                printableGameData.setChessGame(gson.toJson(printableChessGame));
+//                String stringChessBoard = gson.toJson(printableGameData);
+//                drawBoard(stringChessBoard);
+//            }
+//            else if (input.equals(Integer.toString(3))) {
+//                // Leave
+//                serverFacade.leave(gameID);
+//                System.out.print("Thanks for playing!");
+//                postLoginMenu();
+//            }
+//            else if (input.equals(Integer.toString(4))) {
+//                ChessMove move = makeMoveUI();
+//                serverFacade.makeMove(gameID, move);
+//            }
+//            else if (input.equals(Integer.toString(5))) {
+//                // Resign
+//                System.out.print("Are you sure you want to leave resign??\n You will forfeit the game");
+//            }
+//            else if (input.equals(Integer.toString(6))) {
+//                // highlight Legal Moves
+//                Gson gson = new Gson();
+//                String color = "WHITE";
+//                if (myColor == ChessGame.TeamColor.BLACK) {
+//                    color = "BLACK";
+//                }
+//                highlightMovesUI(color, chessBoard);
+//            }
             }
     }
 
@@ -209,29 +242,28 @@ public class Client {
     }
 
     public void highlightMovesUI(String color, ChessBoard chessBoard) {
+        Gson gson = new Gson();
         System.out.print("Enter the position of the piece you want to see the potential moves for\n");
         String startRow = getRowInput();
-        if (!validRow.contains(startRow)){
-            System.out.println("Invalid Row Selection!\nPlease select a different row!");
-            highlightMovesUI(color, chessBoard);
-        }
+        if (startRow.isEmpty()) highlightMovesUI(color, chessBoard);
         String startColumn = getColInput();
-        if (!validColumn.contains(startColumn)){
-            System.out.println("Invalid Column Selection!\nPlease select a different column!");
-            highlightMovesUI(color, chessBoard);
-        }
+        if (startColumn.isEmpty()) highlightMovesUI(color, chessBoard);
         Integer colNum = colNumberMap.get(startColumn);
         ChessPosition currentPosition = new ChessPosition(parseInt(startRow), colNum);
         ChessPiece currentPiece = chessBoard.getPiece(currentPosition);
-        if (currentPiece.getTeamColor().toString().equals(color)) {
-            Collection<ChessMove> moves = currentPiece.pieceMoves(chessBoard, currentPosition);
-            Gson gson = new Gson();
-            String[] args = new String[]{color, gson.toJson(chessBoard), gson.toJson(moves)};
-            ChessBoardUI.main(args);
-        } else {
-            System.out.println("It's not your turn!");
+        Collection<ChessMove> moves = currentPiece.pieceMoves(chessBoard, currentPosition);
+//        ChessGame chessGame = new ChessGame();
+//        chessGame.setBoard(chessBoard);
+//        LoadGame loadGame = new LoadGame(gson.toJson(chessGame));
+//        drawBoard(gson.toJson(loadGame));
 
-        }
+        GameData printableGameData = new GameData(null, null, null, null);
+        chess.ChessGame printableChessGame = new ChessGame();
+        printableChessGame.setBoard(chessBoard);
+//        Gson gson = new Gson();
+        printableGameData.setChessGame(gson.toJson(printableChessGame));
+        String stringChessBoard = gson.toJson(printableGameData);
+        drawBoard(stringChessBoard);
     }
 
     public void registerUI(){
