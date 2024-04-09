@@ -94,6 +94,10 @@ public class Server {
                     String messageObserverJoined = "User: " + joinObserver.getUsername() + " Joined the Game as an Observer!";
                     notifyAllObserversNotCurrent(joinObserver.getGameID(), gson, messageObserverJoined, session);
                     notifyAllPlayers(joinObserver.getGameID(), gson, messageObserverJoined);
+                    //send current board to session
+                    JoinGame joinGame = new JoinGame(joinObserver.getGameID(), null);
+                    String jsonServerMessage2 = gson.toJson(joinGame.loadGame());
+                    session.getRemote().sendString(jsonServerMessage2);
                 } catch (WSException e){
                     System.out.println("Made it");
                     Error error = new Error(e.getMessage());
@@ -101,23 +105,29 @@ public class Server {
                 }catch (Exception e) {
                     System.out.println("Error in Join Observer: " + e.getMessage());
                 }
-                //send current board to session
-                JoinGame joinGame = new JoinGame(joinObserver.getGameID(), null);
-                String jsonServerMessage2 = gson.toJson(joinGame.loadGame());
-                session.getRemote().sendString(jsonServerMessage2);
             }
             case MAKE_MOVE -> {
-                System.out.println("MAKE MOVE");
-                MakeMove makeMove = gson.fromJson(message, MakeMove.class);
-                JoinGame joinGame = new JoinGame(makeMove.getGameID(), null);
-                joinGame.makeMove(makeMove.getMove());
-                for (Session sesh: sessionPlayerMap.get(makeMove.getGameID())){
-                    String jsonServerMessage2 = gson.toJson(joinGame.loadGame());
-                    sesh.getRemote().sendString(jsonServerMessage2);
-                }
-                for (Session sesh: sessionObserverMap.get(makeMove.getGameID())){
-                    String jsonServerMessage3 = gson.toJson((joinGame.loadGame()));
-                    sesh.getRemote().sendString(jsonServerMessage3);
+                try {
+//                    System.out.println("MAKE MOVE");
+                    //if is not turn throw error
+                    MakeMove makeMove = gson.fromJson(message, MakeMove.class);
+//                    makeMove.
+                    JoinGame joinGame = new JoinGame(makeMove.getGameID(), null);
+                    joinGame.makeMove(makeMove.getMove());
+                    for (Session sesh: sessionPlayerMap.get(makeMove.getGameID())){
+                        String jsonServerMessage2 = gson.toJson(joinGame.loadGame());
+                        sesh.getRemote().sendString(jsonServerMessage2);
+                        if (sesh != session){
+                            sesh.getRemote().sendString(gson.toJson(new Notification("The other player moved")));
+                        }
+                    }
+                    for (Session sesh: sessionObserverMap.get(makeMove.getGameID())){
+                        String jsonServerMessage3 = gson.toJson((joinGame.loadGame()));
+                        sesh.getRemote().sendString(jsonServerMessage3);
+                        sesh.getRemote().sendString(gson.toJson(new Notification("Someone moved")));
+                    }
+                } catch (WSException e) {
+                    session.getRemote().sendString(gson.toJson(new Error(e.getMessage())));
                 }
             }
             case LEAVE -> {
@@ -185,46 +195,19 @@ public class Server {
         JoinGameService joinGameService = new JoinGameService();
         try (Connection connection = DatabaseManager.getConnection()){
             GameData gameDataDB = joinGameService.findGame(connection, gameID);
-            String useUsername = username;
-            if (username == null) {
-                JoinGame joinGame = new JoinGame();
-                useUsername = joinGame.findUsername(authToken);
+            String myUsername = "";
+            JoinGame joinGame = new JoinGame();
+            myUsername = joinGame.findUsername(authToken);
+            // join observer bad authtoken
+            if (authToken == null || myUsername == null ){
+                throw new WSException("unauthorized authtoken");
             }
             if (gameDataDB == null) {
                 throw new WSException("Game DNE");
             }
-            // if game is empty
-//            if (gameDataDB.getChessGame() == null) {
-//                throw new WSException("Game is Empty");
-//            }
-//            //if player joins occupied color
-//            if (playerColor == ChessGame.TeamColor.BLACK){
-//                if (gameDataDB.getBlackUsername() == null){
-//                    //add username to black username in DB
-//                    throw new WSException("USERNAME IS NULL");
-//                } else if (!Objects.equals(gameDataDB.getBlackUsername(), useUsername)){
-//                    System.out.println("WHITE:");
-//                    System.out.println(gameDataDB.getBlackUsername() != useUsername);
-//                    throw new WSException("Black Already Occupied");
-//                }
-//            } else if (playerColor == ChessGame.TeamColor.WHITE){
-//                if (gameDataDB.getWhiteUsername() == null){
-//                    // add username to white username in DB
-//                    throw new WSException("USERNAME IS NULL");
-//                }
-//                if (!Objects.equals(gameDataDB.getWhiteUsername(), useUsername)) {
-//                    System.out.println("WHITE:");
-//                    System.out.println("DBUSER: " + gameDataDB.getWhiteUsername() + "\nWSUSER: " + useUsername);
-//                    System.out.println(gameDataDB.getWhiteUsername() != useUsername);
-//                    throw new WSException("White Already Occupied");
-//                }
-//            }
         } catch (SQLException | DataAccessException e) {
             System.out.println("Error accessing data");
         }
-        // if player tries to join a game with a bad authtoken
-        //get the game, bad authtoken result
-        //
     }
     public void joinPlayerErrors(Integer gameID, ChessGame.TeamColor playerColor, String authToken, Gson gson, String username) throws WSException{
         JoinGameService joinGameService = new JoinGameService();

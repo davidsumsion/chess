@@ -40,7 +40,7 @@ public class JoinGame {
         }
     }
 
-    public void makeMove(ChessMove chessMove) {
+    public void makeMove(ChessMove chessMove) throws WSException {
         try {
             Connection connection = DatabaseManager.getConnection();
             JoinGameService joinGameService = new JoinGameService();
@@ -57,7 +57,8 @@ public class JoinGame {
 //            return new Error("Cannot Find Game");
             throw new RuntimeException(e);
         } catch (InvalidMoveException e) {
-            throw new RuntimeException(e);
+            System.out.print("MADE IT HERE");
+            throw new WSException(e.getMessage());
         }
     }
 
