@@ -74,21 +74,19 @@ public class Server {
                 }
             }
             case JOIN_OBSERVER -> {
-                JoinPlayer joinPlayer = gson.fromJson(message, JoinPlayer.class);
+                JoinObserver joinObserver = gson.fromJson(message, JoinObserver.class);
                 try {
-                    addObserverToMap(session, joinPlayer.getGameID(), gson);
-                    String messageObserverJoined = "User: " + joinPlayer.getUsername() + " Joined the Game as an Observer!";
-//                    notifyAllObservers(joinPlayer.getGameID(), gson, messageObserverJoined);
-                    notifyAllPlayers(joinPlayer.getGameID(), gson, messageObserverJoined);
+                    addObserverToMap(session, joinObserver.getGameID(), gson);
+                    String messageObserverJoined = "User: " + joinObserver.getUsername() + " Joined the Game as an Observer!";
+                    notifyAllObservers(joinObserver.getGameID(), gson, messageObserverJoined);
+                    notifyAllPlayers(joinObserver.getGameID(), gson, messageObserverJoined);
                 } catch (Exception e) {
                     System.out.println("Error in Join Observer: " + e.getMessage());
                 }
                 //send current board to session
-//                JoinGame joinGame = new JoinGame(joinPlayer.getGameID(), null);
-//                String jsonServerMessage2 = gson.toJson(joinGame.loadGame());
-//                if (session.isOpen()) {
-//                    session.getRemote().sendString(jsonServerMessage2);
-//                }
+                JoinGame joinGame = new JoinGame(joinObserver.getGameID(), null);
+                String jsonServerMessage2 = gson.toJson(joinGame.loadGame());
+                session.getRemote().sendString(jsonServerMessage2);
             }
             case MAKE_MOVE -> {
                 System.out.print("MAKE MOVE");

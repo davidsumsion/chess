@@ -313,8 +313,8 @@ public class Client {
         String gameID = gameIDScanner.nextLine();
         String result =  serverFacade.joinPlayer(gameID, null);
         if (result.isEmpty()) {
-            System.out.format("Enjoy the show\n");
-            ObserveUI();
+            System.out.format("Enjoy the show:\n");
+            ObserverUI();
         } else if (result.equals("Start the Server")) {
             System.out.println("Start the Server");
             preLoginMenu();
@@ -434,7 +434,7 @@ public class Client {
     private static final String OBSERVE_TEXT = "Enter an Integer:\n" +
             "1 - Help\n\tDisplays This Menu\n" +
             "2 - Redraw Chess Board\n\tRedraws the board\n" +
-            "3 - Leave\n\tRemove yourself from the game\n"
+            "3 - Leave\n\tRemove yourself from the game\n";
     private static final String LOGGED_IN_TEXT = "\n" +
             EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_KING+ EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.EMPTY +
             EscapeSequences.EMPTY + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_KING+ EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK +

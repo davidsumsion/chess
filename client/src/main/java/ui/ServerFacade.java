@@ -144,7 +144,8 @@ public class ServerFacade {
             MessageOnlyResult messageOnlyResult = clientCommunicator.joinPlayer(urlString, jsonString, this.authToken);
             if (messageOnlyResult.getMessage().equals("CORRECT")){
                 if (playerColor == null){
-                    JoinObserver joinObserver = new JoinObserver(authToken, parseInt(gameID));
+//                    JoinPlayer joinPlayer = new JoinPlayer(authToken, parseInt(gameID), null, username);
+                    JoinObserver joinObserver = new JoinObserver(authToken, parseInt(gameID), username);
                     ws.send(gson.toJson(joinObserver));
                 } else {
                     ChessGame.TeamColor teamColor = ChessGame.TeamColor.WHITE;
