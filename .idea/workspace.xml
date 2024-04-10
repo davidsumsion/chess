@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -157,7 +155,7 @@
       <recent name="$PROJECT_DIR$/shared/src/main/java" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.WebSocketTests.validResign">
+  <component name="RunManager" selected="JUnit.WebSocketTests">
     <configuration name="Client" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ui.Client" />
       <module name="client" />
@@ -211,22 +209,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WebSocketTests.invalidResignObserver" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="passoffTests.serverTests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
-      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.WebSocketTests" />
-      <option name="METHOD_NAME" value="invalidResignObserver" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="WebSocketTests.leaveGame" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
@@ -238,6 +220,22 @@
       <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
       <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.WebSocketTests" />
       <option name="METHOD_NAME" value="leaveGame" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebSocketTests.multipleLobbies" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.WebSocketTests" />
+      <option name="METHOD_NAME" value="multipleLobbies" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -262,19 +260,19 @@
     <list>
       <item itemvalue="Application.Client" />
       <item itemvalue="Application.Server" />
+      <item itemvalue="JUnit.WebSocketTests.multipleLobbies" />
       <item itemvalue="JUnit.WebSocketTests.invalidResignGameOver" />
       <item itemvalue="JUnit.WebSocketTests.validResign" />
       <item itemvalue="JUnit.WebSocketTests" />
-      <item itemvalue="JUnit.WebSocketTests.invalidResignObserver" />
       <item itemvalue="JUnit.WebSocketTests.leaveGame" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.WebSocketTests.validResign" />
         <item itemvalue="JUnit.WebSocketTests" />
         <item itemvalue="JUnit.WebSocketTests.leaveGame" />
+        <item itemvalue="JUnit.WebSocketTests.multipleLobbies" />
+        <item itemvalue="JUnit.WebSocketTests.validResign" />
         <item itemvalue="JUnit.WebSocketTests.invalidResignGameOver" />
-        <item itemvalue="JUnit.WebSocketTests.invalidResignObserver" />
       </list>
     </recent_temporary>
   </component>
@@ -448,21 +446,6 @@
           <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/WebSocketTests.java</url>
           <line>290</line>
           <option name="timeStamp" value="578" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/server/Server.java</url>
-          <line>155</line>
-          <option name="timeStamp" value="591" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/server/Server.java</url>
-          <line>153</line>
-          <option name="timeStamp" value="592" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/server/src/main/java/server/Server.java</url>
-          <line>151</line>
-          <option name="timeStamp" value="593" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>

@@ -152,16 +152,28 @@ public class Server {
                     System.out.println("LEAVE");
                     String notificationMessage = "USER: " + " LEFT THE GAME";
                     Leave leave = gson.fromJson(message, Leave.class);
+                    Boolean indicator = false;
                     for (Session sesh: sessionPlayerMap.get(leave.getGameID())) {
                         Notification notification = new Notification(notificationMessage);
                         sesh.getRemote().sendString(gson.toJson(notification));
+                        if (session == sesh){
+                            indicator = true;
+                        }
                     }
-                    System.out.println("PAST FIRST for loop");
+                    if (indicator) {
+                        sessionPlayerMap.get(leave.getGameID()).remove(session);
+                    }
+                    Boolean indicator2 = false;
                     for (Session sesh: sessionObserverMap.get(leave.getGameID())){
                         Notification notification = new Notification(notificationMessage);
                         sesh.getRemote().sendString(gson.toJson(notification));
+                        if (session == sesh){
+                            indicator2 = true;
+                        }
                     }
-                    System.out.println("PAST SECOND for loop");
+                    if (indicator2) {
+                        sessionObserverMap.get(leave.getGameID()).remove(session);
+                    }
                 } catch (Exception e) {
                     System.out.println("error with leave case");
                 }
@@ -405,8 +417,6 @@ public class Server {
     public void onOpen(Session session) {
         System.out.println("Websocket opened.");
     }
-
-
 
     public void stop() {
         Spark.stop();
