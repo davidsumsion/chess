@@ -28,8 +28,7 @@ public class JoinGame {
     public JoinGame() {}
 
     public ServerMessage loadGame() {
-        try {
-            Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = DatabaseManager.getConnection()){
             JoinGameService joinGameService = new JoinGameService();
             GameData gameData = joinGameService.findGame(connection, this.gameID);
             Gson gson = new Gson();
@@ -41,8 +40,7 @@ public class JoinGame {
     }
 
     public GameData getGame() {
-        try {
-            Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = DatabaseManager.getConnection()){
             JoinGameService joinGameService = new JoinGameService();
             return joinGameService.findGame(connection, this.gameID);
 
@@ -54,8 +52,7 @@ public class JoinGame {
     }
 
     public void makeMove(ChessMove chessMove) throws WSException {
-        try {
-            Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = DatabaseManager.getConnection()) {
             JoinGameService joinGameService = new JoinGameService();
             GameData gameData = joinGameService.findGame(connection, this.gameID);
             String chessGameJson = gameData.getChessGame();
@@ -76,8 +73,7 @@ public class JoinGame {
     }
 
     public void updateDBGame(GameData updatedGameData) {
-        try {
-            Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = DatabaseManager.getConnection()){
             MySqlGameDataDA mySqlGameDataDA = new MySqlGameDataDA();
             mySqlGameDataDA.updateGame(connection, updatedGameData);
         } catch (Exception e) {
@@ -87,8 +83,7 @@ public class JoinGame {
     }
 
     public String findUsername(String authToken) {
-        try {
-            Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = DatabaseManager.getConnection()){
             MySqlAuthTokenDA mySqlAuthTokenDA = new MySqlAuthTokenDA();
             return mySqlAuthTokenDA.getUser(connection, authToken);
         } catch (Exception e) {

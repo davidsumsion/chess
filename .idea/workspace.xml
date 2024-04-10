@@ -6,6 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/lib/passoff-dependencies.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/WSLogic/JoinGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/WSLogic/JoinGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/DatabaseManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -269,9 +273,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.WebSocketTests" />
-        <item itemvalue="JUnit.WebSocketTests.leaveGame" />
         <item itemvalue="JUnit.WebSocketTests.multipleLobbies" />
         <item itemvalue="JUnit.WebSocketTests.validResign" />
+        <item itemvalue="JUnit.WebSocketTests.leaveGame" />
         <item itemvalue="JUnit.WebSocketTests.invalidResignGameOver" />
       </list>
     </recent_temporary>
@@ -394,13 +398,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/server/src/main/java/WSLogic/JoinGame.java</url>
-          <line>63</line>
+          <line>60</line>
           <option name="timeStamp" value="528" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/client/src/main/java/ui/WSCommunicator.java</url>
-          <line>17</line>
-          <option name="timeStamp" value="548" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/Client.java</url>
@@ -409,22 +408,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
-          <line>159</line>
+          <line>161</line>
           <option name="timeStamp" value="565" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
-          <line>155</line>
+          <line>157</line>
           <option name="timeStamp" value="566" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
-          <line>156</line>
+          <line>158</line>
           <option name="timeStamp" value="567" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
-          <line>162</line>
+          <line>164</line>
           <option name="timeStamp" value="569" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -449,7 +448,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
-          <line>43</line>
+          <line>45</line>
           <option name="timeStamp" value="595" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -471,6 +470,11 @@
           <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/WebSocketTests.java</url>
           <line>462</line>
           <option name="timeStamp" value="599" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/WebSocketTests.java</url>
+          <line>530</line>
+          <option name="timeStamp" value="602" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/server/src/test/java/passoffTests/serverTests/WebSocketTests.java</url>

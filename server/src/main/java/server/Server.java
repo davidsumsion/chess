@@ -193,6 +193,11 @@ public class Server {
                         throw new WSException("Observer cannot resign");
                     }
 
+                    if (resignedGames != null && resignedGames.contains((resign.getGameID()))){
+                        System.out.println("NO MESSAGE SEND resignedGames Bottom");
+                        throw new WSException("Already Resigned");
+                    }
+
                     resignedGames.add(resign.getGameID());
 
                     for (Session sesh: sessionPlayerMap.get(resign.getGameID())) {
@@ -206,11 +211,6 @@ public class Server {
                         sesh.getRemote().sendString(gson.toJson(notification));
                     }
 
-
-                    if (resignedGames != null && resignedGames.contains((resign.getGameID()))){
-                        System.out.println("NO MESSAGE SEND resignedGames Bottom");
-                        throw new WSException("Already Resigned");
-                    }
                 } catch (Exception e) {
                     Error error = new Error(e.getMessage());
                     session.getRemote().sendString(gson.toJson(error));
