@@ -65,7 +65,7 @@ public class ServerFacade {
 
     public void makeMove(Integer gameID, ChessMove move){
         Gson gson = new Gson();
-        MakeMove makeMove = new MakeMove(authToken, gameID, move);
+        MakeMove makeMove = new MakeMove(authToken, gameID, move, username);
         try {
             ws.send(gson.toJson(makeMove));
         } catch (Exception e) {

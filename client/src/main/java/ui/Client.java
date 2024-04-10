@@ -173,34 +173,62 @@ public class Client {
     }
 
     public ChessMove makeMoveUI() {
-        //Start Position
-        System.out.println("Enter the position of the piece you want to move");
-        String startRow = getRowInput();
-        if (startRow.isEmpty()) makeMoveUI();
-        String startColumn = getColInput();
-        if (startColumn.isEmpty()) makeMoveUI();
-        Integer startColInt = colNumberMap.get(startColumn);
-        ChessPosition startPosition = new ChessPosition(parseInt(startRow), startColInt);
-        //End Position
-        System.out.println("Enter the position of the location you want to move to");
-        String endRow = getRowInput();
-        if (startRow.isEmpty()) makeMoveUI();
-        String endCol = getColInput();
-        if (endCol.isEmpty()) makeMoveUI();
-        Integer endColInt = colNumberMap.get(endCol);
-        ChessPosition endPosition = new ChessPosition(parseInt(endRow), endColInt);
+        try {
+            //Start Position
+            System.out.println("Enter the position of the piece you want to move");
+            String startRow = getRowInput2();
+            if (startRow.isEmpty()) makeMoveUI();
+            String startColumn = getColInput2();
+            if (startColumn.isEmpty()) makeMoveUI();
+            Integer startColInt = colNumberMap.get(startColumn);
 
-        //change for pawn for promotion Piece
-        ChessMove chessMove =  new ChessMove(startPosition, endPosition, null);
-        ChessGame chessGame = new ChessGame();
-        chessGame.setBoard(chessBoard);
-        Collection<ChessMove> validMoves = chessGame.validMoves(startPosition);
-        if (validMoves.contains(chessMove)) {
-            return chessMove;
-        } else{
-            System.out.println("You didn't select a valid move");
+            //End Position
+            System.out.println("Enter the position of the location you want to move to");
+            String endRow = getRowInput2();
+            if (startRow.isEmpty()) makeMoveUI();
+            String endCol = getColInput2();
+            if (endCol.isEmpty()) makeMoveUI();
+            Integer endColInt = colNumberMap.get(endCol);
+            //change for pawn for promotion Piece
+            ChessPosition startPosition = new ChessPosition(parseInt(startRow), startColInt);
+            ChessPosition endPosition = new ChessPosition(parseInt(endRow), endColInt);
+            ChessMove chessMove =  new ChessMove(startPosition, endPosition, null);
+            ChessGame chessGame = new ChessGame();
+            chessGame.setBoard(chessBoard);
+            Collection<ChessMove> validMoves = chessGame.validMoves(startPosition);
+            if (validMoves.contains(chessMove)) {
+                return chessMove;
+            } else{
+                System.out.println("You didn't select a valid move");
+                return makeMoveUI();
+            }
+        } catch (Exception e){
+            System.out.println("Invalid move selection");
             return makeMoveUI();
         }
+    }
+
+
+    public String getRowInput2() throws Exception{
+        System.out.println("Enter a Row Number");
+        Scanner rowScanner = new Scanner(System.in);
+        String row = rowScanner.nextLine();
+        if (!validRow.contains(row)){
+            System.out.println("Invalid Row Selection!\nPlease select a different row!");
+            throw new Exception("invalid move");
+        }
+        return row;
+    }
+
+    public String getColInput2() throws Exception {
+        System.out.println("Enter a Column Letter");
+        Scanner colScanner = new Scanner(System.in);
+        String col = colScanner.nextLine();
+        if (!validColumn.contains(col)){
+            System.out.println("Invalid Column Selection!\nPlease select a different column!");
+            throw new Exception("invalid move");
+        }
+        return col.toUpperCase();
     }
 
     public String getRowInput(){
@@ -371,6 +399,10 @@ public class Client {
                     serverFacade.leave(gameID);
                     postLoginMenu();
                 }
+                case "4" -> {
+                    //highlight moves
+                    highlightMovesUI(null, chessBoard);
+                }
             }
         }
 
@@ -465,7 +497,8 @@ public class Client {
     private static final String OBSERVE_TEXT = "\n" +
             "1 - Help\n\tDisplays This Menu\n" +
             "2 - Redraw Chess Board\n\tRedraws the board\n" +
-            "3 - Leave\n\tRemove yourself from the game\n\n";
+            "3 - Leave\n\tRemove yourself from the game\n\n" +
+            "4 - Highlight Legal Moves\n\tSee All Legal Moves for a piece\n\n";
     private static final String LOGGED_IN_TEXT = "\n" +
             EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_KING+ EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.EMPTY +
             EscapeSequences.EMPTY + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_KING+ EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK +
@@ -489,7 +522,7 @@ public class Client {
     private static final String OBSERVE_INTRO = "\n" +
             EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_KING+ EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.EMPTY +
             EscapeSequences.EMPTY + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_KING+ EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK +
-            String.format("\n%s%s%s     GAMEPLAY     %s%s%s\n", EscapeSequences.DARK_KNIGHT, EscapeSequences.BLACK_BISHOP, EscapeSequences.BLACK_QUEEN, EscapeSequences.WHITE_QUEEN, EscapeSequences.WHITE_BISHOP, EscapeSequences.WHITE_KNIGHT) +
+            String.format("\n%s%s%s     OBSERVER     %s%s%s\n", EscapeSequences.DARK_KNIGHT, EscapeSequences.BLACK_BISHOP, EscapeSequences.BLACK_QUEEN, EscapeSequences.WHITE_QUEEN, EscapeSequences.WHITE_BISHOP, EscapeSequences.WHITE_KNIGHT) +
             EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_KING+ EscapeSequences.BLACK_ROOK + EscapeSequences.BLACK_ROOK + EscapeSequences.EMPTY +
             EscapeSequences.EMPTY + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_KING+ EscapeSequences.WHITE_ROOK + EscapeSequences.WHITE_ROOK;
 }

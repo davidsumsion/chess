@@ -130,6 +130,10 @@ public class Server {
                         throw new WSException("NOT YOUR TURN");
                     }
 
+                    if (chessGame.isInCheckmate(ChessGame.TeamColor.BLACK) || chessGame.isInCheckmate(ChessGame.TeamColor.WHITE)){
+                        notifyAllPlayers(makeMove.getGameID(), gson,   "User: " + makeMove.getUsername() + "put the other player in Checkmate");
+                    }
+
                     joinGame.makeMove(makeMove.getMove());
                     for (Session sesh: sessionPlayerMap.get(makeMove.getGameID())){
                         String jsonServerMessage2 = gson.toJson(joinGame.loadGame());
@@ -206,7 +210,7 @@ public class Server {
                     }
 
                     resignedGames.add(resign.getGameID());
-                    String notificationMessage = "USER: " + username + " LEFT THE GAME";
+                    String notificationMessage = "USER: " + username + " RESIGNED FROM THE GAME";
                     for (Session sesh: sessionPlayerMap.get(resign.getGameID())) {
                         Notification notification = new Notification(notificationMessage);
                         sesh.getRemote().sendString(gson.toJson(notification));
