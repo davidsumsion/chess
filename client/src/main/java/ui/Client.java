@@ -100,6 +100,7 @@ public class Client {
         }
     }
 
+
     public void drawBoard(String gameDataJson, Collection<ChessMove> validMoves){
         Gson gson = new Gson();
         String color = "BLACK";
@@ -149,7 +150,14 @@ public class Client {
                     }
                     //resign
                     case 5 -> {
-                        System.out.println("Are you sure you want to leave resign??\n You will forfeit the game");
+                        System.out.println("Are you sure you want to resign??(y/n)\n You will forfeit the game");
+                        String yn = scanner.nextLine();
+                        if (Objects.equals(yn, "y")){
+                            serverFacade.resign(gameID);
+                            postLoginMenu();
+                        } else{
+                            System.out.println("You are staying in the game!\n Who's gonna carry the boats?");
+                        }
                     }
                     // highlight moves
                     case 6 -> {
@@ -319,8 +327,9 @@ public class Client {
     public void joinToObserveUI(){
         System.out.print("Enter a gameID\n>>> ");
         Scanner gameIDScanner = new Scanner(System.in);
-        String gameID = gameIDScanner.nextLine();
-        String result =  serverFacade.joinPlayer(gameID, null);
+        String currentGameID = gameIDScanner.nextLine();
+        String result =  serverFacade.joinPlayer(currentGameID, null);
+        gameID = parseInt(currentGameID);
         if (result.isEmpty()) {
             System.out.format("Enjoy the show:\n");
             ObserverUI();
@@ -359,7 +368,8 @@ public class Client {
                 }
                 case "3" -> {
                     //leave
-                    break;
+                    serverFacade.leave(gameID);
+                    postLoginMenu();
                 }
             }
         }

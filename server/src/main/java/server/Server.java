@@ -148,56 +148,61 @@ public class Server {
                 }
             }
             case LEAVE -> {
-                System.out.println("LEAVE");
-                Leave leave = gson.fromJson(message, Leave.class);
-//                List<Session> playersList = sessionTracker.get(leave.getGameID()).getPlayers();
-//                playersList.remove(session);
-//                List<Session> observersList = sessionTracker.get(leave.getGameID()).getObservers();
-////                observersList.remove(session);
-////                PlayerHolder newPlayerHolder = new PlayerHolder();
-////                newPlayerHolder.setPlayers(playersList);
-////                newPlayerHolder.setObservers(observersList);
-////                sessionTracker.put(leave.getGameID(), newPlayerHolder);
-//
-//                for (Session sesh: playersList){
-//                    String notificationMessage = "USER: " + " LEFT THE GAME";
-//                    Notification notification = new Notification(notificationMessage);
-//                    String jsonServerMessage = gson.toJson(notification);
-//                    if (session.isOpen()) {
-//                        session.getRemote().sendString(jsonServerMessage);
-//                    }
-//                }
-//                for (Session sesh: observersList){
-//                    String notificationMessage = "USER: " + " LEFT THE GAME";
-//                    Notification notification = new Notification(notificationMessage);
-//                    String jsonServerMessage = gson.toJson(notification);
-//                    if (session.isOpen()) {
-//                        session.getRemote().sendString(jsonServerMessage);
-//                    }
-//                }
+                try {
+                    System.out.println("LEAVE");
+                    String notificationMessage = "USER: " + " LEFT THE GAME";
+                    Leave leave = gson.fromJson(message, Leave.class);
+                    for (Session sesh: sessionPlayerMap.get(leave.getGameID())) {
+                        Notification notification = new Notification(notificationMessage);
+                        sesh.getRemote().sendString(gson.toJson(notification));
+                    }
+                    System.out.println("PAST FIRST for loop");
+                    for (Session sesh: sessionObserverMap.get(leave.getGameID())){
+                        Notification notification = new Notification(notificationMessage);
+                        sesh.getRemote().sendString(gson.toJson(notification));
+                    }
+                    System.out.println("PAST SECOND for loop");
+                } catch (Exception e) {
+                    System.out.println("error with leave case");
+                }
             }
             case RESIGN -> {
-                System.out.print("RESIGN");
-                Resign resign = gson.fromJson(message, Resign.class);
+                try {
+                    System.out.print("RESIGN");
+                    Resign resign = gson.fromJson(message, Resign.class);
 
-                resignedGames.add(resign.getGameID());
+                    if (resignedGames != null && resignedGames.contains(resign.getGameID())){
+                        System.out.println("NO MESSAGE SEND resignedGames");
+                        throw new WSException("cannot resign twice");
+                    }
 
-                for (Session sesh: sessionPlayerMap.get(resign.getGameID())) {
-                    String notificationMessage = "USER: " + " LEFT THE GAME";
-                    Notification notification = new Notification(notificationMessage);
-                    sesh.getRemote().sendString(gson.toJson(notification));
+                    if (sessionObserverMap.get(resign.getGameID()).contains(session)){
+                        System.out.println("NO MESSAGE SEND sessionObserverMap");
+                        throw new WSException("Observer cannot resign");
+                    }
+
+                    resignedGames.add(resign.getGameID());
+
+                    for (Session sesh: sessionPlayerMap.get(resign.getGameID())) {
+                        String notificationMessage = "USER: " + " LEFT THE GAME";
+                        Notification notification = new Notification(notificationMessage);
+                        sesh.getRemote().sendString(gson.toJson(notification));
+                    }
+                    for (Session sesh: sessionObserverMap.get(resign.getGameID())){
+                        String notificationMessage = "USER: " + " LEFT THE GAME";
+                        Notification notification = new Notification(notificationMessage);
+                        sesh.getRemote().sendString(gson.toJson(notification));
+                    }
+
+
+                    if (resignedGames != null && resignedGames.contains((resign.getGameID()))){
+                        System.out.println("NO MESSAGE SEND resignedGames Bottom");
+                        throw new WSException("Already Resigned");
+                    }
+                } catch (Exception e) {
+                    Error error = new Error(e.getMessage());
+                    session.getRemote().sendString(gson.toJson(error));
                 }
-                for (Session sesh: sessionObserverMap.get(resign.getGameID())){
-                    String notificationMessage = "USER: " + " LEFT THE GAME";
-                    Notification notification = new Notification(notificationMessage);
-                    sesh.getRemote().sendString(gson.toJson(notification));
-                }
-
-                List<Session> playersList = sessionPlayerMap.get(resign.getGameID());
-                playersList.remove(session);
-                List<Session> observersList = sessionObserverMap.get(resign.getGameID());
-                observersList.remove(session);
-
 
             }
         }
@@ -321,7 +326,7 @@ public class Server {
         }
         ArrayList<Session> newSessions = sessionPlayerMap.get(gameID);
         newSessions.add(session);
-//        sessionPlayerMap.put(gameID, newSessions);
+        sessionPlayerMap.put(gameID, newSessions);
     }
 
     public void addObserverToMap(Session session, Integer gameID, Gson gson){
@@ -330,7 +335,7 @@ public class Server {
         }
         ArrayList<Session> newSessions = sessionObserverMap.get(gameID);
         newSessions.add(session);
-//        sessionObserverMap.put(gameID, newSessions);
+        sessionObserverMap.put(gameID, newSessions);
     }
 
     public synchronized void sendGame(Integer gameID, ChessGame.TeamColor playerColor, Gson gson, Session session) throws IOException {
@@ -366,20 +371,32 @@ public class Server {
         System.out.println("WEBSOCKET CLOSED");
         for (Integer gameID : sessionPlayerMap.keySet()){
             ArrayList<Session> array = sessionPlayerMap.get(gameID);
-            for (Session sesh: array){
-                if (sesh == session){
-                    array.remove(sesh);
-                    sessionPlayerMap.put(gameID, array);
+            Boolean indicator = false;
+            if (array != null){
+                for (Session sesh: array){
+                    if (sesh == session){
+                        indicator = true;
+                    }
                 }
+            }
+            if (indicator){
+                array.remove(session);
+                sessionPlayerMap.put(gameID, array);
             }
         }
         for (Integer gameID : sessionObserverMap.keySet()){
             ArrayList<Session> array = sessionObserverMap.get(gameID);
-            for (Session sesh: array){
-                if (sesh == session){
-                    array.remove(sesh);
-                    sessionObserverMap.put(gameID, array);
+            Boolean indicator = false;
+            if (array != null){
+                for (Session sesh: array){
+                    if (sesh == session){
+                        indicator = true;
+                    }
                 }
+            }
+            if (indicator){
+                array.remove(session);
+                sessionObserverMap.put(gameID, array);
             }
         }
     }

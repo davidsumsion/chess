@@ -9,10 +9,7 @@ import results.CreateGameResult;
 import results.ListGamesResult;
 import results.MessageOnlyResult;
 import results.UserResult;
-import webSocketMessages.userCommands.JoinObserver;
-import webSocketMessages.userCommands.JoinPlayer;
-import webSocketMessages.userCommands.Leave;
-import webSocketMessages.userCommands.MakeMove;
+import webSocketMessages.userCommands.*;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -51,6 +48,17 @@ public class ServerFacade {
             System.out.print("ERROR LEAVING");
         }
     }
+
+    public void resign(Integer gameID) {
+        Resign resign = new Resign(authToken, gameID);
+        try {
+            Gson gson = new Gson();
+            ws.send(gson.toJson(resign));
+        } catch (Exception e) {
+            System.out.print("Error resigning");
+        }
+    }
+
 
     public void makeMove(Integer gameID, ChessMove move){
         Gson gson = new Gson();
@@ -138,6 +146,7 @@ public class ServerFacade {
             return "Start the Server";
         }
     }
+
 
     public String joinPlayer(String gameID, String playerColor){
         try {
