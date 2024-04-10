@@ -132,6 +132,12 @@ public class Server {
 
                     if (chessGame.isInCheckmate(ChessGame.TeamColor.BLACK) || chessGame.isInCheckmate(ChessGame.TeamColor.WHITE)){
                         notifyAllPlayers(makeMove.getGameID(), gson,   "User: " + makeMove.getUsername() + "put the other player in Checkmate");
+                        notifyAllObservers(makeMove.getGameID(), gson, "User: " + makeMove.getUsername() + "put the other player in Checkmate");
+                    }
+
+                    if (chessGame.isInStalemate(ChessGame.TeamColor.BLACK) || chessGame.isInStalemate(ChessGame.TeamColor.WHITE)){
+                        notifyAllPlayers(makeMove.getGameID(), gson,   "User: " + makeMove.getUsername() + "put the other player in Checkmate");
+                        notifyAllObservers(makeMove.getGameID(), gson, "User: " + makeMove.getUsername() + "put the other player in Checkmate");
                     }
 
                     joinGame.makeMove(makeMove.getMove());
