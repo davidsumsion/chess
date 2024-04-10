@@ -74,18 +74,18 @@ public class Server {
             case JOIN_PLAYER -> {
                 JoinPlayer joinPlayer = gson.fromJson(message, JoinPlayer.class);
                 try {
-                    System.out.println("JOIN PLAYER");
+//                    System.out.println("JOIN PLAYER");
                     joinPlayerErrors(joinPlayer.getGameID(), joinPlayer.getPlayerColor(), joinPlayer.getAuthString(), gson, joinPlayer.getUsername());
                     addPlayerToMap(session, joinPlayer.getGameID(), gson);
                     String messageToObserver = "User: " + joinPlayer.getUsername() + " Joined the Game!";
                     notifyAllObservers(joinPlayer.getGameID(), gson, messageToObserver);
                     notifyPlayersJoinPlayer(joinPlayer.getGameID(), joinPlayer.getPlayerColor(), gson, session, joinPlayer.getUsername());
                 } catch (WSException e){
-                    System.out.println("Made it");
+//                    System.out.println("Made it");
                     Error error = new Error(e.getMessage());
                     session.getRemote().sendString(gson.toJson(error));
                 } catch (Exception e) {
-                    System.out.println("Error: " + e.getMessage());
+//                    System.out.println("Error: " + e.getMessage());
                 }
             }
             case JOIN_OBSERVER -> {
@@ -102,11 +102,11 @@ public class Server {
                     String jsonServerMessage2 = gson.toJson(joinGame.loadGame());
                     session.getRemote().sendString(jsonServerMessage2);
                 } catch (WSException e){
-                    System.out.println("Made it");
+//                    System.out.println("Made it");
                     Error error = new Error(e.getMessage());
                     session.getRemote().sendString(gson.toJson(error));
                 }catch (Exception e) {
-                    System.out.println("Error in Join Observer: " + e.getMessage());
+//                    System.out.println("Error in Join Observer: " + e.getMessage());
                 }
             }
             case MAKE_MOVE -> {
@@ -149,9 +149,13 @@ public class Server {
             }
             case LEAVE -> {
                 try {
-                    System.out.println("LEAVE");
-                    String notificationMessage = "USER: " + " LEFT THE GAME";
+//                    System.out.println("LEAVE");
+
                     Leave leave = gson.fromJson(message, Leave.class);
+
+                    JoinGame joinGame = new JoinGame(leave.getGameID(), null);
+                    String username = joinGame.findUsername(leave.getAuthString());
+                    String notificationMessage = "USER: " + username + " LEFT THE GAME";
                     Boolean indicator = false;
                     for (Session sesh: sessionPlayerMap.get(leave.getGameID())) {
                         Notification notification = new Notification(notificationMessage);
@@ -175,38 +179,39 @@ public class Server {
                         sessionObserverMap.get(leave.getGameID()).remove(session);
                     }
                 } catch (Exception e) {
-                    System.out.println("error with leave case");
+//                    System.out.println("error with leave case");
                 }
             }
             case RESIGN -> {
                 try {
-                    System.out.print("RESIGN");
+//                    System.out.print("RESIGN");
                     Resign resign = gson.fromJson(message, Resign.class);
 
+                    JoinGame joinGame = new JoinGame(resign.getGameID(), null);
+                    String username = joinGame.findUsername(resign.getAuthString());
+
                     if (resignedGames != null && resignedGames.contains(resign.getGameID())){
-                        System.out.println("NO MESSAGE SEND resignedGames");
+//                        System.out.println("NO MESSAGE SEND resignedGames");
                         throw new WSException("cannot resign twice");
                     }
 
                     if (sessionObserverMap.get(resign.getGameID()).contains(session)){
-                        System.out.println("NO MESSAGE SEND sessionObserverMap");
+//                        System.out.println("NO MESSAGE SEND sessionObserverMap");
                         throw new WSException("Observer cannot resign");
                     }
 
                     if (resignedGames != null && resignedGames.contains((resign.getGameID()))){
-                        System.out.println("NO MESSAGE SEND resignedGames Bottom");
+//                        System.out.println("NO MESSAGE SEND resignedGames Bottom");
                         throw new WSException("Already Resigned");
                     }
 
                     resignedGames.add(resign.getGameID());
-
+                    String notificationMessage = "USER: " + username + " LEFT THE GAME";
                     for (Session sesh: sessionPlayerMap.get(resign.getGameID())) {
-                        String notificationMessage = "USER: " + " LEFT THE GAME";
                         Notification notification = new Notification(notificationMessage);
                         sesh.getRemote().sendString(gson.toJson(notification));
                     }
                     for (Session sesh: sessionObserverMap.get(resign.getGameID())){
-                        String notificationMessage = "USER: " + " LEFT THE GAME";
                         Notification notification = new Notification(notificationMessage);
                         sesh.getRemote().sendString(gson.toJson(notification));
                     }
@@ -235,7 +240,7 @@ public class Server {
                 throw new WSException("Game DNE");
             }
         } catch (SQLException | DataAccessException e) {
-            System.out.println("Error accessing data");
+//            System.out.println("Error accessing data");
         }
     }
     public void joinPlayerErrors(Integer gameID, ChessGame.TeamColor playerColor, String authToken, Gson gson, String username) throws WSException{
@@ -260,8 +265,8 @@ public class Server {
                     //add username to black username in DB
                     throw new WSException("USERNAME IS NULL");
                 } else if (!Objects.equals(gameDataDB.getBlackUsername(), useUsername)){
-                    System.out.println("WHITE:");
-                    System.out.println(gameDataDB.getBlackUsername() != useUsername);
+//                    System.out.println("WHITE:");
+//                    System.out.println(gameDataDB.getBlackUsername() != useUsername);
                     throw new WSException("Black Already Occupied");
                 }
             } else if (playerColor == ChessGame.TeamColor.WHITE){
@@ -270,9 +275,9 @@ public class Server {
                     throw new WSException("USERNAME IS NULL");
                 }
                 if (!Objects.equals(gameDataDB.getWhiteUsername(), useUsername)) {
-                    System.out.println("WHITE:");
-                    System.out.println("DBUSER: " + gameDataDB.getWhiteUsername() + "\nWSUSER: " + useUsername);
-                    System.out.println(gameDataDB.getWhiteUsername() != useUsername);
+//                    System.out.println("WHITE:");
+//                    System.out.println("DBUSER: " + gameDataDB.getWhiteUsername() + "\nWSUSER: " + useUsername);
+//                    System.out.println(gameDataDB.getWhiteUsername() != useUsername);
                     throw new WSException("White Already Occupied");
                 }
             }

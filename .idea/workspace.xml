@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="fix(tests) compare collections">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/lib/passoff-dependencies.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/WSLogic/JoinGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/WSLogic/JoinGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/dataAccess/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/dataAccess/DatabaseManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -408,22 +404,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
-          <line>161</line>
+          <line>162</line>
           <option name="timeStamp" value="565" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
-          <line>157</line>
+          <line>158</line>
           <option name="timeStamp" value="566" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
-          <line>158</line>
+          <line>159</line>
           <option name="timeStamp" value="567" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
-          <line>164</line>
+          <line>165</line>
           <option name="timeStamp" value="569" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -448,7 +444,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/client/src/main/java/ui/ServerFacade.java</url>
-          <line>45</line>
+          <line>46</line>
           <option name="timeStamp" value="595" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
