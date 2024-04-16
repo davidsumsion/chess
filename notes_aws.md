@@ -1,6 +1,66 @@
 ## Final
 - Final on concurrency and Security
-
+- Cryptographic hash functions are: 
+  - deterministic, given the same input it always produces the same hash
+- An advantage of asymmetric key encryption is
+  - it only requires one of the keys in the pair for encryption
+  - public/private key
+  - slower, requires a key
+  - RSA is asymetric
+- Symmetric can encypt any length of data
+- Secure key exchange is uually done with
+  - asymmetric encryption of a symmetric key
+  - encrypt with asyemetric public key you can only read it
+- Parallelism is;
+  - Running things at the same time, need multiple processors
+  - concurrently: means I have multiple threads, not necicarily running at the same time
+    - single processor
+- A race condition happens when:
+  - two threads modify an access a critical resouce at the same time
+- A critical section
+  - defines code that may contain a race condition
+  - contains a critical resource
+  - modify or read shared memory
+  - NOT: apply to single threaded programs
+- Synchronized keyword
+  - protects a critical section
+- You can create a thread in Java using
+  - an extended Thread object
+  - a runnable object
+    - implements the run method
+    - returns void
+  - a callable object
+    - returns a result
+- Thread pools always
+  - add overhead
+  - can 
+    - grow dynamically (can create a thread pool of a fixed size)
+    - have multiple threads (can just be one)
+    - increase performance (it can)
+- Thread 
+  - you can make a thread wait for another read
+  - t1.start()
+  - t1.join() -- whatever thread calls this thread (main) will finish this thread before moving on
+  - t2.start()
+  - t2.join()
+  - once you start a thread you don't have any control over when it goes, if you want control you join() it. 
+- Database Transactions
+  - don't allow partial executino of statemnets
+  - increase copmlexity
+  - require a commit
+  - enable synchronization
+- Hashing with Salt
+  - store passwords uniquely
+- Asymmetric Encryption
+  - uses public/private key pairs
+- Hash functions are not a good choice for:
+  - encryption -- can't go back once you hash something -- encryption you want to decrypt
+  - good for:
+    - digital signatures
+    - unique identifiers
+    - data comparison 
+- Asymetric Key pair 
+  - you can decrypt data that was encrypted with the OTHER key in the pair
 
 ## AWS
 - EC2 - lease a server, specify what should be on the machine and when you start it up and they pick a machine to run it on
@@ -10,3 +70,64 @@
   - SSH: secure shell, how you access your server from a remote terminal
   - Have to secure the file, the pem key can't be a public file
   - chmod 600 user has all permissions except to excecute and no one else has permissions
+
+## command-line builds
+- steps
+  - retreiving source code
+  - download/resolve dependencies
+  - complining code
+  - run tests
+  - verify code quality
+  - package compiled code into a distributable format (jar files)
+  - intalling/deploying software
+- Automate it so anyone can do it and you get the same result
+  - Continuous integration and deployment
+- Common tools for command-line builds
+  - Java: maven, gradle
+  - C/C++: Make
+  - JavaScript: npm
+  - Python: Poetry, PyBuilder
+  - Universal: Shell Scripts
+- Maven build
+  - mvn clean: wipes out compiled code
+  - mvn install: compiile, package, tests, instals the projects and deploys it
+  - mvn site: generates a website for the project code
+- examples with Maven
+  - cd server; mvn exec:java
+- Maven has a specefic project structure
+  - home
+    - src
+      - main  
+        - java
+        - resources (config files)
+      - test
+        - java
+        - resources
+    - target
+    - pom.xml
+- Automatically make a mvn project
+  -  mvn archetype:generate -DgroupdId=edu.byu.cs240 -DartifactId=chess -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+- Multi-Module projects
+  - server
+  - client
+  - shared
+- Dependencies
+  - pom.xml
+    - model version
+    - maven coordinates (groupId, artifactId, version)
+    - name
+    - URL
+    - properties
+    - dependencies
+      - Alwyas say yes to IntelliJ when it asks you if you want to sync
+      - Scope: compile, test, runtime
+    - build (plugins)
+    - reporting (plugins)
+- Plugins
+  - configure dependencies (example set a port on server.server.main)
+  - mvn pluginName:goalName
+    - run specefic tests from a plugin
+- Default lifecycle
+  - can put plugins into specefic steps
+  - lots of steps when you call deploy
+  - 
